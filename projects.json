@@ -1,0 +1,51 @@
+[
+    {
+        "image": "images/gnsite.jpg",
+        "title": "Application de Gestion",
+        "description": "Une application full-stack pour la gestion de projets et le suivi de tâches, construite avec React, Node.js et MongoDB.",
+        "technologies": ["React", "Node.js", "MongoDB"],
+        "category": "Web"
+    },
+    {
+        "image": "images/swift.jpg",
+        "title": "Optimum Swift IA",
+        "description": "Développement d'une intelligence artificielle au seins d'Optimum Entreprise.",
+        "technologies": ["projet en cours..."],
+        "category": "Intelligence Artificielle"
+    },
+    {
+        "image": "images/mshop.png",
+        "title": "Plateforme E-Commerce",
+        "description": "Une plateforme de commerce électronique complète avec un panier d'achat, un système de paiement et une gestion de l'inventaire.",
+        "technologies": ["Django", "PostgreSQL", "Stripe"],
+        "category": "E-commerce"
+    },
+    {
+        "image": "images/taxi.png",
+        "title": "Application de réservation de taxi",
+        "description": "Développement d'une application de réservation de taxi incluant un système de géolocalisation, des moyens des paiements locaux et des intégrations d'API de cartographie. ",
+        "technologies": ["React Native", "Firebase"],
+        "category": "Mobile"
+    },
+    {
+        "image": "images/fitness.png",
+        "title": "Application Mobile",
+        "description": "Une application mobile pour suivre vos séances de sport, développée avec React Native.",
+        "technologies": ["React Native", "Firebase"],
+        "category": "Mobile"
+    },
+    {
+        "image": "images/refonte.png",
+        "title": "Refonte d'un site institutionnelle",
+        "description": "Transformation d'un site institutionnelle abandonnée en une véritale vitrine de l'entreprise.",
+        "technologies": ["HTML", "TailwindCSS", "Javascript", "Django"],
+        "category": "web"
+    },
+    {
+        "image": "images/educa.png",
+        "title": "Création d'un site de formation",
+        "description": "Développement d'un site permettant à toutes personnes voulant apprendre l'informatique appliqué e suivre des cours et de se développer. ",
+        "technologies": ["HTML", "TailwindCSS", "Javascript"],
+        "category": "web"
+    }
+]
