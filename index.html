@@ -1,1129 +1,709 @@
-<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-    <!-- Favicon personnalisé -->
-    <link rel="icon" type="image/png" href="logo-davidwawina.png">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio de David WAWINA, développeur full-stack, expert en solutions numériques, web et mobile, basé en RDC.">
-    <meta property="og:title" content="Portfolio | Développeur Full-Stack/ David WAWINA">
-    <meta property="og:description" content="Découvrez les réalisations, services et valeurs de David WAWINA, créateur de solutions digitales.">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="logo-davidwawina.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Portfolio  Développeur Full-Stack David WAWINA">
-    <meta name="twitter:description" content="Découvrez les réalisations, services et valeurs de David WAWINA, créateur de solutions digitales.">
-    <meta name="twitter:image" content="logo-davidwawina.png">
-    <!-- Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<!DOCTYPE html> <html lang="fr" class="scroll-smooth">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <!-- Font Awesome pour les icônes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* CSS Variables for theming */
-        :root {
-            --bg-color: #0a0a0a;
-            --text-color: #e5e7eb;
-            --card-bg: rgba(17, 24, 39, 0.5);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --secondary-text-color: #9ca3af;
-            --button-primary-bg: #ffffff;
-            --button-primary-text: #000000;
-            --button-primary-hover-bg: #e5e7eb;
-            --button-secondary-bg: #4b5563;
-            --button-secondary-text: #ffffff;
-            --button-secondary-hover-bg: #374151;
-        }
+  <!-- Title (≤60-65 caractères, mot-clé au début) -->
+  <title>Développeur Full-Stack à Kisangani — David Wawina MBULA</title>
 
-        .light-mode {
-            --bg-color: #f3f4f6;
-            --text-color: #1f2937;
-            --card-bg: rgba(255, 255, 255, 0.7);
-            --card-border: rgba(0, 0, 0, 0.1);
-            --secondary-text-color: #4b5563;
-            --button-primary-bg: #1f2937;
-            --button-primary-text: #ffffff;
-            --button-primary-hover-bg: #374151;
-            --button-secondary-bg: #d1d5db;
-            --button-secondary-text: #1f2937;
-            --button-secondary-hover-bg: #e5e7eb;
-        }
+  <!-- Meta description (150–160 caractères, action + mots-clés locaux) -->
+  <meta name="description" content="Portfolio de David Wawina MBULA, David MBULA, David Wawina, Kisangani développeur full-stack (JS/TS, APIs, Tailwind). Applications web rapides, sécurisées et scalables — Kisangani, RDC. Mbula Wawina David." />
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
+  <!-- Canonical (URL absolue) -->
+  <link rel="canonical" href="https://portfoliodavidwawina.vercel.app/" />
 
-        .text-gradient {
-            background-image: linear-gradient(to right, #4ade80, #38bdf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  <!-- Favicon / PWA basics -->
+   <link rel="icon" href="./images/logof.jpg" type="image/svg+xml">
+  <link rel="icon" type="image/png" href="logo-davidwawina.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logof.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logof.jpg">
+  <link rel="apple-touch-icon" href="/images/logof.jpg">
+  <meta name="theme-color" content="#0f172a">
 
-        /* Animation de fondu au chargement de la page */
-        .fade-in-container {
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Développeur Full-Stack à Kisangani — David Wawina MBULA">
+  <meta property="og:description" content="Apps web rapides et fiables. Front & back, APIs, intégrations paiement, Tailwind. Basé à Kisangani (RDC).">
+  <meta property="og:url" content="https://portfoliodavidwawina.vercel.app/">
+  <meta property="og:site_name" content="David Wawina MBULA — Portfolio">
+  <meta property="og:image" content="https://portfoliodavidwawina.vercel.app/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 
-        /* Animation for sections fading in on scroll */
-        .scroll-animate {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .scroll-animate.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Développeur Full-Stack à Kisangani — David Wawina MBULA">
+  <meta name="twitter:description" content="Applications web modernes, performantes et sécurisées. JS/TS, APIs, Tailwind. Kisangani, RDC.">
+  <meta name="twitter:image" content="https://portfoliodavidwawina.vercel.app/og-cover.jpg">
 
-        /* Glassmorphism effect for cards */
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--card-border);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background 0.5s ease, border-color 0.5s ease;
-        }
-        .glass-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
+  <!-- Indexation -->
+  <meta name="robots" content="index, follow, max-image-preview:large">
 
-        /* Style for the back-to-top button */
-        #back-to-top {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 99;
-            background-color: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 24px;
-            cursor: pointer;
-            transition: background-color 0.3s, opacity 0.3s;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        #back-to-top:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-        .tech-icon {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-size: 1.125rem;
-            color: var(--text-color);
-        }
-        .tech-icon svg {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.2s ease-in-out;
-        }
-        .tech-icon:hover svg {
-            transform: scale(1.1);
-        }
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
 
-        /* Modal styles */
-        .modal {
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+  <!-- Données structurées JSON-LD : Person + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Person",
+        "@id":"https://portfoliodavidwawina.vercel.app/#person",
+        "name":"David Wawina MBULA",
+        "jobTitle":"Développeur full-stack",
+        "description":"Développeur full-stack basé à Kisangani (RDC) — JS/TS, APIs, Tailwind, performance et sécurité.",
+        "url":"https://portfoliodavidwawina.vercel.app/",
+        "image":"https://portfoliodavidwawina.vercel.app/portrait.jpg",
+        "address":{
+          "@type":"PostalAddress",
+          "addressLocality":"Kisangani",
+          "addressRegion":"Tshopo",
+          "addressCountry":"CD"
+        },
+        "sameAs":[
+          "https://github.com/",
+          "https://www.linkedin.com/in/davidwawina/",
+          "https://facebook.com/magnumtheone"
+        ]
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://Vportfoliodavidwawina.vercel.app/#website",
+        "url":"https://portfoliodavidwawina.vercel.app/",
+        "name":"David Wawina MBULA — Portfolio",
+        "publisher":{"@id":"https://portfoliodavidwawina.vercel.app/#person"},
+        "inLanguage":"fr-FR",
+        "potentialAction":{
+          "@type":"SearchAction",
+          "target":"https://portfoliodavidwawina.vercel.app/recherche?q={search_term_string}",
+          "query-input":"required name=search_term_string"
         }
-
-        .modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            margin: auto;
-            padding: 30px;
-            border: 1px solid var(--card-border);
-            width: 90%;
-            max-width: 700px;
-            border-radius: 12px;
-            position: relative;
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            color: var(--text-color);
-        }
-
-        .modal.show .modal-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            color: var(--secondary-text-color);
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: var(--text-color);
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* Form validation error message style */
-        .error-message {
-            color: #ff4d4d;
-            font-size: 0.875rem;
-            margin-top: 0.25rem;
-            display: block;
-        }
-
-        /* Project filter buttons styles */
-        .filter-button {
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition-property: background-color, color;
-            transition-duration: 300ms;
-            background-color: var(--button-secondary-bg);
-            color: var(--button-secondary-text);
-        }
-        .filter-button:hover {
-            background-color: var(--button-secondary-hover-bg);
-        }
-        .filter-button.active {
-            background-color: var(--button-primary-bg);
-            color: var(--button-primary-text);
-        }
-
-        /* Footer social link hover effect */
-        .footer-social-link {
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-        .footer-social-link:hover {
-            transform: scale(1.1);
-            color: var(--text-color);
-        }
-
-        /* Hero section background slideshow */
-        #hero-background {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            z-index: -1;
-        }
-        #hero-background img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: opacity 2s ease-in-out, transform 8s linear;
-            opacity: 0;
-            transform: scale(1);
-        }
-        #hero-background img.active {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-
-        /* Testimonial Carousel styles */
-        .carousel-container {
-            overflow: hidden;
-            position: relative;
-        }
-        .carousel-track {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-        .carousel-item {
-            flex: 0 0 100%;
-            padding: 1rem;
-        }
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            background-color: var(--secondary-text-color);
-            border-radius: 50%;
-            margin: 0 0.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .carousel-dot.active {
-            background-color: var(--text-color);
-        }
-
-        /* Blog article content toggle */
-        .blog-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out;
-            margin-top: 1rem;
-        }
-
-        .blog-content.open {
-            max-height: 500px; /* Adjust as needed for content height */
-            transition: max-height 0.8s ease-in;
-        }
-        /* Loader animation */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .loader {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid #fff;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-
-        /* Toast message styles */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 2px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1;
-            left: 50%;
-            bottom: 30px;
-            font-size: 17px;
-        }
-        #toast.show {
-            visibility: visible;
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-
-        @-webkit-keyframes fadein {
-            from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
-        }
-
-        @keyframes fadein {
-            from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
-        }
-
-        @-webkit-keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
-            to {bottom: 0; opacity: 0;}
-        }
-
-        @keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
-            to {bottom: 0; opacity: 0;}
-        }
-    </style>
+      }
+    ]
+  }
+  </script>
 </head>
-<body class="w-full">
-    <!-- Ajoutez la classe 'fade-in-container' ici pour l'animation au chargement -->
-    <div class="fade-in-container">
 
-    <!-- Bandeau cookies -->
-    <div id="cookie-banner" class="hidden fixed bottom-0 left-0 w-full bg-[#222] text-[#fff] p-4 z-[9999] shadow-[0_-2px_16px_rgba(0,0,0,0.10)] text-center">
-        Ce site utilise des cookies pour améliorer votre expérience. <button id="accept-cookies" class="bg-[#22c55e] text-[#fff] border-none px-6 py-2 rounded-[9999px] font-bold cursor-pointer ml-4">J'accepte</button>
-    </div>
-    <!-- Bouton accessibilité -->
-    <button id="accessibility-btn" title="Accessibilité" aria-label="Activer les options d'accessibilité" class="fixed right-4 bottom-[6rem] z-[9999] bg-[#374151] text-[#fff] border-none rounded-full w-12 h-12 flex items-center justify-center text-2xl shadow-[0_2px_8px_rgba(0,0,0,0.10)] cursor-pointer">
-        <span aria-hidden="true">🦾</span>
-    </button>
-    <!-- Bouton retour menu -->
-    <button id="back-to-menu" title="Retour au menu principal" aria-label="Retour au menu principal" class="fixed left-4 bottom-[6rem] z-[9999] bg-[#374151] text-[#fff] border-none rounded-full w-12 h-12 flex items-center justify-center text-2xl shadow-[0_2px_8px_rgba(0,0,0,0.10)] cursor-pointer hidden">
-        <span aria-hidden="true">🏠</span>
-    </button>
-    <!-- Bouton retour en haut de la page -->
-    <button id="back-to-top" title="Retour en haut" class="p-3 bg-gray-700 text-white rounded-full">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-    </button>
-
-    <!-- ===== Header / Navigation ===== -->
-    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- LOGO SECTION -->
-            <a href="#" class="flex items-center gap-2 text-2xl font-bold text-white">
-                <img src="images/logof.jpg" alt="Logo David WAWINA Magnum" class="h-8 w-8 rounded-full" loading="lazy">
-                <span>David WAWINA (Magnum)</span>
-            </a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="nav-link">À propos</a>
-                <a href="#technologies" class="nav-link">Technologies</a>
-                <a href="#projets" class="nav-link">Projets</a>
-                <a href="#temoignages" class="nav-link">Témoignages</a>
-                <a href="#blog" class="nav-link">Blog</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </nav>
-            <!-- Theme Toggle Button & Mobile Menu Button -->
-            <div class="flex items-center gap-4">
-                <button id="theme-toggle" class="p-2 rounded-full bg-gray-700 text-white hover:bg-gray-600 transition-colors duration-300" aria-label="Basculer le thème (clair/sombre)">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M4 12H3m15.325-4.727l-.707-.707M6.343 17.657l-.707.707M16.95 6.343l.707-.707M7.05 16.95l-.707.707M12 7a5 5 0 100 10 5 5 0 000-10z" />
-                    </svg>
-                </button>
-                <button id="mobile-menu-button" class="md:hidden text-white" aria-label="Toggle mobile menu">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 bg-opacity-90 backdrop-blur-md">
-            <nav class="flex flex-col items-center py-4 space-y-4">
-                <a href="#about" class="nav-link-mobile">À propos</a>
-                <a href="#technologies" class="nav-link-mobile">Technologies</a>
-                <a href="#projets" class="nav-link-mobile">Projets</a>
-                <a href="#temoignages" class="nav-link-mobile">Témoignages</a>
-                <a href="#blog" class="nav-link-mobile">Blog</a>
-                <a href="#contact" class="nav-link-mobile">Contact</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="relative z-10">
-        <!-- ===== Hero Section ===== -->
-        <section id="hero" class="relative min-h-screen flex items-center justify-center text-center p-8 overflow-hidden">
-            <!-- Background Image Slideshow -->
-            <div id="hero-background">
-                <img src="images/bg1.jpg" class="active" alt="Background image 1">
-                <img src="images/bg4.jpg" alt="Background image 2">
-                <img src="images/bggg1.png" alt="Background image 3">
-            </div>
-            <div class="relative z-10 w-full max-w-4xl mx-auto backdrop-blur-sm bg-black bg-opacity-30 p-8 rounded-lg">
-                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight">
-                    Je suis
-                    <span id="typing-text" class="text-gradient"></span>
-                </h1>
-                <p class="mt-4 text-lg md:text-xl text-gray-300">
-                    Développeur full-stack passionné par la création de solutions numériques innovantes, web et mobile.
-                </p>
-                <!-- Nouveaux boutons pour les RS, le CV et l'email -->
-                <div class="mt-8 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#projets" class="w-full sm:w-auto px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors duration-300">
-                        Mes Projets
-                    </a>
-                    <!-- Bouton pour ouvrir les icônes de réseaux sociaux -->
-                    <div class="relative w-full sm:w-auto">
-                        <button id="social-media-button" class="w-full sm:w-auto px-6 py-3 bg-gray-700 text-white font-bold rounded-full hover:bg-gray-600 transition-colors duration-300 flex items-center justify-center">
-                            <span class="mr-2">Mes Réseaux</span>
-                            <i class="fas fa-share-alt"></i>
-                        </button>
-                        <div id="social-media-icons" class="hidden absolute top-full mt-2 w-full sm:w-auto bg-gray-800 p-2 rounded-lg shadow-lg flex justify-around sm:justify-start sm:space-x-4">
-                            <a href="https://linkedin.com/in/davidwawina" target="_blank" aria-label="LinkedIn" class="p-2 text-white hover:text-blue-400 transition-colors">
-                                <i class="fab fa-linkedin fa-2x"></i>
-                            </a>
-                            <a href="https://github.com/magnumtheone" target="_blank" aria-label="GitHub" class="p-2 text-white hover:text-gray-400 transition-colors">
-                                <i class="fab fa-github fa-2x"></i>
-                            </a>
-                            <a href="https://facebook.com/magnumtheone" target="_blank" aria-label="Facebook" class="p-2 text-white hover:text-blue-300 transition-colors">
-                                <i class="fab fa-twitter fa-2x"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Bouton pour copier l'email -->
-                    <button id="copy-email-button" class="w-full sm:w-auto px-6 py-3 bg-gray-700 text-white font-bold rounded-full hover:bg-gray-600 transition-colors duration-300">
-                        Copier mon Email
-                    </button>
-                    <!-- Bouton pour télécharger le CV -->
-                    <a href="cv/MBULA_WAWINA_Développeur_Full_Stack.pdf" download class="w-full sm:w-auto px-6 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition-colors duration-300">
-                        Télécharger mon CV
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== À propos de moi Section ===== -->
-        <section id="about" class="py-20 lg:py-32 scroll-animate">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col lg:flex-row items-center gap-12">
-                    <div class="lg:w-1/2">
-                        <img src="images/po.jpg" alt="Photo de profil David WAWINA" class="rounded-xl shadow-lg w-full h-auto" loading="lazy">
-                    </div>
-                    <div class="lg:w-1/2">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white">À propos de moi</h2>
-                        <p class="mt-4 text-gray-400 leading-relaxed">
-                            Je suis un développeur full-stack, avec une expertise approfondie dans le développement d'applications web et mobiles. Basé en RDC, j'ai eu l'opportunité de travailler sur divers projets, de la conception à la mise en production, en passant par le développement et la maintenance.
-                        </p>
-                        <p class="mt-4 text-gray-400 leading-relaxed">
-                            Mon approche est axée sur la résolution de problèmes, en créant des solutions logicielles robustes, évolutives et axées sur l'utilisateur. Je suis passionné par l'apprentissage continu et l'exploration des dernières technologies pour rester à la pointe de l'industrie.
-                        </p>
-                        <p class="mt-4 text-gray-400 leading-relaxed">
-                            J'aime partager mes connaissances et mon expérience, et je suis toujours à la recherche de nouvelles collaborations ou de projets stimulants.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== Technologies Section ===== -->
-        <section id="technologies" class="py-20 lg:py-32 scroll-animate">
-            <div class="container mx-auto px-6">
-                <div class="text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">Compétences & Technologies</h2>
-                    <p class="mt-4 text-gray-400">Une vue d'ensemble des technologies que je maîtrise.</p>
-                </div>
-                <div class="mt-16 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/javascript/javascript-icon.svg" alt="JavaScript" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">JavaScript</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/reactjs/reactjs-icon.svg" alt="React" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">React</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/nodejs/nodejs-icon.svg" alt="Node.js" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">Node.js</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/expressjs/expressjs-icon.svg" alt="Express.js" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">Express.js</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/python/python-icon.svg" alt="Python" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">Python</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/djangoproject/djangoproject-icon.svg" alt="Django" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">Django</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/postgresql/postgresql-icon.svg" alt="PostgreSQL" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">PostgreSQL</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" alt="MongoDB" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">MongoDB</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="Git" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">Git</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/docker/docker-icon.svg" alt="Docker" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">Docker</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/amazon_aws/amazon_aws-icon.svg" alt="AWS" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">AWS</span>
-                        </div>
-                    </div>
-                    <div class="glass-card p-6 rounded-lg text-center">
-                        <div class="flex flex-col items-center">
-                            <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="Tailwind CSS" class="w-12 h-12 mb-2" loading="lazy">
-                            <span class="text-white font-medium">Tailwind CSS</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== Projets Section ===== -->
-        <section id="projets" class="py-20 lg:py-32 scroll-animate">
-            <div class="container mx-auto px-6">
-                <div class="text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">🚀 Mes projets</h2>
-                    <p class="mt-4 text-gray-400">Quelques-unes de mes réalisations récentes.</p>
-                </div>
-                <!-- Le contenu des projets sera généré ici par le JavaScript -->
-                <div id="projects-container" class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Les cartes des projets seront insérées ici dynamiquement -->
-                </div>
-            </div>
-        </section>
-
-        <!-- Modal pour projets -->
-        <div id="project-modal" class="modal">
-            <div class="modal-content">
-                <span id="close-modal" class="close-button">&times;</span>
-                <img id="modal-image" src="" alt="" class="rounded-lg mb-4 w-full h-64 object-cover">
-                <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
-                <p id="modal-description" class="text-gray-300"></p>
-            </div>
-        </div>
-
-        <!-- ===== Témoignages Section ===== -->
-        <section id="temoignages" class="py-20 lg:py-32 scroll-animate">
-            <div class="container mx-auto px-6">
-                <div class="text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">💬 Témoignages</h2>
-                    <p class="mt-4 text-gray-400">Ce que mes clients disent de mon travail.</p>
-                </div>
-                <div class="mt-16 carousel-container">
-                    <div class="carousel-track">
-                        <!-- Témoignage 1 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"David a transformé notre idée en une application robuste et performante. Sa rigueur et son professionnalisme sont remarquables."</p>
-                                <p class="text-white font-bold">- Jean-Luc, Directeur de Bekam'Art</p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 2 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"Une collaboration exceptionnelle ! David est à l'écoute et propose toujours des solutions créatives et efficaces."</p>
-                                <p class="text-white font-bold">- Marie, Directrice de SM</p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 3 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"Son expertise en full-stack nous a permis de livrer un produit de haute qualité dans les délais impartis."</p>
-                                <p class="text-white font-bold">- Fatima, Entrepreneuse </p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 4 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"David est un atout précieux pour toute équipe. Sa capacité à résoudre les problèmes complexes est impressionnante."</p>
-                                <p class="text-white font-bold">- Anonyme, CTO</p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 5 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"Nous avons été ravis de la qualité du travail et de la rapidité d'exécution. Je recommande vivement David."</p>
-                                <p class="text-white font-bold">- Hope, Présidente du Club RFI-KISANGNI</p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 6 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"Un développeur fiable et talentueux. Le résultat final a dépassé toutes nos attentes."</p>
-                                <p class="text-white font-bold">- Marc, Gérant Hysope Bussiness SARL</p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 7 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"Sa maîtrise des technologies modernes est un vrai plus. Il a su nous conseiller à chaque étape du projet."</p>
-                                <p class="text-white font-bold">- Grâce, PDG de Grami Entreprise</p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 8 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"Excellent travail, de la communication au produit final. Nous sommes très satisfaits."</p>
-                                <p class="text-white font-bold">- Antoine, Chef de rédaction de Tshopo Mosala</p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 9 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"Un véritable expert dans son domaine. Il a su relever tous les défis techniques avec brio."</p>
-                                <p class="text-white font-bold">- Charles, Responsable du développement et entrepreneur</p>
-                            </div>
-                        </div>
-                        <!-- Témoignage 10 -->
-                        <div class="carousel-item">
-                            <div class="glass-card p-8 rounded-lg text-center">
-                                <p class="text-gray-300 italic mb-4">"David a une approche méthodique et rigoureuse. Le projet a été livré dans les temps et avec une qualité irréprochable."</p>
-                                <p class="text-white font-bold">- Simon, Entrepreneur</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-dots"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== Blog Section ===== -->
-        <section id="blog" class="py-20 lg:py-32 scroll-animate">
-            <div class="container mx-auto px-6">
-                <div class="text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">📝 Derniers articles</h2>
-                    <p class="mt-4 text-gray-400">Quelques astuces et partages autour du développement full-stack.</p>
-                </div>
-                <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Article 1 -->
-                    <div class="glass-card p-6 rounded-lg block article-card">
-                        <h3 class="text-xl font-bold text-white mb-2">Optimiser une API REST avec Node.js</h3>
-                        <p class="text-gray-400">Découvrez comment améliorer la performance et la sécurité d’une API.</p>
-                        <button class="text-blue-400 hover:underline mt-2 inline-block read-more-btn" data-target="blog-1">Lire l’article</button>
-                        <!-- Contenu de l'article (initialement caché) -->
-                        <div class="blog-content" id="blog-1">
-                            <p class="mt-4 text-gray-400">
-                                L'optimisation d'une API est cruciale pour garantir une expérience utilisateur fluide. Voici quelques conseils clés :
-                            </p>
-                            <ul class="list-disc list-inside mt-2 text-gray-400">
-                                <li>Caching : Mettez en cache les réponses des requêtes fréquentes pour réduire la charge sur votre serveur.</li>
-                                <li>Compression : Utilisez la compression Gzip pour réduire la taille des réponses HTTP.</li>
-                                <li>Limitation du débit (Rate Limiting) : Protégez votre API contre les abus en limitant le nombre de requêtes par utilisateur.</li>
-                                <li>Indexation de la base de données : Assurez-vous que les colonnes utilisées dans les requêtes de recherche sont correctement indexées pour des performances optimales.</li>
-                            </ul>
-                            <p class="mt-4 text-gray-400">
-                                En suivant ces bonnes pratiques, vous rendrez votre API plus rapide et plus fiable pour vos utilisateurs.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Article 2 -->
-                    <div class="glass-card p-6 rounded-lg block article-card">
-                        <h3 class="text-xl font-bold text-white mb-2">Django + React : le duo gagnant</h3>
-                        <p class="text-gray-400">Pourquoi combiner Django côté backend et React côté frontend.</p>
-                        <button class="text-blue-400 hover:underline mt-2 inline-block read-more-btn" data-target="blog-2">Lire l’article</button>
-                        <!-- Contenu de l'article (initialement caché) -->
-                        <div class="blog-content" id="blog-2">
-                            <p class="mt-4 text-gray-400">
-                                L'association de Django et React offre le meilleur des deux mondes :
-                            </p>
-                            <ul class="list-disc list-inside mt-2 text-gray-400">
-                                <li>Django : Sa structure robuste et son ORM puissant en font un choix parfait pour la gestion des données et la logique métier.</li>
-                                <li>React : Pour le frontend, il offre une expérience utilisateur dynamique et fluide grâce à son système de composants.</li>
-                            </ul>
-                            <p class="mt-4 text-gray-400">
-                                Cette séparation des responsabilités permet à la fois un développement rapide et la création d'applications complexes et performantes.
-                            </p>
-                        </div>
-                    </div>
-                    <!-- Article 3 -->
-                    <div class="glass-card p-6 rounded-lg block article-card">
-                        <h3 class="text-xl font-bold text-white mb-2">Les 5 outils indispensables pour un développeur Full Stack</h3>
-                        <p class="text-gray-400">Une liste des outils que tout développeur Full Stack devrait connaître.</p>
-                        <button class="text-blue-400 hover:underline mt-2 inline-block read-more-btn" data-target="blog-3">Lire l’article</button>
-                        <!-- Contenu de l'article (initialement caché) -->
-                        <div class="blog-content" id="blog-3">
-                            <p class="mt-4 text-gray-400">
-                                Pour être efficace en tant que développeur full stack, voici 5 outils à avoir absolument dans sa boîte à outils :
-                            </p>
-                            <ol class="list-decimal list-inside mt-2 text-gray-400">
-                                <li>Git : Indispensable pour le contrôle de version et la collaboration.</li>
-                                <li>Docker : Pour le déploiement et la gestion des environnements.</li>
-                                <li>Postman : Pour tester les APIs et s'assurer qu'elles fonctionnent comme prévu.</li>
-                                <li>VS Code : Un éditeur de code puissant et personnalisable.</li>
-                                <li>MongoDB Compass : Une interface graphique pour gérer les bases de données MongoDB.</li>
-                            </ol>
-                            <p class="mt-4 text-gray-400">
-                                Ces outils vous feront gagner un temps précieux au quotidien.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== Contact Section ===== -->
-        <section id="contact" class="py-20 lg:py-32 scroll-animate">
-            <div class="container mx-auto px-6">
-                <div class="text-center">
-                    <h2 class="text-3xl md:text-4xl font-bold text-white">📩 Contactez-moi</h2>
-                    <p class="mt-4 text-gray-400">Un projet, une idée, une collaboration ? Écrivez-moi directement via ce formulaire.</p>
-                </div>
-                <div class="mt-12 max-w-2xl mx-auto">
-                    <form id="contact-form" class="space-y-6 glass-card p-8 rounded-lg">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-300">Nom</label>
-                            <input type="text" id="name" name="user_name" required
-                                   class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 text-white p-3 focus:border-blue-500 focus:ring focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-                            <input type="email" id="email" name="user_email" required
-                                   class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 text-white p-3 focus:border-blue-500 focus:ring focus:ring-blue-500">
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-300">Message</label>
-                            <textarea id="message" name="message" rows="5" required
-                                      class="mt-1 block w-full rounded-md border-gray-700 bg-gray-800 text-white p-3 focus:border-blue-500 focus:ring focus:ring-blue-500"></textarea>
-                        </div>
-                        <!-- reCAPTCHA widget -->
-                        <div class="g-recaptcha" data-sitekey="VOTRE_SITE_KEY"></div>
-                        <button type="submit"
-                                class="w-full px-6 py-3 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 transition-colors duration-300">
-                            Envoyer
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    </div>
-    <!-- Toast message -->
-    <div id="toast" class="hidden">Message envoyé !</div>
-
-    <!-- ===== Footer ===== -->
-    <footer class="py-8 text-center text-gray-400 border-t border-gray-700">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <p>&copy; 2025 David WAWINA. Tous droits réservés.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <a href="https://linkedin.com/in/davidwawina" target="_blank" aria-label="LinkedIn" class="footer-social-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.761 0-.971.784-1.76 1.75-1.76s1.75.789 1.75 1.76c0 .971-.784 1.761-1.75 1.761zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
-                        </svg>
-                    </a>
-                    <a href="https://github.com/magnumtheone" target="_blank" aria-label="GitHub" class="footer-social-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.809 1.309 3.493.997.108-.776.418-1.309.762-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.465-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.772.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.197-6.094 8.197-11.388 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                    </a>
-                    <a href="https://facebook.com/magnumtheone" target="_blank" aria-label="Twitter" class="footer-social-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.799-1.574 2.16-2.723-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.585 0-6.49 2.903-6.49 6.49 0 .507.058 1.002.167 1.477-5.394-.27-10.187-2.855-13.38-6.784-.56.961-.88 2.07-.88 3.251 0 2.253 1.149 4.258 2.898 5.421-.849-.025-1.649-.26-2.35-.647-.001.027-.001.054-.001.081 0 3.134 2.234 5.761 5.195 6.368-.545.148-1.12.227-1.708.227-.419 0-.82-.041-1.222-.116.829 2.573 3.21 4.455 6.03 4.508-2.228 1.748-5.018 2.822-8.093 2.822-.524 0-1.04-.031-1.552-.092 3.197 2.031 6.974 3.221 11.022 3.221 13.227 0 20.45-10.994 20.45-20.45 0-.317-.007-.633-.02-.947.85-61 .94-1.746 1.023-2.613z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts pour fonctionnalités modernes -->
-    <!-- Mode sombre/clair automatique selon le système de l'utilisateur -->
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                document.documentElement.classList.add('light-mode');
-            } else if (savedTheme === 'dark') {
-                document.documentElement.classList.remove('light-mode');
-            } else {
-                const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-                if (prefersLight) {
-                    document.documentElement.classList.add('light-mode');
-                }
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          container: { center: true, padding: '1rem' },
+          colors: {
+            brand:'#22c55e',
+            brand2:'#38bdf8',
+            glass: 'rgba(17,24,39,.55)'
+          },
+          boxShadow: {
+            soft: '0 2px 16px rgba(0,0,0,.25)'
+          },
+          keyframes: {
+            float: {
+              '0%,100%':{ transform:'translateY(0)'},
+              '50%':{ transform:'translateY(-8px)'}
+            },
+            shimmer: {
+              '0%':{ backgroundPosition:'-200% 0'},
+              '100%':{ backgroundPosition:'200% 0'}
             }
-        })();
-        const themeToggle = document.getElementById("theme-toggle");
-        if (themeToggle) {
-            themeToggle.addEventListener("click", () => {
-                const isLightMode = document.documentElement.classList.toggle("light-mode");
-                localStorage.setItem("theme", isLightMode ? "light" : "dark");
-            });
+          },
+          animation: {
+            float: 'float 6s ease-in-out infinite',
+            shimmer:'shimmer 2s linear infinite'
+          }
         }
-    </script>
-    <!-- Script pour l'effet de frappe du texte -->
-    <script>
-        const roles = ["Développeur Full-Stack.", "Créateur de Solutions Numériques.", "Entrepreneur Digital.", "Formateur & Consultant."];
-        let index = 0, charIndex = 0, currentRole = "", typing = true;
+      }
+    }
+  </script>
 
-        function typeEffect() {
-            const typingTextElement = document.getElementById("typing-text");
-            if (!typingTextElement) return;
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
 
-            if (typing) {
-                if (charIndex < roles[index].length) {
-                    currentRole += roles[index].charAt(charIndex);
-                    typingTextElement.textContent = currentRole;
-                    charIndex++;
-                    setTimeout(typeEffect, 100);
-                } else {
-                    typing = false;
-                    setTimeout(typeEffect, 2000);
-                }
-            } else {
-                if (charIndex > 0) {
-                    currentRole = currentRole.slice(0, -1);
-                    typingTextElement.textContent = currentRole;
-                    charIndex--;
-                    setTimeout(typeEffect, 50);
-                } else {
-                    typing = true;
-                    index = (index + 1) % roles.length;
-                    setTimeout(typeEffect, 300);
-                }
-            }
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    html,body{ font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    .text-gradient{ background-image: linear-gradient(90deg, #22c55e, #38bdf8); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .glass{ background: var(--glass, rgba(17,24,39,.45)); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,.08); }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; border-radius: 0.9rem; padding: 0.75rem 1.1rem; font-weight: 600; transition: transform .12s ease, background-color .2s ease, box-shadow .2s ease; position:relative; overflow:hidden }
+    .btn:active{ transform: translateY(1px) scale(.99) }
+    .btn-primary{ background:linear-gradient(90deg,#fff,#e2e8f0); color:#0b1220; box-shadow: 0 6px 24px rgba(255,255,255,.12) }
+    .btn-primary:hover{ background: #fff }
+    .btn-ghost{ border:1px solid rgb(71 85 105 / .7); color: rgb(241 245 249); background: rgba(30,41,59,.25) }
+    .btn-ghost:hover{ background: rgba(30,41,59,.5) }
+    .btn-glass{ background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.18); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 10px 30px rgba(0,0,0,.25) }
+    .nav-link{ color: rgb(203 213 225); }
+    .nav-link:hover{ color: white; }
+    .card{ border-radius: 1rem; border: 1px solid rgb(30 41 59); background-color: rgb(15 23 42); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); }
+    .shadow-soft{ box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+    /* Progress bar */
+    #scrollbar{ position: fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,#22c55e,#38bdf8); z-index:60; }
+    /* Ripple */
+    .ripple{ position:absolute; border-radius:9999px; background:rgba(255,255,255,.25); transform:scale(0); pointer-events:none; animation:ripple .6s ease-out forwards; }
+    @keyframes ripple{ to{ transform:scale(2); opacity:0; } }
+    style>
+  /* Masonry (CSS columns) — VERSION FIXÉE */
+  .masonry{
+    column-count: 1;
+    column-gap: 1rem;
+  }
+  @media (min-width:768px){ .masonry{ column-count: 2; } }
+  @media (min-width:1024px){ .masonry{ column-count: 3; } }
+
+  /* ✅ Empêche les cassures et assure un flux correct dans les colonnes */
+  .masonry .mitem{
+    /* compat navigateurs */
+    break-inside: avoid;
+    break-inside: avoid-column;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+
+    display: block;       /* IMPORTANT: pas d'inline-block ici */
+    width: 100%;
+    margin: 0 0 1rem;     /* espacement vertical régulier */
+  }
+</style>
+
+  </style>
+
+   
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div id="scrollbar"></div>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-white text-black px-3 py-2 rounded-md z-50">Aller au contenu</a>
+
+  <!-- Header -->
+  <header id="navbar" class="sticky top-0 z-50 border-b border-slate-800/60 bg-slate-950/60 backdrop-blur supports-[backdrop-filter]:bg-slate-950/50">
+    <div class="container max-w-7xl h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <img src="images/logof.jpg" alt="Logo David Wawina" class="h-8 w-8 rounded-full" loading="lazy" />
+        <span class="font-bold">David WAWINA (Magnum)</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a data-i18n="nav.about" href="#about" class="nav-link">À propos</a>
+        <a data-i18n="nav.skills" href="#skills" class="nav-link">Compétences</a>
+        <a data-i18n="nav.projects" href="#projets" class="nav-link">Projets</a>
+        <a data-i18n="nav.testimonials" href="#temoignages" class="nav-link">Témoignages</a>
+        <a data-i18n="nav.contact" href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <!-- Language Switcher -->
+        <button id="langBtn" class="btn btn-ghost" aria-label="Changer la langue" title="FR / EN"><i class="fa-solid fa-language"></i><span class="hidden sm:inline" id="langLabel">FR</span></button>
+        <!-- Theme Switcher -->
+        <button id="theme-toggle" class="btn btn-ghost" aria-label="Basculer le thème"><i class="fa-solid fa-moon"></i></button>
+        <button id="menuBtn" class="md:hidden btn btn-ghost"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-800/60">
+      <div class="container max-w-7xl py-3 grid gap-2 text-sm">
+        <a data-i18n="nav.about" href="#about" class="py-2">À propos</a>
+        <a data-i18n="nav.skills" href="#skills" class="py-2">Compétences</a>
+        <a data-i18n="nav.projects" href="#projets" class="py-2">Projets</a>
+        <a data-i18n="nav.testimonials" href="#temoignages" class="py-2">Témoignages</a>
+        <a data-i18n="nav.contact" href="#contact" class="py-2">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section id="hero" class="relative min-h-[85vh] grid place-items-center overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 opacity-30">
+        <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full blur-3xl animate-float" style="background:radial-gradient(600px 600px at center, #38bdf8 0%, transparent 60%)"></div>
+        <div class="absolute -bottom-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-3xl animate-float" style="animation-delay:1s;background:radial-gradient(600px 600px at center, #22c55e 0%, transparent 60%)"></div>
+      </div>
+      <div class="relative z-10 container max-w-4xl text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs">
+          <i class="fa-solid fa-bolt text-brand"></i> <span data-i18n="hero.badge">Disponible pour mission / freelance</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black leading-tight mt-4"> <span data-i18n="hero.im">Je suis</span> <span id="typing" class="text-gradient"></span></h1>
+        <p data-i18n="hero.subtitle" class="mt-5 text-lg text-slate-300">Développeur full‑stack. J’aide les équipes à passer de l’idée à la prod avec des produits rapides, fiables et beaux.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a data-i18n="cta.viewProjects" href="#projets" class="btn btn-primary btn-glass"><i class="fa-solid fa-rocket"></i>Voir mes projets récents</a>
+          <a data-i18n="cta.downloadCV" href="cv/MBULA_WAWINA_Développeur_Full_Stack.pdf" download class="btn btn-ghost"><i class="fa-solid fa-file-arrow-down"></i>Télécharger mon CV</a>
+          <button data-i18n="cta.copyMail" id="copyMail" class="btn btn-ghost"><i class="fa-solid fa-envelope"></i>Copier mon email</button>
+        </div>
+        <!-- KPIs -->
+        <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="card p-5 text-center reveal"><p data-i18n="kpi.years" class="text-xs text-slate-400">Années d’expérience</p><p class="text-3xl font-extrabold" data-counter="6">0</p></div>
+          <div class="card p-5 text-center reveal"><p data-i18n="kpi.projects" class="text-xs text-slate-400">Projets livrés</p><p class="text-3xl font-extrabold" data-counter="56">0</p></div>
+          <div class="card p-5 text-center reveal"><p data-i18n="kpi.clients" class="text-xs text-slate-400">Clients satisfaits</p><p class="text-3xl font-extrabold" data-counter="50">0</p></div>
+          <div class="card p-5 text-center reveal"><p data-i18n="kpi.commits" class="text-xs text-slate-400">Commits / an</p><p class="text-3xl font-extrabold" data-counter="1200">0</p></div>
+        </div>
+      </div>
+      <!-- Back to top -->
+      <button id="toTop" class="fixed bottom-5 right-5 hidden btn btn-primary btn-glass" aria-label="Retour en haut"><i class="fa-solid fa-arrow-up"></i></button>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="container max-w-7xl px-4 py-20">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <img src="images/po.jpg" alt="Photo de David Wawina" class="rounded-2xl shadow-soft w-full h-auto reveal" loading="lazy" />
+        <div class="reveal">
+          <h2 class="text-3xl md:text-4xl font-bold" data-i18n="about.title">À propos</h2>
+          <p data-i18n="about.desc" class="mt-4 text-slate-300 leading-relaxed">Full‑stack orienté produit, je construis des plateformes web & mobiles sécurisées (auth, paiements, dashboards) avec une obsession pour la DX/UX et la performance.</p>
+          <div class="mt-6 flex flex-wrap gap-2 text-xs">
+            <span class="px-3 py-1 rounded-full border border-slate-700">Django</span>
+            <span class="px-3 py-1 rounded-full border border-slate-700">React</span>
+            <span class="px-3 py-1 rounded-full border border-slate-700">PostgreSQL</span>
+            <span class="px-3 py-1 rounded-full border border-slate-700">Docker</span>
+            <span class="px-3 py-1 rounded-full border border-slate-700">Tailwind</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS + RADAR CHART -->
+    <section id="skills" class="container max-w-7xl px-4 pb-20">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="card p-6 reveal">
+          <h3 class="font-semibold mb-3" data-i18n="skills.radar">Compétences (radar)</h3>
+          <canvas id="radar"></canvas>
+        </div>
+        <div class="card p-6 reveal">
+          <h3 class="font-semibold mb-3" data-i18n="skills.stack">Stack & outils</h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-js"></i> JavaScript</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-react"></i> React</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-node"></i> Node.js</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-python"></i> Python</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-feather"></i> Django</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-database"></i> PostgreSQL</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-database"></i> MongoDB</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-docker"></i> Docker</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-aws"></i> AWS</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-git-alt"></i> Git</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-wand-magic-sparkles"></i> TailwindCSS</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-infinity"></i> CI/CD</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projets" class="container max-w-7xl px-4 pb-20">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-bold" data-i18n="projects.title">🚀 Projets</h2>
+        <p class="mt-2 text-slate-300" data-i18n="projects.subtitle">Sélection de réalisations récentes.</p>
+        <div class="mt-4 inline-flex flex-wrap gap-2">
+          <button class="btn btn-ghost filter-btn" data-filter="all" data-i18n="filter.all">Tous</button>
+          <button class="btn btn-ghost filter-btn" data-filter="web" data-i18n="filter.web">Web</button>
+          <button class="btn btn-ghost filter-btn" data-filter="mobile" data-i18n="filter.mobile">Mobile</button>
+          <button class="btn btn-ghost filter-btn" data-filter="data" data-i18n="filter.data">Data</button>
+        </div>
+      </div>
+      <div id="projects" class="masonry mt-10">
+        <!-- Items injectés via JS depuis dataProjects -->
+      </div>
+      <!-- Modal projet -->
+      <dialog id="projModal" class="backdrop:bg-black/60 rounded-2xl p-0 w-[min(92vw,860px)]">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+          <div class="p-4 flex items-center justify-between border-b border-slate-800">
+            <h3 id="mTitle" class="font-semibold"></h3>
+            <button id="mClose" class="btn btn-ghost" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <img id="mImg" alt="aperçu projet" class="w-full h-64 object-cover" />
+          <div class="p-5 text-slate-300 space-y-5" id="mDesc">
+            <!-- Description + diagrammes -->
+            <div id="mText"></div>
+            <div class="grid md:grid-cols-3 gap-4">
+              <canvas id="mChart1" class="rounded-xl bg-slate-950/40 p-4"></canvas>
+              <canvas id="mChart2" class="rounded-xl bg-slate-950/40 p-4"></canvas>
+              <canvas id="mChart3" class="rounded-xl bg-slate-950/40 p-4"></canvas>
+            </div>
+          </div>
+          <div class="p-5 flex gap-3 border-t border-slate-800">
+            <a id="mLive" target="_blank" class="btn btn-primary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
+            <a id="mRepo" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-github"></i> Repo</a>
+          </div>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- GALLERY
+    <section id="gallery" class="container max-w-7xl px-4 pb-20">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-bold" data-i18n="gallery.title">🖼️ Galerie de projets</h2>
+        <p class="mt-2 text-slate-300" data-i18n="gallery.subtitle">Screenshots, maquettes et prototypes.</p>
+      </div>
+      <div id="galGrid" class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <!-- images injectées 
+      </div>
+      <dialog id="lightbox" class="backdrop:bg-black/70 rounded-xl p-0">
+        <img id="lbImg" alt="aperçu" class="max-w-[92vw] max-h-[90vh] object-contain"/>
+      </dialog>
+    </section>-->
+
+    <!-- TESTIMONIALS -->
+    <section id="temoignages" class="container max-w-7xl px-4 pb-20">
+      <h2 class="text-3xl md:text-4xl font-bold text-center" data-i18n="testimonials.title">💬 Témoignages</h2>
+      <div class="mt-10 relative overflow-hidden">
+        <div id="tTrack" class="flex transition-transform duration-500 will-change-transform">
+          <!-- Slides injectés JS -->
+        </div>
+        <div class="mt-4 flex justify-center gap-2" id="tDots"></div>
+        <button id="tPrev" class="absolute -left-2 top-1/2 -translate-y-1/2 btn btn-ghost" aria-label="Précédent"><i class="fa-solid fa-chevron-left"></i></button>
+        <button id="tNext" class="absolute -right-2 top-1/2 -translate-y-1/2 btn btn-ghost" aria-label="Suivant"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </section>
+
+    <!-- BLOG 
+    <section id="blog" class="container max-w-7xl px-4 pb-20">
+      <h2 class="text-3xl md:text-4xl font-bold text-center" data-i18n="blog.title">📝 Derniers articles</h2>
+      <div id="blogGrid" class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Blog cards (statiques/Demo) 
+        <article class="card p-5 reveal">
+          <h3 class="font-semibold">Optimiser une API REST avec Node.js</h3>
+          <p class="text-slate-300 mt-1">Performance, sécurité et DX.</p>
+          <button class="mt-2 text-brand2 hover:underline readmore" data-target="b1">Lire l’article</button>
+          <div id="b1" class="max-h-0 overflow-hidden transition-[max-height] duration-500 text-slate-300">
+            <ul class="list-disc list-inside mt-3 space-y-1">
+              <li>Cache intelligent</li>
+              <li>Compression Gzip</li>
+              <li>Rate limiting</li>
+              <li>Indexation DB</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card p-5 reveal">
+          <h3 class="font-semibold">Django + React : le duo gagnant</h3>
+          <p class="text-slate-300 mt-1">Back solide, front fluide.</p>
+          <button class="mt-2 text-brand2 hover:underline readmore" data-target="b2">Lire l’article</button>
+          <div id="b2" class="max-h-0 overflow-hidden transition-[max-height] duration-500 text-slate-300">
+            <p class="mt-3">Séparation claire des responsabilités, vélocité, scalabilité.</p>
+          </div>
+        </article>
+        <article class="card p-5 reveal">
+          <h3 class="font-semibold">5 outils indispensables Full‑stack</h3>
+          <p class="text-slate-300 mt-1">Gagnez du temps chaque jour.</p>
+          <button class="mt-2 text-brand2 hover:underline readmore" data-target="b3">Lire l’article</button>
+          <div id="b3" class="max-h-0 overflow-hidden transition-[max-height] duration-500 text-slate-300">
+            <ol class="list-decimal list-inside mt-3 space-y-1">
+              <li>Git</li><li>Docker</li><li>Postman</li><li>VS Code</li><li>MongoDB Compass</li>
+            </ol>
+          </div>
+        </article>
+      </div>
+    </section>-->
+
+    <!-- CONTACT -->
+    <section id="contact" class="container max-w-7xl px-4 pb-24">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-bold" data-i18n="contact.title">📩 Contact</h2>
+        <p class="mt-2 text-slate-300" data-i18n="contact.subtitle">Parlons de votre projet.</p>
+      </div>
+      <form id="contactForm" class="mt-8 max-w-2xl mx-auto card p-6" method="POST" action="https://api.web3forms.com/submit">
+        <!-- Web3Forms access key -->
+        <input type="hidden" name="access_key" value="e667d93e-9313-417c-9c0c-e909c23209cb" />
+        <label class="block text-sm"> <span data-i18n="contact.name">Nom</span>
+          <input name="name" class="mt-1 w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2" required id="cName" />
+        </label>
+        <label class="block text-sm mt-4"> <span data-i18n="contact.email">Email</span>
+          <input name="email" type="email" class="mt-1 w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2" required id="cEmail" />
+        </label>
+        <label class="block text-sm mt-4"> <span data-i18n="contact.message">Message</span>
+          <textarea name="message" class="mt-1 w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2" rows="5" required id="cMsg"></textarea>
+        </label>
+        <!-- honeypot -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+        <button class="mt-6 btn btn-primary btn-glass relative overflow-hidden" id="sendBtn" data-i18n="contact.send">Envoyer</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/60">
+    <div class="container max-w-7xl px-4 py-8 grid md:grid-cols-3 gap-6 text-sm">
+      <div>
+        <p class="font-semibold">David WAWINA</p>
+        <p class="text-slate-400 mt-1" data-i18n="footer.bio">Développeur full‑stack, passionné par les produits utiles & élégants.</p>
+      </div>
+      <div>
+        <p class="font-semibold" data-i18n="footer.links">Liens</p>
+        <ul class="mt-2 space-y-1 text-slate-400">
+          <li><a class="hover:text-white" href="#projets" data-i18n="nav.projects">Projets</a></li>
+          <!--<li><a class="hover:text-white" href="#blog" data-i18n="nav.blog">Blog</a></li>-->
+          <li><a class="hover:text-white" href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-semibold" data-i18n="footer.follow">Réseaux sociaux</p>
+        <div class="mt-2 flex items-center gap-4 text-lg">
+          <a aria-label="LinkedIn" href="https://linkedin.com/in/davidwawina" target="_blank" class="hover:text-white"><i class="fa-brands fa-linkedin"></i></a>
+          <a aria-label="GitHub" href="https://github.com/" target="_blank" class="hover:text-white"><i class="fa-brands fa-github"></i></a>
+          <a aria-label="Facebook" href="https://facebook.com/magnumtheone" target="_blank" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a>
+          <!--<a aria-label="X" href="https://x.com" target="_blank" class="hover:text-white"><i class="fa-brands fa-x-twitter"></i></a>-->
+          <!--<a aria-label="YouTube" href="https://youtube.com" target="_blank" class="hover:text-white"><i class="fa-brands fa-youtube"></i></a>-->
+        </div>
+        <p class="mt-3 text-slate-500">© <span id="year"></span> • Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Socials Menu (anywhere) -->
+  <div id="fab" class="fixed left-5 bottom-6 z-50">
+    <button class="btn btn-primary btn-glass" aria-haspopup="true" aria-expanded="false" id="fabBtn"><i class="fa-solid fa-share-nodes"></i></button>
+    <div id="fabMenu" class="hidden mt-2 flex flex-col gap-2">
+      <a href="https://linkedin.com/in/davidwawina" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      <a href="https://github.com/" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="https://facebook.com/magnumtheone" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-facebook"></i> Facebook</a>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div id="toasts" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+  <script>
+    // Helpers
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    function toast(msg, type='info'){ const el = document.createElement('div'); el.className = `px-4 py-3 rounded-xl border text-sm bg-slate-900 ${ type==='success'?'border-emerald-500/40 text-emerald-300': type==='error'?'border-rose-500/40 text-rose-300':'border-slate-700 text-slate-200' }`; el.textContent = msg; $('#toasts').appendChild(el); setTimeout(()=> el.remove(), 3500); }
+    function ripple(e){ const t=e.currentTarget, r=document.createElement('span'); const rect=t.getBoundingClientRect(); const size=Math.max(rect.width,rect.height); r.className='ripple'; r.style.width=r.style.height=size+'px'; r.style.left=(e.clientX-rect.left-size/2)+'px'; r.style.top=(e.clientY-rect.top-size/2)+'px'; t.appendChild(r); setTimeout(()=>r.remove(),650); }
+
+    // i18n
+    const dict = {
+      fr: {
+        'nav.about':'À propos','nav.skills':'Compétences','nav.projects':'Projets','nav.testimonials':'Témoignages','nav.blog':'Blog','nav.contact':'Contact',
+        'hero.badge':'Disponible pour mission / freelance','hero.im':'Je suis','hero.subtitle':'Développeur full‑stack. J’aide les équipes à passer de l’idée à la prod avec des produits rapides, fiables et beaux.',
+        'cta.viewProjects':'Voir mes projets','cta.downloadCV':'Télécharger mon CV','cta.copyMail':'Copier mon email',
+        'kpi.years':'Années d’expérience','kpi.projects':'Projets livrés','kpi.clients':'Clients satisfaits','kpi.commits':'Commits / an',
+        'about.title':'À propos','about.desc':'Full‑stack orienté produit, je construis des plateformes web & mobiles sécurisées (auth, paiements, dashboards) avec une obsession pour la DX/UX et la performance.',
+        'skills.radar':'Compétences (radar)','skills.stack':'Stack & outils',
+        'projects.title':'🚀 Projets','projects.subtitle':'Sélection de réalisations récentes.',
+        'filter.all':'Tous','filter.web':'Web','filter.mobile':'Mobile','filter.data':'Data',
+        'gallery.title':'🖼️ Galerie de projets','gallery.subtitle':'Screenshots, maquettes et prototypes.',
+        'testimonials.title':'💬 Témoignages',
+        'blog.title':'📝 Derniers articles',
+        'contact.title':'📩 Contact','contact.subtitle':'Parlons de votre projet.','contact.name':'Nom','contact.email':'Email','contact.message':'Message','contact.send':'Envoyer',
+        'footer.bio':'Développeur full‑stack, passionné par les produits utiles & élégants.','footer.links':'Liens','footer.follow':'Réseaux sociaux'
+      },
+      en: {
+        'nav.about':'About','nav.skills':'Skills','nav.projects':'Projects','nav.testimonials':'Testimonials','nav.blog':'Blog','nav.contact':'Contact',
+        'hero.badge':'Available for missions / freelance','hero.im':'I am','hero.subtitle':'Full‑stack developer. I help teams go from idea to production with fast, reliable and beautiful products.',
+        'cta.viewProjects':'View my projects','cta.downloadCV':'Download CV','cta.copyMail':'Copy my email',
+        'kpi.years':'Years of experience','kpi.projects':'Projects delivered','kpi.clients':'Happy clients','kpi.commits':'Commits / year',
+        'about.title':'About','about.desc':'Product‑minded full‑stack, I build secure web & mobile platforms (auth, payments, dashboards) with a strong focus on DX/UX and performance.',
+        'skills.radar':'Skills (radar)','skills.stack':'Stack & tools',
+        'projects.title':'🚀 Projects','projects.subtitle':'A selection of recent work.',
+        'filter.all':'All','filter.web':'Web','filter.mobile':'Mobile','filter.data':'Data',
+        'gallery.title':'🖼️ Project gallery','gallery.subtitle':'Screenshots, mockups & prototypes.',
+        'testimonials.title':'💬 Testimonials',
+        'blog.title':'📝 Latest posts',
+        'contact.title':'📩 Contact','contact.subtitle':'Let’s talk about your project.','contact.name':'Name','contact.email':'Email','contact.message':'Message','contact.send':'Send',
+        'footer.bio':'Full‑stack developer, crafting useful & elegant products.','footer.links':'Links','footer.follow':'Follow'
+      }
+    }
+    function setLang(l){ localStorage.setItem('lang', l); $$('#navbar [data-i18n], #mobileMenu [data-i18n], [data-i18n]').forEach(el=>{ const k = el.getAttribute('data-i18n'); const t = dict[l][k]; if(t) el.textContent = t; }); $('#langLabel').textContent = l.toUpperCase(); document.documentElement.setAttribute('lang', l==='fr'?'fr':'en'); }
+
+    // Theme
+    const root = document.documentElement;
+    const themeToggle = $('#theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      root.classList.add('light');
+      themeIcon.className = 'fa-solid fa-sun';
+    } else {
+      root.classList.remove('light');
+      themeIcon.className = 'fa-solid fa-moon';
+    }
+    themeToggle.addEventListener('click', () => {
+      root.classList.toggle('light');
+      const isLight = root.classList.contains('light');
+      themeIcon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+    // Language button
+    const savedLang = localStorage.getItem('lang') || 'fr'; setLang(savedLang);
+    $('#langBtn').addEventListener('click', (e)=>{ ripple(e); const next = (localStorage.getItem('lang')||'fr')==='fr'?'en':'fr'; setLang(next); });
+
+    // Mobile menu
+    $('#menuBtn').addEventListener('click', ()=> $('#mobileMenu').classList.toggle('hidden'));
+
+    // Scroll progress + ToTop visibility
+    const bar = $('#scrollbar'); const toTop=$('#toTop'); window.addEventListener('scroll', ()=>{ const h=document.documentElement; const p= (h.scrollTop)/(h.scrollHeight-h.clientHeight)*100; bar.style.width = p+'%'; toTop.classList.toggle('hidden', window.scrollY < 450); }); toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+    // Typing
+    const rolesFR=["Développeur Full‑Stack.","Créateur de solutions numériques.","Formateur & Consultant."], rolesEN=["Full‑Stack Developer.","Digital Solutions Builder.","Trainer & Consultant."]; let idx=0, txt=''; let typing=true, ch=0; (function loop(){ const el=$('#typing'); if(!el) return; const l=localStorage.getItem('lang')||'fr'; const arr=l==='fr'?rolesFR:rolesEN; const target=arr[idx]; if(typing){ if(ch<target.length){ txt+=target[ch++]; el.textContent=txt; setTimeout(loop,90);} else {typing=false; setTimeout(loop,1600);} } else { if(ch>0){ txt=txt.slice(0,-1); ch--; el.textContent=txt; setTimeout(loop,40);} else { typing=true; idx=(idx+1)%arr.length; setTimeout(loop,400);} } })();
+
+    // Counters + reveal on scroll
+    function startCounters(){ const els=$$('[data-counter]'); if(!els.length) return; const io=new IntersectionObserver((ents)=>{ ents.forEach(ent=>{ if(!ent.isIntersecting) return; const el=ent.target; io.unobserve(el); const target=+el.getAttribute('data-counter'); const dur=1000+Math.min(2000,target/2); const s=performance.now(); function tick(now){ const t=Math.min(1,(now-s)/dur); const val=Math.floor(target*(t*(2-t))); el.textContent=val.toLocaleString('fr-FR'); if(t<1) requestAnimationFrame(tick);} requestAnimationFrame(tick); }); },{threshold:.4}); els.forEach(el=>io.observe(el)); }
+    function reveal(){ const io=new IntersectionObserver((ents)=>{ ents.forEach(ent=>{ if(ent.isIntersecting){ ent.target.classList.add('revealed'); io.unobserve(ent.target);} }); },{threshold:.2}); $$('.reveal').forEach(el=>io.observe(el)); }
+
+    // Radar chart
+    function radar(){ const c=$('#radar'); if(!c) return; const isLight = root.classList.contains('light'); const gridColor = isLight? 'rgba(15,23,42,.15)':'rgba(148,163,184,.15)'; const labelColor = isLight? '#334155':'#cbd5e1'; const d={ labels:['JS','React','Node','Python','Django','SQL','DevOps'], datasets:[{ label:'Niveau', data:[90,85,80,88,86,78,72], borderColor:'#38bdf8', backgroundColor:'rgba(56,189,248,.15)' }] }; new Chart(c,{ type:'radar', data:d, options:{ plugins:{legend:{display:false}}, scales:{ r:{ angleLines:{color:gridColor}, grid:{color:gridColor}, pointLabels:{ color:labelColor }, suggestedMin:0, suggestedMax:100 } } } }); }
+
+    // Project data (generated content)
+    const dataProjects = [
+      { id:'fa', title:'FastAkademia', category:'web', image:'images/fastakademia.webp', technologies:['Django','React','Tailwind','M‑Pesa/Airtel/Orange','QR'], description:'Plateforme de paiement académique en ligne avec reçu QR sécurisé, anti‑fraude et dashboard temps réel.', live:'#', repo:'#', charts:[ [35,60,80,95], [12,28,45,72], [5,12,22,40] ] },
+      { id:'ds', title:'DataSense', category:'data', image:'images/fitness.webp', technologies:['Python','Pandas','FastAPI','PostgreSQL'], description:'Pipeline d’ingestion et API d’analytics (ETL, agrégations, caching) – latence p95 < 120ms.', live:'#', repo:'#', charts:[ [10,30,50,90], [5,9,15,25], [2,7,13,21] ] },
+      { id:'mobi', title:'ShopGo Mobile', category:'mobile', image:'images/mshop.png', technologies:['React Native','Expo','Stripe'], description:'App e‑commerce mobile – checkout Stripe, notifications, thèmes dynamiques.', live:'#', repo:'#', charts:[ [20,45,70,88], [6,14,22,31], [1,4,9,16] ] },
+      { id:'dash', title:'OpsDash', category:'web', image:'images/gnsite.webp', technologies:['Next.js','tRPC','Prisma','Docker'], description:'Dashboard DevOps – logs, métriques, alerting, RBAC et audit trail.', live:'#', repo:'#', charts:[ [15,35,65,92], [8,13,19,27], [3,8,14,20] ] }
+    ];
+
+    // Build projects grid
+    function buildProjects(){ const grid=$('#projects'); grid.innerHTML=''; dataProjects.forEach(p=>{ const card=document.createElement('article'); card.className='mitem card mb-4 overflow-hidden hover:-translate-y-1 transition reveal'; card.innerHTML=`<div class="relative"><img src="${p.image}" alt="${p.title}" class="w-full h-48 object-cover" loading="lazy"/><span class='absolute top-3 right-3 text-xs px-2 py-1 rounded-full bg-black/50 border border-white/10'>${p.category}</span></div><div class="p-5"><div class="flex items-center justify-between gap-2"><h3 class="font-semibold">${p.title}</h3><div class='flex gap-2 text-xs text-slate-400'><i class="fa-solid fa-diagram-project"></i><i class="fa-solid fa-tower-broadcast"></i><i class="fa-solid fa-lock"></i></div></div><p class="text-slate-300 mt-1 text-sm">${(p.technologies||[]).join(' • ')}</p><div class='mt-3 flex gap-2'><button class='btn btn-primary open-proj'><i class="fa-solid fa-circle-info"></i> Détails</button><a class='btn btn-ghost' href='${p.live}' target='_blank'><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a></div></div>`; card.dataset.cat=p.category.toLowerCase(); card.querySelector('.open-proj').addEventListener('click',()=>openProject(p)); grid.appendChild(card); }); bindFilters(); }
+
+    function bindFilters(){
+  $$('.filter-btn').forEach(b =>
+    b.addEventListener('click', (e) => {
+      ripple(e);
+      const f = b.getAttribute('data-filter');
+      $$('#projects .mitem').forEach(it => {
+        // ✅ Laisser l'item en display par défaut (block) pour le layout en colonnes
+        it.style.display = (f === 'all' || it.dataset.cat === f) ? '' : 'none';
+      });
+    })
+  );
+}
+    // Open project modal + charts
+    let modalCharts=[];
+    function openProject(p){ const m=$('#projModal'); $('#mTitle').textContent=p.title; $('#mImg').src=p.image; $('#mText').innerHTML = `<p>${p.description}</p><ul class='list-disc list-inside mt-2 text-sm opacity-90'><li>Scope: ${p.technologies.join(', ')}</li><li>Livrables: UI réactive, API sécurisée, monitoring</li><li>Résultats: perf x2, bugs -37%, satisfaction +24%</li></ul>`; $('#mLive').href=p.live; $('#mRepo').href=p.repo; if(modalCharts.length){ modalCharts.forEach(c=>c.destroy()); modalCharts=[]; }
+      const base = { plugins:{legend:{display:false}}, scales:{x:{display:false}, y:{display:false}}};
+      modalCharts.push(new Chart($('#mChart1'),{type:'line',data:{labels:['T1','T2','T3','T4'],datasets:[{data:p.charts[0]}]},options:base}));
+      modalCharts.push(new Chart($('#mChart2'),{type:'bar',data:{labels:['T1','T2','T3','T4'],datasets:[{data:p.charts[1]}]},options:base}));
+      modalCharts.push(new Chart($('#mChart3'),{type:'line',data:{labels:['T1','T2','T3','T4'],datasets:[{data:p.charts[2]}]},options:base}));
+      if(typeof m.showModal==='function') m.showModal(); else m.classList.remove('hidden');
+    }
+    $('#mClose').addEventListener('click', ()=>{ const m=$('#projModal'); if(m.close) m.close(); else m.classList.add('hidden'); });
+
+
+// --- Données (ajout du "gender": 'male' | 'female' | 'other') ---
+const testimonials = [
+  { text: 'David a transformé notre idée en une application robuste et performante.', author: 'Jean-Luc, Bekam\'Art', gender: 'male', stars: 5 },
+  { text: 'Une collaboration exceptionnelle ! Toujours des solutions créatives.', author: 'Marie, SM', gender: 'female', stars: 5 },
+  { text: 'Expert full-stack, livraison de haute qualité dans les délais.', author: 'Fatima, Entrepreneuse', gender: 'female', stars: 4 },
+  { text: 'Capacité à résoudre les problèmes complexes impressionnante.', author: 'Anonyme, CTO', gender: 'other', stars: 5 },
+  { text: 'Rapide et soigné. Je recommande vivement.', author: 'Hope, Club RFI-Kisangani', gender: 'other', stars: 5 },
+];
+
+const genderIcon = (g) => {
+  switch ((g || 'other').toLowerCase()) {
+    case 'male':   return { icon: 'fa-user',          bg: 'bg-sky-500/15',    ico: 'text-sky-300'    };
+    case 'female': return { icon: 'fa-person-dress',  bg: 'bg-fuchsia-500/15',ico: 'text-fuchsia-300'};
+    default:       return { icon: 'fa-user-large',    bg: 'bg-slate-500/15',  ico: 'text-slate-300'  };
+  }
+};
+
+let cur = 0;
+
+function loadTestimonials() {
+  const track = $('#tTrack');
+  const dots  = $('#tDots');
+  track.innerHTML = '';
+  dots.innerHTML  = '';
+
+  testimonials.forEach((t, i) => {
+    const { icon, bg, ico } = genderIcon(t.gender);
+
+    const slide = document.createElement('div');
+    slide.className = 'shrink-0 w-full md:w-1/2 lg:w-1/3 px-3';
+    slide.innerHTML = `
+      <div class="card grad-border p-6 h-full text-center">
+        <div class="w-14 h-14 mx-auto rounded-full grid place-items-center border border-white/20 ${bg}">
+          <i class="fa-solid ${icon} ${ico} text-xl"></i>
+        </div>
+        <div class="mt-2 text-amber-400">${'★'.repeat(t.stars)}${'☆'.repeat(5 - t.stars)}</div>
+        <p class="italic text-slate-300 mt-2">“${t.text}”</p>
+        <p class="mt-3 font-semibold">— ${t.author}</p>
+      </div>
+    `;
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-600';
+    dot.addEventListener('click', () => goTo(i));
+    dots.appendChild(dot);
+  });
+
+  goTo(0);
+}
+
+function goTo(i) {
+  cur = i;
+  const track = $('#tTrack');
+  const dots  = $$('#tDots button');
+  const firstSlide = track.querySelector('.shrink-0');
+  if (!firstSlide) return;
+  const slideWidth = firstSlide.offsetWidth;
+  track.style.transform = `translateX(${-i * slideWidth}px)`;
+  dots.forEach((d, idx) => d.style.background = idx === i ? '#fff' : '#475569');
+}
+
+// Contrôles et auto défilement (inchangés)
+$('#tPrev').addEventListener('click', () => goTo((cur - 1 + testimonials.length) % testimonials.length));
+$('#tNext').addEventListener('click', () => goTo((cur + 1) % testimonials.length));
+let auto = setInterval(() => { goTo((cur + 1) % testimonials.length); }, 5000);
+$('#tTrack').addEventListener('mouseenter', () => clearInterval(auto));
+$('#tTrack').addEventListener('mouseleave', () => auto = setInterval(() => { goTo((cur + 1) % testimonials.length); }, 5000));
+
+// Lance le rendu
+loadTestimonials();
+
+    // Blog read more
+    $$('.readmore').forEach(btn=> btn.addEventListener('click', ()=>{ const id=btn.dataset.target; const box=document.getElementById(id); const open=box.style.maxHeight && box.style.maxHeight!=='0px'; box.style.maxHeight = open ? '0' : '300px'; btn.textContent = open ? (localStorage.getItem('lang')==='en'?'Read post':'Lire l\'article') : (localStorage.getItem('lang')==='en'?'Collapse':'Réduire l\'article'); }));
+
+    // Gallery images
+    const galleryImages=[
+      'images/fitness.png','images/mshop.png','images/educa.png','images/Capture d’écran 2025-09-24 074314.png','images/Capture d’écran 2025-09-25 071843.png','images/gnsite.jpg'
+    ];
+    function buildGallery(){ const g=$('#galGrid'); g.innerHTML=''; galleryImages.forEach(src=>{ const a=document.createElement('a'); a.href=src; a.className='group block relative overflow-hidden rounded-xl'; a.innerHTML=`<img src='${src}' class='w-full h-40 object-cover group-hover:scale-105 transition' alt='capture'/><div class='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition'></div>`; a.addEventListener('click', (e)=>{ e.preventDefault(); $('#lbImg').src=src; const lb=$('#lightbox'); if(lb.showModal) lb.showModal(); else lb.classList.remove('hidden'); }); g.appendChild(a); }); }
+    $('#lightbox')?.addEventListener('click', e=>{ if(e.target.id==='lightbox') e.currentTarget.close?.(); })
+
+    // Blog & Contact
+    $('#copyMail').addEventListener('click', (e)=>{ ripple(e); navigator.clipboard.writeText('magnum1wawina@gmail.com'); toast(localStorage.getItem('lang')==='en'?'Email copied':'Email copié','success'); });
+
+    // Web3Forms success feedback
+   $('#contactForm').addEventListener('submit', (e)=>{ const name=$('#cName').value.trim(), m=$('#cEmail').value.trim(), msg=$('#cMsg').value.trim(); if(!name||!m||!msg){ e.preventDefault(); toast(localStorage.getItem('lang')==='en'?'Please fill all fields':'Veuillez remplir tous les champs','error'); }
+    // Let the native submission happen; optional: show toast
+      setTimeout(()=> toast(localStorage.getItem('lang')==='en'?'Message sent!':'Message envoyé !','success'), 300);
+    });
+    $('#contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = $('#cName').value.trim(), m = $('#cEmail').value.trim(), msg = $('#cMsg').value.trim();
+      if (!name || !m || !msg) {
+        toast(localStorage.getItem('lang') === 'en' ? 'Please fill all fields' : 'Veuillez remplir tous les champs', 'error');
+        return;
+      }
+      const btn = $('#sendBtn');
+      btn.disabled = true;
+      btn.classList.add('opacity-60', 'cursor-not-allowed');
+      try {
+        const formData = new FormData(e.target);
+        const res = await fetch(e.target.action, { method: 'POST', body: formData });
+        let ok = res.ok;
+        try { const json = await res.json(); if (json && ('success' in json)) ok = ok && json.success; } catch (_) {}
+        if (ok) {
+          // redirect to thank you page
+          window.location.href = 'thanks.html';
+        } else {
+          toast(localStorage.getItem('lang') === 'en' ? 'Submission failed, please try again.' : 'Envoi échoué, veuillez réessayer.', 'error');
         }
-        typeEffect();
-    </script>
-    <!-- Script pour la modal de projet -->
-    <script>
-        const modal = document.getElementById("project-modal");
-        const closeBtn = document.getElementById("close-modal");
+      } catch (err) {
+        toast(localStorage.getItem('lang') === 'en' ? 'Network error, please try again.' : 'Erreur réseau, veuillez réessayer.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-60', 'cursor-not-allowed');
+      }
+    });
 
-        closeBtn.addEventListener("click", () => modal.classList.remove("show"));
-        window.addEventListener("click", (e) => {
-            if (e.target === modal) modal.classList.remove("show");
-        });
-    </script>
-    <!-- Scripts pour l'animation de sections, le bouton de retour en haut et le carrousel -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Section scroll animation
-            const sections = document.querySelectorAll(".scroll-animate");
-            const observerOptions = {
-                root: null,
-                rootMargin: "0px",
-                threshold: 0.2
-            };
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("visible");
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
+    // FAB socials
+    $('#fabBtn').addEventListener('click', (e)=>{ ripple(e); $('#fabMenu').classList.toggle('hidden'); });
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
+    // Init
+    document.getElementById('year').textContent = new Date().getFullYear();
+    window.addEventListener('load', ()=>{ startCounters(); reveal(); radar(); buildProjects(); loadTestimonials(); buildGallery(); });
 
-            // Back-to-top button functionality
-            const backToTopButton = document.getElementById("back-to-top");
-            window.addEventListener("scroll", () => {
-                if (window.scrollY > 300) {
-                    backToTopButton.style.display = "flex";
-                } else {
-                    backToTopButton.style.display = "none";
-                }
-            });
-            backToTopButton.addEventListener("click", () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
-            // Hero background slideshow
-            const bgImages = document.querySelectorAll("#hero-background img");
-            let currentBgIndex = 0;
-            setInterval(() => {
-                bgImages[currentBgIndex].classList.remove("active");
-                currentBgIndex = (currentBgIndex + 1) % bgImages.length;
-                bgImages[currentBgIndex].classList.add("active");
-            }, 8000); // Change image every 8 seconds
-
-            // Testimonial carousel
-            const carouselTrack = document.querySelector(".carousel-track");
-            const carouselDotsContainer = document.querySelector(".carousel-dots");
-            const carouselItems = document.querySelectorAll(".carousel-item");
-            let currentSlide = 0;
-
-            function updateCarousel() {
-                const slideWidth = carouselItems[0].offsetWidth;
-                carouselTrack.style.transform = `translateX(${-currentSlide * slideWidth}px)`;
-                updateDots();
-            }
-
-            function updateDots() {
-                carouselDotsContainer.innerHTML = "";
-                carouselItems.forEach((_, index) => {
-                    const dot = document.createElement("span");
-                    dot.classList.add("carousel-dot");
-                    if (index === currentSlide) {
-                        dot.classList.add("active");
-                    }
-                    dot.addEventListener("click", () => {
-                        currentSlide = index;
-                        updateCarousel();
-                    });
-                    carouselDotsContainer.appendChild(dot);
-                });
-            }
-
-            function nextSlideCarousel() {
-                currentSlide = (currentSlide + 1) % carouselItems.length;
-                updateCarousel();
-            }
-
-            // Auto-play carousel
-            setInterval(nextSlideCarousel, 5000);
-            updateCarousel();
-            window.addEventListener('resize', updateCarousel);
-
-            // Mobile menu functionality
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const navLinksMobile = document.querySelectorAll('.nav-link-mobile');
-
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-
-            navLinksMobile.forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-
-            // New feature scripts below
-
-            // Social media button toggle
-            const socialMediaButton = document.getElementById('social-media-button');
-            const socialMediaIcons = document.getElementById('social-media-icons');
-            socialMediaButton.addEventListener('click', () => {
-                socialMediaIcons.classList.toggle('hidden');
-            });
-
-            // Copy email button
-            const copyEmailButton = document.getElementById('copy-email-button');
-            const emailAddress = "magnum1wawina@gmail.com"; // REMPLACEZ PAR VOTRE ADRESSE EMAIL
-            copyEmailButton.addEventListener('click', () => {
-                navigator.clipboard.writeText(emailAddress).then(() => {
-                    const toast = document.getElementById("toast");
-                    toast.textContent = "Email copié !";
-                    toast.className = "show";
-                    setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-                }).catch(err => {
-                    alert("Erreur lors de la copie de l'email : " + err);
-                });
-            });
-
-            // Blog content toggle
-            const readMoreButtons = document.querySelectorAll('.read-more-btn');
-            readMoreButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const targetId = e.target.getAttribute('data-target');
-                    const targetContent = document.getElementById(targetId);
-                    if (targetContent) {
-                        targetContent.classList.toggle('open');
-                        if (targetContent.classList.contains('open')) {
-                            e.target.textContent = 'Réduire l’article';
-                        } else {
-                            e.target.textContent = 'Lire l’article';
-                        }
-                    }
-                });
-            });
-
-            // Dynamic project loading
-            const projectsContainer = document.getElementById("projects-container");
-            const projectModal = document.getElementById("project-modal");
-
-            fetch('projects.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(projects => {
-                    projects.forEach(project => {
-                        const projectCard = document.createElement('div');
-                        projectCard.classList.add('glass-card', 'p-6', 'rounded-lg', 'cursor-pointer', 'project-card');
-                        projectCard.dataset.image = project.image;
-                        projectCard.dataset.title = project.title;
-                        projectCard.dataset.description = project.description;
-                        projectCard.innerHTML = `
-                            <img src="${project.image}" alt="${project.title}" class="rounded-lg mb-4 w-full h-48 object-cover">
-                            <h3 class="text-xl font-bold text-white mb-2">${project.title}</h3>
-                            <p class="text-gray-400">${project.technologies.join(' | ')}</p>
-                        `;
-
-                        // Add event listener to each newly created card
-                        projectCard.addEventListener("click", () => {
-                            const modalImg = projectModal.querySelector("#modal-image");
-                            const modalTitle = projectModal.querySelector("#modal-title");
-                            const modalDesc = projectModal.querySelector("#modal-description");
-
-                            projectModal.classList.add("show");
-                            modalImg.src = projectCard.dataset.image;
-                            modalTitle.textContent = projectCard.dataset.title;
-                            modalDesc.textContent = projectCard.dataset.description;
-                        });
-
-                        projectsContainer.appendChild(projectCard);
-                    });
-                })
-                .catch(error => {
-                    console.error('Erreur lors du chargement des projets:', error);
-                    projectsContainer.innerHTML = `<p class="text-center text-red-500">Impossible de charger les projets. Veuillez réessayer plus tard.</p>`;
-                });
-        });
-    </script>
-    <!-- Script pour EmailJS et reCAPTCHA -->
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script>
-        (function() {
-            emailjs.init("VOTRE_PUBLIC_KEY"); // Remplacez par votre Public Key EmailJS
-        })();
-
-        const form = document.getElementById("contact-form");
-
-        form.addEventListener("submit", function(e) {
-            e.preventDefault();
-
-            // Vérifie si reCAPTCHA est validé
-            if (grecaptcha.getResponse() === "") {
-                alert("Veuillez cocher le reCAPTCHA pour valider.");
-                return;
-            }
-
-            emailjs.sendForm("VOTRE_SERVICE_ID", "VOTRE_TEMPLATE_ID", this)
-                .then(() => {
-                    const toast = document.getElementById("toast");
-                    toast.textContent = "Message envoyé !";
-                    toast.className = "show";
-                    setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-                    form.reset();
-                    grecaptcha.reset(); // réinitialiser le captcha après envoi
-                }, (error) => {
-                    alert("Une erreur est survenue : " + JSON.stringify(error));
-                });
-        });
-    </script>
+  </script>
 </body>
 </html>
