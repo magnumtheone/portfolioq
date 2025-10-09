@@ -1,0 +1,6 @@
+ /* Reveal on scroll */
+    .reveal{opacity:0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease}
+    .reveal.revealed{opacity:1; transform:none}
+    /* Testimonial gradient border */
+    .grad-border{ position:relative }
+    .grad-border:before{ content:''; position:absolute; inset:-1px; border-radius:1rem; padding:1px; background:linear-gradient(90deg,#22c55e,#38bdf8); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; }
