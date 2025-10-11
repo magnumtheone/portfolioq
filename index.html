@@ -215,6 +215,83 @@
       </div>
     </div>
   </header>
+   <body class="bg-slate-950 text-slate-100">
+<!-- PROMO (avec bouton En savoir plus) -->
+<section id="promo"
+  class="relative w-full bg-gradient-to-r from-brand2 via-brand to-brand2 text-white shadow-[0_8px_24px_rgba(2,6,23,.12)] overflow-hidden">
+  <div class="mx-auto max-w-6xl px-4 py-5 text-center">
+    <p class="text-base md:text-lg font-semibold tracking-tight">
+      🎉 Offre spéciale limitée :
+      <span class="ml-1 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-sm md:text-base font-extrabold">
+        -40% sur tous vos projets
+      </span>
+      <span class="ml-2">• Création de site internet à <span class="font-extrabold">en un prix exclusif et unique</span></span>
+    </p>
+
+    <p class="mt-1 text-sm md:text-base opacity-90">
+      Seulement <span class="font-bold">200</span> clients acceptés — fin avant le <u>31 décembre</u>.
+    </p>
+
+    <div class="mt-3 flex flex-wrap items-center justify-center gap-3">
+      <a href="./promo.html"
+         class="inline-flex items-center gap-2 rounded-xl bg-black/20 px-4 py-2 text-sm font-semibold text-white hover:bg-black/25 transition">
+        ℹ️ En savoir plus sur la promotion
+      </a>
+      <a href="#contact"
+         class="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black/90 hover:opacity-90 transition">
+        🚀 Demander un devis
+      </a>
+      <a href="https://wa.me/243816684426" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20 transition">
+        💬 WhatsApp
+      </a>
+    </div>
+
+    <!-- Compte à rebours -->
+    <div class="mt-4">
+      <p class="text-xs uppercase tracking-wide opacity-90">Fin de l'offre dans :</p>
+      <div id="countdown" class="mt-1 flex gap-3 text-lg font-bold tracking-wide justify-center">
+        <span id="days">00</span>j <span id="hours">00</span>h <span id="minutes">00</span>m <span id="seconds">00</span>s
+      </div>
+    </div>
+  </div>
+
+  <button type="button" id="closePromo"
+          class="absolute right-2 top-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 hover:bg-white/25"
+          aria-label="Fermer la bannière promotionnelle">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <div aria-hidden="true"
+       class="pointer-events-none absolute -inset-2 -z-10 blur-2xl bg-gradient-to-r from-brand/25 via-transparent to-brand2/25"></div>
+</section>
+
+<script>
+  // Fermer la promo
+  document.getElementById("closePromo")?.addEventListener("click", () => {
+    document.getElementById("promo")?.classList.add("hidden");
+  });
+
+  // Compte à rebours (31 déc 2025 23:59:59)
+  const countDownDate = new Date("Dec 31, 2025 23:59:59").getTime();
+  const countdown = setInterval(() => {
+    const now = Date.now();
+    const d = countDownDate - now;
+    if (d < 0) { clearInterval(countdown); document.getElementById("countdown").innerHTML = "⏰ Offre expirée !"; return; }
+    const dd = Math.floor(d / (1000*60*60*24));
+    const hh = Math.floor((d % (1000*60*60*24)) / (1000*60*60));
+    const mm = Math.floor((d % (1000*60*60)) / (1000*60));
+    const ss = Math.floor((d % (1000*60)) / 1000);
+    document.getElementById("days").textContent = String(dd).padStart(2,"0");
+    document.getElementById("hours").textContent = String(hh).padStart(2,"0");
+    document.getElementById("minutes").textContent = String(mm).padStart(2,"0");
+    document.getElementById("seconds").textContent = String(ss).padStart(2,"0");
+  }, 1000);
+</script>
+
+
 
   <main id="main">
     <!-- HERO -->
@@ -546,7 +623,7 @@
     // Project data (generated content)
     const dataProjects = [
       { id:'fa', title:'FastAkademia', category:'web', image:'images/fastakademia.webp', technologies:['Django','React','Tailwind','M‑Pesa/Airtel/Orange','QR'], description:'Plateforme de paiement académique en ligne avec reçu QR sécurisé, anti‑fraude et dashboard temps réel.', live:'#', repo:'#', charts:[ [35,60,80,95], [12,28,45,72], [5,12,22,40] ] },
-      { id:'ds', title:'DataSense', category:'data', image:'images/fitness.webp', technologies:['Python','Pandas','FastAPI','PostgreSQL'], description:'Pipeline d’ingestion et API d’analytics (ETL, agrégations, caching) – latence p95 < 120ms.', live:'#', repo:'#', charts:[ [10,30,50,90], [5,9,15,25], [2,7,13,21] ] },
+      { id:'ds', title:'DataSense', category:'data', image:'images/fitness.webp', technologies:['Python','Pandas','FastAPI','PostgreSQL'], description:'Pipeline d’ingestion et API d’analytics (ETL, agrégations, caching) – latence p95 < 120ms.', live:'https://dashbordpro.vercel.app', repo:'#', charts:[ [10,30,50,90], [5,9,15,25], [2,7,13,21] ] },
       { id:'mobi', title:'ShopGo Mobile', category:'mobile', image:'images/mshop.png', technologies:['React Native','Expo','Stripe'], description:'App e‑commerce mobile – checkout Stripe, notifications, thèmes dynamiques.', live:'#', repo:'#', charts:[ [20,45,70,88], [6,14,22,31], [1,4,9,16] ] },
       { id:'dash', title:'OpsDash', category:'web', image:'images/gnsite.webp', technologies:['Next.js','tRPC','Prisma','Docker'], description:'Dashboard DevOps – logs, métriques, alerting, RBAC et audit trail.', live:'#', repo:'#', charts:[ [15,35,65,92], [8,13,19,27], [3,8,14,20] ] }
     ];
