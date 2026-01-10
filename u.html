@@ -1,0 +1,786 @@
+<!DOCTYPE html> <html lang="fr" class="scroll-smooth">
+ <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Title (≤60-65 caractères, mot-clé au début) -->
+  <title>Développeur Full-Stack à Kisangani — David Wawina MBULA</title>
+
+  <!-- Meta description (150–160 caractères, action + mots-clés locaux) -->
+  <meta name="description" content="Portfolio de David Wawina MBULA, David MBULA, David Wawina, Kisangani développeur full-stack (JS/TS, APIs, Tailwind). Applications web rapides, sécurisées et scalables — Kisangani, RDC. Mbula Wawina David." />
+
+  <!-- Canonical (URL absolue) -->
+  <link rel="canonical" href="https://portfoliodavidwawina.vercel.app/" />
+
+  <!-- Favicon / PWA basics -->
+   <link rel="icon" href="./images/logof.jpg" type="image/svg+xml">
+  <link rel="icon" type="image/png" href="logo-davidwawina.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logof.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logof.jpg">
+  <link rel="apple-touch-icon" href="/images/logof.jpg">
+  <meta name="theme-color" content="#0f172a">
+
+  <!-- Open Graph / Facebook / LinkedIn -->
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Développeur Full-Stack à Kisangani — David Wawina MBULA">
+  <meta property="og:description" content="Apps web rapides et fiables. Front & back, APIs, intégrations paiement, Tailwind. Basé à Kisangani (RDC).">
+  <meta property="og:url" content="https://portfoliodavidwawina.vercel.app/">
+  <meta property="og:site_name" content="David Wawina MBULA — Portfolio">
+  <meta property="og:image" content="https://portfoliodavidwawina.vercel.app/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Développeur Full-Stack à Kisangani — David Wawina MBULA">
+  <meta name="twitter:description" content="Applications web modernes, performantes et sécurisées. JS/TS, APIs, Tailwind. Kisangani, RDC.">
+  <meta name="twitter:image" content="https://portfoliodavidwawina.vercel.app/og-cover.jpg">
+
+  <!-- Indexation -->
+  <meta name="robots" content="index, follow, max-image-preview:large">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Données structurées JSON-LD : Person + WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Person",
+        "@id":"https://portfoliodavidwawina.vercel.app/#person",
+        "name":"David Wawina MBULA",
+        "jobTitle":"Développeur full-stack",
+        "description":"Développeur full-stack basé à Kisangani (RDC) — JS/TS, APIs, Tailwind, performance et sécurité.",
+        "url":"https://portfoliodavidwawina.vercel.app/",
+        "image":"https://portfoliodavidwawina.vercel.app/portrait.jpg",
+        "address":{
+          "@type":"PostalAddress",
+          "addressLocality":"Kisangani",
+          "addressRegion":"Tshopo",
+          "addressCountry":"CD"
+        },
+        "sameAs":[
+          "https://github.com/",
+          "https://www.linkedin.com/in/davidwawina/",
+          "https://facebook.com/magnumtheone"
+        ]
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://Vportfoliodavidwawina.vercel.app/#website",
+        "url":"https://portfoliodavidwawina.vercel.app/",
+        "name":"David Wawina MBULA — Portfolio",
+        "publisher":{"@id":"https://portfoliodavidwawina.vercel.app/#person"},
+        "inLanguage":"fr-FR",
+        "potentialAction":{
+          "@type":"SearchAction",
+          "target":"https://portfoliodavidwawina.vercel.app/recherche?q={search_term_string}",
+          "query-input":"required name=search_term_string"
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          container: { center: true, padding: '1rem' },
+          colors: {
+            brand:'#22c55e',
+            brand2:'#38bdf8',
+            glass: 'rgba(17,24,39,.55)'
+          },
+          boxShadow: {
+            soft: '0 2px 16px rgba(0,0,0,.25)'
+          },
+          keyframes: {
+            float: {
+              '0%,100%':{ transform:'translateY(0)'},
+              '50%':{ transform:'translateY(-8px)'}
+            },
+            shimmer: {
+              '0%':{ backgroundPosition:'-200% 0'},
+              '100%':{ backgroundPosition:'200% 0'}
+            }
+          },
+          animation: {
+            float: 'float 6s ease-in-out infinite',
+            shimmer:'shimmer 2s linear infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <style>
+    html,body{ font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+    .text-gradient{ background-image: linear-gradient(90deg, #22c55e, #38bdf8); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .glass{ background: var(--glass, rgba(17,24,39,.45)); backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,.08); }
+    .btn{ display:inline-flex; align-items:center; gap:.5rem; border-radius: 0.9rem; padding: 0.75rem 1.1rem; font-weight: 600; transition: transform .12s ease, background-color .2s ease, box-shadow .2s ease; position:relative; overflow:hidden }
+    .btn:active{ transform: translateY(1px) scale(.99) }
+    .btn-primary{ background:linear-gradient(90deg,#fff,#e2e8f0); color:#0b1220; box-shadow: 0 6px 24px rgba(255,255,255,.12) }
+    .btn-primary:hover{ background: #fff }
+    .btn-ghost{ border:1px solid rgb(71 85 105 / .7); color: rgb(241 245 249); background: rgba(30,41,59,.25) }
+    .btn-ghost:hover{ background: rgba(30,41,59,.5) }
+    .btn-glass{ background: linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.18); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 10px 30px rgba(0,0,0,.25) }
+    .nav-link{ color: rgb(203 213 225); }
+    .nav-link:hover{ color: white; }
+    .card{ border-radius: 1rem; border: 1px solid rgb(30 41 59); background-color: rgb(15 23 42); box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1); }
+    .shadow-soft{ box-shadow: 0 2px 10px rgba(0,0,0,.25); }
+    /* Progress bar */
+    #scrollbar{ position: fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,#22c55e,#38bdf8); z-index:60; }
+    /* Ripple */
+    .ripple{ position:absolute; border-radius:9999px; background:rgba(255,255,255,.25); transform:scale(0); pointer-events:none; animation:ripple .6s ease-out forwards; }
+    @keyframes ripple{ to{ transform:scale(2); opacity:0; } }
+    style>
+  /* Masonry (CSS columns) — VERSION FIXÉE */
+  .masonry{
+    column-count: 1;
+    column-gap: 1rem;
+  }
+  @media (min-width:768px){ .masonry{ column-count: 2; } }
+  @media (min-width:1024px){ .masonry{ column-count: 3; } }
+
+  /* ✅ Empêche les cassures et assure un flux correct dans les colonnes */
+  .masonry .mitem{
+    /* compat navigateurs */
+    break-inside: avoid;
+    break-inside: avoid-column;
+    -webkit-column-break-inside: avoid;
+    -moz-column-break-inside: avoid;
+
+    display: block;       /* IMPORTANT: pas d'inline-block ici */
+    width: 100%;
+    margin: 0 0 1rem;     /* espacement vertical régulier */
+  }
+</style>
+
+  </style>
+
+   
+</head>
+<body class="bg-slate-950 text-slate-100">
+  <div id="scrollbar"></div>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-white text-black px-3 py-2 rounded-md z-50">Aller au contenu</a>
+
+  <!-- Header -->
+  <header id="navbar" class="sticky top-0 z-50 border-b border-slate-800/60 bg-slate-950/60 backdrop-blur supports-[backdrop-filter]:bg-slate-950/50">
+    <div class="container max-w-7xl h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <img src="images/logof.jpg" alt="Logo David Wawina" class="h-8 w-8 rounded-full" loading="lazy" />
+        <span class="font-bold">David WAWINA</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a data-i18n="nav.about" href="#about" class="nav-link">À propos</a>
+        <a data-i18n="nav.skills" href="#skills" class="nav-link">Compétences</a>
+        <a data-i18n="nav.projects" href="#projets" class="nav-link">Projets</a>
+        <a data-i18n="nav.testimonials" href="#temoignages" class="nav-link">Témoignages</a>
+        <a data-i18n="nav.contact" href="#contact" class="nav-link">Contact</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <!-- Language Switcher -->
+        <button id="langBtn" class="btn btn-ghost" aria-label="Changer la langue" title="FR / EN"><i class="fa-solid fa-language"></i><span class="hidden sm:inline" id="langLabel">FR</span></button>
+        <!-- Theme Switcher -->
+        <button id="theme-toggle" class="btn btn-ghost" aria-label="Basculer le thème"><i class="fa-solid fa-moon"></i></button>
+        <button id="menuBtn" class="md:hidden btn btn-ghost"><i class="fa-solid fa-bars"></i></button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="md:hidden hidden border-t border-slate-800/60">
+      <div class="container max-w-7xl py-3 grid gap-2 text-sm">
+        <a data-i18n="nav.about" href="#about" class="py-2">À propos</a>
+        <a data-i18n="nav.skills" href="#skills" class="py-2">Compétences</a>
+        <a data-i18n="nav.projects" href="#projets" class="py-2">Projets</a>
+        <a data-i18n="nav.testimonials" href="#temoignages" class="py-2">Témoignages</a>
+        <a data-i18n="nav.contact" href="#contact" class="py-2">Contact</a>
+      </div>
+    </div>
+  </header>
+   <body class="bg-slate-950 text-slate-100">
+<!-- PROMO (avec bouton En savoir plus) -->
+<section id="promo"
+  class="relative w-full bg-gradient-to-r from-brand2 via-brand to-brand2 text-white shadow-[0_8px_24px_rgba(2,6,23,.12)] overflow-hidden">
+  <div class="mx-auto max-w-6xl px-4 py-5 text-center">
+    <p class="text-base md:text-lg font-semibold tracking-tight">
+      🎉 Offre spéciale limitée :
+      <span class="ml-1 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-sm md:text-base font-extrabold">
+        -40% sur tous vos projets
+      </span>
+      <span class="ml-2">• Création de site internet à <span class="font-extrabold">en un prix exclusif et unique</span></span>
+    </p>
+
+    <p class="mt-1 text-sm md:text-base opacity-90">
+      Seulement <span class="font-bold">200</span> clients acceptés — fin avant le <u>31 décembre</u>.
+    </p>
+
+    <div class="mt-3 flex flex-wrap items-center justify-center gap-3">
+      <a href="./promo.html"
+         class="inline-flex items-center gap-2 rounded-xl bg-black/20 px-4 py-2 text-sm font-semibold text-white hover:bg-black/25 transition">
+        ℹ️ En savoir plus sur la promotion
+      </a>
+      <a href="#contact"
+         class="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-semibold text-black/90 hover:opacity-90 transition">
+        🚀 Demander un devis
+      </a>
+      <a href="https://wa.me/243816684426" target="_blank" rel="noopener"
+         class="inline-flex items-center gap-2 rounded-xl bg-white/10 px-4 py-2 text-sm font-semibold text-white hover:bg-white/20 transition">
+        💬 WhatsApp
+      </a>
+    </div>
+
+    <!-- Compte à rebours -->
+    <div class="mt-4">
+      <p class="text-xs uppercase tracking-wide opacity-90">Fin de l'offre dans :</p>
+      <div id="countdown" class="mt-1 flex gap-3 text-lg font-bold tracking-wide justify-center">
+        <span id="days">00</span>j <span id="hours">00</span>h <span id="minutes">00</span>m <span id="seconds">00</span>s
+      </div>
+    </div>
+  </div>
+
+  <button type="button" id="closePromo"
+          class="absolute right-2 top-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 hover:bg-white/25"
+          aria-label="Fermer la bannière promotionnelle">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <div aria-hidden="true"
+       class="pointer-events-none absolute -inset-2 -z-10 blur-2xl bg-gradient-to-r from-brand/25 via-transparent to-brand2/25"></div>
+</section>
+
+<script>
+  // Fermer la promo
+  document.getElementById("closePromo")?.addEventListener("click", () => {
+    document.getElementById("promo")?.classList.add("hidden");
+  });
+
+  // Compte à rebours (31 déc 2025 23:59:59)
+  const countDownDate = new Date("Dec 31, 2025 23:59:59").getTime();
+  const countdown = setInterval(() => {
+    const now = Date.now();
+    const d = countDownDate - now;
+    if (d < 0) { clearInterval(countdown); document.getElementById("countdown").innerHTML = "⏰ Offre expirée !"; return; }
+    const dd = Math.floor(d / (1000*60*60*24));
+    const hh = Math.floor((d % (1000*60*60*24)) / (1000*60*60));
+    const mm = Math.floor((d % (1000*60*60)) / (1000*60));
+    const ss = Math.floor((d % (1000*60)) / 1000);
+    document.getElementById("days").textContent = String(dd).padStart(2,"0");
+    document.getElementById("hours").textContent = String(hh).padStart(2,"0");
+    document.getElementById("minutes").textContent = String(mm).padStart(2,"0");
+    document.getElementById("seconds").textContent = String(ss).padStart(2,"0");
+  }, 1000);
+</script>
+
+
+
+  <main id="main">
+    <!-- HERO -->
+    <section id="hero" class="relative min-h-[85vh] grid place-items-center overflow-hidden">
+      <div class="pointer-events-none absolute inset-0 opacity-30">
+        <div class="absolute -top-20 -right-20 w-96 h-96 rounded-full blur-3xl animate-float" style="background:radial-gradient(600px 600px at center, #38bdf8 0%, transparent 60%)"></div>
+        <div class="absolute -bottom-20 -left-20 w-[28rem] h-[28rem] rounded-full blur-3xl animate-float" style="animation-delay:1s;background:radial-gradient(600px 600px at center, #22c55e 0%, transparent 60%)"></div>
+      </div>
+      <div class="relative z-10 container max-w-4xl text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs">
+          <i class="fa-solid fa-bolt text-brand"></i> <span data-i18n="hero.badge">Disponible pour mission / freelance</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black leading-tight mt-4"> <span data-i18n="hero.im">Je suis</span> <span id="typing" class="text-gradient"></span></h1>
+        <p data-i18n="hero.subtitle" class="mt-5 text-lg text-slate-300">Développeur full‑stack. J’aide les équipes à passer de l’idée à la prod avec des produits rapides, fiables et beaux.</p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a data-i18n="cta.viewProjects" href="#projets" class="btn btn-primary btn-glass"><i class="fa-solid fa-rocket"></i>Voir mes projets récents</a>
+          <a data-i18n="cta.downloadCV" href="cv/MBULA_WAWINA_Développeur_Full_Stack.pdf" download class="btn btn-ghost"><i class="fa-solid fa-file-arrow-down"></i>Télécharger mon CV</a>
+          <button data-i18n="cta.copyMail" id="copyMail" class="btn btn-ghost"><i class="fa-solid fa-envelope"></i>Copier mon email</button>
+        </div>
+        <!-- KPIs -->
+        <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="card p-5 text-center reveal"><p data-i18n="kpi.years" class="text-xs text-slate-400">Années d’expérience</p><p class="text-3xl font-extrabold" data-counter="6">0</p></div>
+          <div class="card p-5 text-center reveal"><p data-i18n="kpi.projects" class="text-xs text-slate-400">Projets livrés</p><p class="text-3xl font-extrabold" data-counter="56">0</p></div>
+          <div class="card p-5 text-center reveal"><p data-i18n="kpi.clients" class="text-xs text-slate-400">Clients satisfaits</p><p class="text-3xl font-extrabold" data-counter="50">0</p></div>
+          <div class="card p-5 text-center reveal"><p data-i18n="kpi.commits" class="text-xs text-slate-400">Commits / an</p><p class="text-3xl font-extrabold" data-counter="1200">0</p></div>
+        </div>
+      </div>
+      <!-- Back to top -->
+      <button id="toTop" class="fixed bottom-5 right-5 hidden btn btn-primary btn-glass" aria-label="Retour en haut"><i class="fa-solid fa-arrow-up"></i></button>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="container max-w-7xl px-4 py-20">
+      <div class="grid md:grid-cols-2 gap-10 items-center">
+        <img src="images/po.jpg" alt="Photo de David Wawina" class="rounded-2xl shadow-soft w-full h-auto reveal" loading="lazy" />
+        <div class="reveal">
+          <h2 class="text-3xl md:text-4xl font-bold" data-i18n="about.title">À propos</h2>
+          <p data-i18n="about.desc" class="mt-4 text-slate-300 leading-relaxed">Full‑stack orienté produit, je construis des plateformes web & mobiles sécurisées (auth, paiements, dashboards) avec une obsession pour la DX/UX et la performance.</p>
+          <div class="mt-6 flex flex-wrap gap-2 text-xs">
+            <span class="px-3 py-1 rounded-full border border-slate-700">Django</span>
+            <span class="px-3 py-1 rounded-full border border-slate-700">React</span>
+            <span class="px-3 py-1 rounded-full border border-slate-700">PostgreSQL</span>
+            <span class="px-3 py-1 rounded-full border border-slate-700">Docker</span>
+            <span class="px-3 py-1 rounded-full border border-slate-700">Tailwind</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS + RADAR CHART -->
+    <section id="skills" class="container max-w-7xl px-4 pb-20">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="card p-6 reveal">
+          <h3 class="font-semibold mb-3" data-i18n="skills.radar">Compétences (radar)</h3>
+          <canvas id="radar"></canvas>
+        </div>
+        <div class="card p-6 reveal">
+          <h3 class="font-semibold mb-3" data-i18n="skills.stack">Stack & outils</h3>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-js"></i> JavaScript</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-react"></i> React</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-node"></i> Node.js</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-python"></i> Python</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-feather"></i> Django</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-database"></i> PostgreSQL</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-database"></i> MongoDB</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-docker"></i> Docker</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-aws"></i> AWS</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-brands fa-git-alt"></i> Git</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-wand-magic-sparkles"></i> TailwindCSS</div>
+            <div class="glass p-3 rounded-lg text-center"><i class="fa-solid fa-infinity"></i> CI/CD</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projets" class="container max-w-7xl px-4 pb-20">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-bold" data-i18n="projects.title">🚀 Projets</h2>
+        <p class="mt-2 text-slate-300" data-i18n="projects.subtitle">Sélection de réalisations récentes.</p>
+        <div class="mt-4 inline-flex flex-wrap gap-2">
+          <button class="btn btn-ghost filter-btn" data-filter="all" data-i18n="filter.all">Tous</button>
+          <button class="btn btn-ghost filter-btn" data-filter="web" data-i18n="filter.web">Web</button>
+          <button class="btn btn-ghost filter-btn" data-filter="mobile" data-i18n="filter.mobile">Mobile</button>
+          <button class="btn btn-ghost filter-btn" data-filter="data" data-i18n="filter.data">Data</button>
+        </div>
+      </div>
+      <div id="projects" class="masonry mt-10">
+        <!-- Items injectés via JS depuis dataProjects -->
+      </div>
+      <!-- Modal projet -->
+      <dialog id="projModal" class="backdrop:bg-black/60 rounded-2xl p-0 w-[min(92vw,860px)]">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+          <div class="p-4 flex items-center justify-between border-b border-slate-800">
+            <h3 id="mTitle" class="font-semibold"></h3>
+            <button id="mClose" class="btn btn-ghost" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <img id="mImg" alt="aperçu projet" class="w-full h-64 object-cover" />
+          <div class="p-5 text-slate-300 space-y-5" id="mDesc">
+            <!-- Description + diagrammes -->
+            <div id="mText"></div>
+            <div class="grid md:grid-cols-3 gap-4">
+              <canvas id="mChart1" class="rounded-xl bg-slate-950/40 p-4"></canvas>
+              <canvas id="mChart2" class="rounded-xl bg-slate-950/40 p-4"></canvas>
+              <canvas id="mChart3" class="rounded-xl bg-slate-950/40 p-4"></canvas>
+            </div>
+          </div>
+          <div class="p-5 flex gap-3 border-t border-slate-800">
+            <a id="mLive" target="_blank" class="btn btn-primary"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a>
+            <a id="mRepo" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-github"></i> Repo</a>
+          </div>
+        </div>
+      </dialog>
+    </section>
+
+    <!-- GALLERY
+    <section id="gallery" class="container max-w-7xl px-4 pb-20">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-bold" data-i18n="gallery.title">🖼️ Galerie de projets</h2>
+        <p class="mt-2 text-slate-300" data-i18n="gallery.subtitle">Screenshots, maquettes et prototypes.</p>
+      </div>
+      <div id="galGrid" class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <!-- images injectées 
+      </div>
+      <dialog id="lightbox" class="backdrop:bg-black/70 rounded-xl p-0">
+        <img id="lbImg" alt="aperçu" class="max-w-[92vw] max-h-[90vh] object-contain"/>
+      </dialog>
+    </section>-->
+
+    <!-- TESTIMONIALS -->
+    <section id="temoignages" class="container max-w-7xl px-4 pb-20">
+      <h2 class="text-3xl md:text-4xl font-bold text-center" data-i18n="testimonials.title">💬 Témoignages</h2>
+      <div class="mt-10 relative overflow-hidden">
+        <div id="tTrack" class="flex transition-transform duration-500 will-change-transform">
+          <!-- Slides injectés JS -->
+        </div>
+        <div class="mt-4 flex justify-center gap-2" id="tDots"></div>
+        <button id="tPrev" class="absolute -left-2 top-1/2 -translate-y-1/2 btn btn-ghost" aria-label="Précédent"><i class="fa-solid fa-chevron-left"></i></button>
+        <button id="tNext" class="absolute -right-2 top-1/2 -translate-y-1/2 btn btn-ghost" aria-label="Suivant"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </section>
+
+    <!-- BLOG 
+    <section id="blog" class="container max-w-7xl px-4 pb-20">
+      <h2 class="text-3xl md:text-4xl font-bold text-center" data-i18n="blog.title">📝 Derniers articles</h2>
+      <div id="blogGrid" class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Blog cards (statiques/Demo) 
+        <article class="card p-5 reveal">
+          <h3 class="font-semibold">Optimiser une API REST avec Node.js</h3>
+          <p class="text-slate-300 mt-1">Performance, sécurité et DX.</p>
+          <button class="mt-2 text-brand2 hover:underline readmore" data-target="b1">Lire l’article</button>
+          <div id="b1" class="max-h-0 overflow-hidden transition-[max-height] duration-500 text-slate-300">
+            <ul class="list-disc list-inside mt-3 space-y-1">
+              <li>Cache intelligent</li>
+              <li>Compression Gzip</li>
+              <li>Rate limiting</li>
+              <li>Indexation DB</li>
+            </ul>
+          </div>
+        </article>
+        <article class="card p-5 reveal">
+          <h3 class="font-semibold">Django + React : le duo gagnant</h3>
+          <p class="text-slate-300 mt-1">Back solide, front fluide.</p>
+          <button class="mt-2 text-brand2 hover:underline readmore" data-target="b2">Lire l’article</button>
+          <div id="b2" class="max-h-0 overflow-hidden transition-[max-height] duration-500 text-slate-300">
+            <p class="mt-3">Séparation claire des responsabilités, vélocité, scalabilité.</p>
+          </div>
+        </article>
+        <article class="card p-5 reveal">
+          <h3 class="font-semibold">5 outils indispensables Full‑stack</h3>
+          <p class="text-slate-300 mt-1">Gagnez du temps chaque jour.</p>
+          <button class="mt-2 text-brand2 hover:underline readmore" data-target="b3">Lire l’article</button>
+          <div id="b3" class="max-h-0 overflow-hidden transition-[max-height] duration-500 text-slate-300">
+            <ol class="list-decimal list-inside mt-3 space-y-1">
+              <li>Git</li><li>Docker</li><li>Postman</li><li>VS Code</li><li>MongoDB Compass</li>
+            </ol>
+          </div>
+        </article>
+      </div>
+    </section>-->
+
+    <!-- CONTACT -->
+    <section id="contact" class="container max-w-7xl px-4 pb-24">
+      <div class="text-center">
+        <h2 class="text-3xl md:text-4xl font-bold" data-i18n="contact.title">📩 Contact</h2>
+        <p class="mt-2 text-slate-300" data-i18n="contact.subtitle">Parlons de votre projet.</p>
+      </div>
+      <form id="contactForm" class="mt-8 max-w-2xl mx-auto card p-6" method="POST" action="https://api.web3forms.com/submit">
+        <!-- Web3Forms access key -->
+        <input type="hidden" name="access_key" value="e667d93e-9313-417c-9c0c-e909c23209cb" />
+        <label class="block text-sm"> <span data-i18n="contact.name">Nom</span>
+          <input name="name" class="mt-1 w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2" required id="cName" />
+        </label>
+        <label class="block text-sm mt-4"> <span data-i18n="contact.email">Email</span>
+          <input name="email" type="email" class="mt-1 w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2" required id="cEmail" />
+        </label>
+        <label class="block text-sm mt-4"> <span data-i18n="contact.message">Message</span>
+          <textarea name="message" class="mt-1 w-full rounded-xl border border-slate-800 bg-slate-900 px-3 py-2" rows="5" required id="cMsg"></textarea>
+        </label>
+        <!-- honeypot -->
+        <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+        <button class="mt-6 btn btn-primary btn-glass relative overflow-hidden" id="sendBtn" data-i18n="contact.send">Envoyer</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="border-t border-slate-800/60">
+    <div class="container max-w-7xl px-4 py-8 grid md:grid-cols-3 gap-6 text-sm">
+      <div>
+        <p class="font-semibold">David WAWINA</p>
+        <p class="text-slate-400 mt-1" data-i18n="footer.bio">Développeur full‑stack, passionné par les produits utiles & élégants.</p>
+      </div>
+      <div>
+        <p class="font-semibold" data-i18n="footer.links">Liens</p>
+        <ul class="mt-2 space-y-1 text-slate-400">
+          <li><a class="hover:text-white" href="#projets" data-i18n="nav.projects">Projets</a></li>
+          <!--<li><a class="hover:text-white" href="#blog" data-i18n="nav.blog">Blog</a></li>-->
+          <li><a class="hover:text-white" href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-semibold" data-i18n="footer.follow">Réseaux sociaux</p>
+        <div class="mt-2 flex items-center gap-4 text-lg">
+          <a aria-label="LinkedIn" href="https://linkedin.com/in/davidwawina" target="_blank" class="hover:text-white"><i class="fa-brands fa-linkedin"></i></a>
+          <a aria-label="GitHub" href="https://github.com/" target="_blank" class="hover:text-white"><i class="fa-brands fa-github"></i></a>
+          <a aria-label="Facebook" href="https://facebook.com/magnumtheone" target="_blank" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a>
+          <!--<a aria-label="X" href="https://x.com" target="_blank" class="hover:text-white"><i class="fa-brands fa-x-twitter"></i></a>-->
+          <!--<a aria-label="YouTube" href="https://youtube.com" target="_blank" class="hover:text-white"><i class="fa-brands fa-youtube"></i></a>-->
+        </div>
+        <p class="mt-3 text-slate-500">© <span id="year"></span> • Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Socials Menu (anywhere) -->
+  <div id="fab" class="fixed left-5 bottom-6 z-50">
+    <button class="btn btn-primary btn-glass" aria-haspopup="true" aria-expanded="false" id="fabBtn"><i class="fa-solid fa-share-nodes"></i></button>
+    <div id="fabMenu" class="hidden mt-2 flex flex-col gap-2">
+      <a href="https://linkedin.com/in/davidwawina" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+      <a href="https://github.com/" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-github"></i> GitHub</a>
+      <a href="https://facebook.com/magnumtheone" target="_blank" class="btn btn-ghost"><i class="fa-brands fa-facebook"></i> Facebook</a>
+    </div>
+  </div>
+
+  <!-- Toasts -->
+  <div id="toasts" class="fixed bottom-4 right-4 space-y-2 z-50"></div>
+
+  <script>
+    // Helpers
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => document.querySelectorAll(s);
+    function toast(msg, type='info'){ const el = document.createElement('div'); el.className = `px-4 py-3 rounded-xl border text-sm bg-slate-900 ${ type==='success'?'border-emerald-500/40 text-emerald-300': type==='error'?'border-rose-500/40 text-rose-300':'border-slate-700 text-slate-200' }`; el.textContent = msg; $('#toasts').appendChild(el); setTimeout(()=> el.remove(), 3500); }
+    function ripple(e){ const t=e.currentTarget, r=document.createElement('span'); const rect=t.getBoundingClientRect(); const size=Math.max(rect.width,rect.height); r.className='ripple'; r.style.width=r.style.height=size+'px'; r.style.left=(e.clientX-rect.left-size/2)+'px'; r.style.top=(e.clientY-rect.top-size/2)+'px'; t.appendChild(r); setTimeout(()=>r.remove(),650); }
+
+    // i18n
+    const dict = {
+      fr: {
+        'nav.about':'À propos','nav.skills':'Compétences','nav.projects':'Projets','nav.testimonials':'Témoignages','nav.blog':'Blog','nav.contact':'Contact',
+        'hero.badge':'Disponible pour mission / freelance','hero.im':'Je suis','hero.subtitle':'Développeur full‑stack. J’aide les équipes à passer de l’idée à la prod avec des produits rapides, fiables et beaux.',
+        'cta.viewProjects':'Voir mes projets','cta.downloadCV':'Télécharger mon CV','cta.copyMail':'Copier mon email',
+        'kpi.years':'Années d’expérience','kpi.projects':'Projets livrés','kpi.clients':'Clients satisfaits','kpi.commits':'Commits / an',
+        'about.title':'À propos','about.desc':'Full‑stack orienté produit, je construis des plateformes web & mobiles sécurisées (auth, paiements, dashboards) avec une obsession pour la DX/UX et la performance.',
+        'skills.radar':'Compétences (radar)','skills.stack':'Stack & outils',
+        'projects.title':'🚀 Projets','projects.subtitle':'Sélection de réalisations récentes.',
+        'filter.all':'Tous','filter.web':'Web','filter.mobile':'Mobile','filter.data':'Data',
+        'gallery.title':'🖼️ Galerie de projets','gallery.subtitle':'Screenshots, maquettes et prototypes.',
+        'testimonials.title':'💬 Témoignages',
+        'blog.title':'📝 Derniers articles',
+        'contact.title':'📩 Contact','contact.subtitle':'Parlons de votre projet.','contact.name':'Nom','contact.email':'Email','contact.message':'Message','contact.send':'Envoyer',
+        'footer.bio':'Développeur full‑stack, passionné par les produits utiles & élégants.','footer.links':'Liens','footer.follow':'Réseaux sociaux'
+      },
+      en: {
+        'nav.about':'About','nav.skills':'Skills','nav.projects':'Projects','nav.testimonials':'Testimonials','nav.blog':'Blog','nav.contact':'Contact',
+        'hero.badge':'Available for missions / freelance','hero.im':'I am','hero.subtitle':'Full‑stack developer. I help teams go from idea to production with fast, reliable and beautiful products.',
+        'cta.viewProjects':'View my projects','cta.downloadCV':'Download CV','cta.copyMail':'Copy my email',
+        'kpi.years':'Years of experience','kpi.projects':'Projects delivered','kpi.clients':'Happy clients','kpi.commits':'Commits / year',
+        'about.title':'About','about.desc':'Product‑minded full‑stack, I build secure web & mobile platforms (auth, payments, dashboards) with a strong focus on DX/UX and performance.',
+        'skills.radar':'Skills (radar)','skills.stack':'Stack & tools',
+        'projects.title':'🚀 Projects','projects.subtitle':'A selection of recent work.',
+        'filter.all':'All','filter.web':'Web','filter.mobile':'Mobile','filter.data':'Data',
+        'gallery.title':'🖼️ Project gallery','gallery.subtitle':'Screenshots, mockups & prototypes.',
+        'testimonials.title':'💬 Testimonials',
+        'blog.title':'📝 Latest posts',
+        'contact.title':'📩 Contact','contact.subtitle':'Let’s talk about your project.','contact.name':'Name','contact.email':'Email','contact.message':'Message','contact.send':'Send',
+        'footer.bio':'Full‑stack developer, crafting useful & elegant products.','footer.links':'Links','footer.follow':'Follow'
+      }
+    }
+    function setLang(l){ localStorage.setItem('lang', l); $$('#navbar [data-i18n], #mobileMenu [data-i18n], [data-i18n]').forEach(el=>{ const k = el.getAttribute('data-i18n'); const t = dict[l][k]; if(t) el.textContent = t; }); $('#langLabel').textContent = l.toUpperCase(); document.documentElement.setAttribute('lang', l==='fr'?'fr':'en'); }
+
+    // Theme
+    const root = document.documentElement;
+    const themeToggle = $('#theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      root.classList.add('light');
+      themeIcon.className = 'fa-solid fa-sun';
+    } else {
+      root.classList.remove('light');
+      themeIcon.className = 'fa-solid fa-moon';
+    }
+    themeToggle.addEventListener('click', () => {
+      root.classList.toggle('light');
+      const isLight = root.classList.contains('light');
+      themeIcon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
+    // Language button
+    const savedLang = localStorage.getItem('lang') || 'fr'; setLang(savedLang);
+    $('#langBtn').addEventListener('click', (e)=>{ ripple(e); const next = (localStorage.getItem('lang')||'fr')==='fr'?'en':'fr'; setLang(next); });
+
+    // Mobile menu
+    $('#menuBtn').addEventListener('click', ()=> $('#mobileMenu').classList.toggle('hidden'));
+
+    // Scroll progress + ToTop visibility
+    const bar = $('#scrollbar'); const toTop=$('#toTop'); window.addEventListener('scroll', ()=>{ const h=document.documentElement; const p= (h.scrollTop)/(h.scrollHeight-h.clientHeight)*100; bar.style.width = p+'%'; toTop.classList.toggle('hidden', window.scrollY < 450); }); toTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+    // Typing
+    const rolesFR=["Développeur Full‑Stack.","Créateur de solutions numériques.","Formateur & Consultant."], rolesEN=["Full‑Stack Developer.","Digital Solutions Builder.","Trainer & Consultant."]; let idx=0, txt=''; let typing=true, ch=0; (function loop(){ const el=$('#typing'); if(!el) return; const l=localStorage.getItem('lang')||'fr'; const arr=l==='fr'?rolesFR:rolesEN; const target=arr[idx]; if(typing){ if(ch<target.length){ txt+=target[ch++]; el.textContent=txt; setTimeout(loop,90);} else {typing=false; setTimeout(loop,1600);} } else { if(ch>0){ txt=txt.slice(0,-1); ch--; el.textContent=txt; setTimeout(loop,40);} else { typing=true; idx=(idx+1)%arr.length; setTimeout(loop,400);} } })();
+
+    // Counters + reveal on scroll
+    function startCounters(){ const els=$$('[data-counter]'); if(!els.length) return; const io=new IntersectionObserver((ents)=>{ ents.forEach(ent=>{ if(!ent.isIntersecting) return; const el=ent.target; io.unobserve(el); const target=+el.getAttribute('data-counter'); const dur=1000+Math.min(2000,target/2); const s=performance.now(); function tick(now){ const t=Math.min(1,(now-s)/dur); const val=Math.floor(target*(t*(2-t))); el.textContent=val.toLocaleString('fr-FR'); if(t<1) requestAnimationFrame(tick);} requestAnimationFrame(tick); }); },{threshold:.4}); els.forEach(el=>io.observe(el)); }
+    function reveal(){ const io=new IntersectionObserver((ents)=>{ ents.forEach(ent=>{ if(ent.isIntersecting){ ent.target.classList.add('revealed'); io.unobserve(ent.target);} }); },{threshold:.2}); $$('.reveal').forEach(el=>io.observe(el)); }
+
+    // Radar chart
+    function radar(){ const c=$('#radar'); if(!c) return; const isLight = root.classList.contains('light'); const gridColor = isLight? 'rgba(15,23,42,.15)':'rgba(148,163,184,.15)'; const labelColor = isLight? '#334155':'#cbd5e1'; const d={ labels:['JS','React','Node','Python','Django','SQL','DevOps'], datasets:[{ label:'Niveau', data:[90,85,80,88,86,78,72], borderColor:'#38bdf8', backgroundColor:'rgba(56,189,248,.15)' }] }; new Chart(c,{ type:'radar', data:d, options:{ plugins:{legend:{display:false}}, scales:{ r:{ angleLines:{color:gridColor}, grid:{color:gridColor}, pointLabels:{ color:labelColor }, suggestedMin:0, suggestedMax:100 } } } }); }
+
+    // Project data (generated content)
+    const dataProjects = [
+      { id:'fa', title:'FastAkademia', category:'web', image:'images/fastakademia.webp', technologies:['Django','React','Tailwind','M‑Pesa/Airtel/Orange','QR'], description:'Plateforme de paiement académique en ligne avec reçu QR sécurisé, anti‑fraude et dashboard temps réel.', live:'#', repo:'#', charts:[ [35,60,80,95], [12,28,45,72], [5,12,22,40] ] },
+      { id:'ds', title:'DataSense', category:'data', image:'images/fitness.webp', technologies:['Python','Pandas','FastAPI','PostgreSQL'], description:'Pipeline d’ingestion et API d’analytics (ETL, agrégations, caching) – latence p95 < 120ms.', live:'https://dashbordpro.vercel.app', repo:'#', charts:[ [10,30,50,90], [5,9,15,25], [2,7,13,21] ] },
+      { id:'mobi', title:'ShopGo Mobile', category:'mobile', image:'images/mshop.png', technologies:['React Native','Expo','Stripe'], description:'App e‑commerce mobile – checkout Stripe, notifications, thèmes dynamiques.', live:'#', repo:'#', charts:[ [20,45,70,88], [6,14,22,31], [1,4,9,16] ] },
+      { id:'dash', title:'OpsDash', category:'web', image:'images/gnsite.webp', technologies:['Next.js','tRPC','Prisma','Docker'], description:'Dashboard DevOps – logs, métriques, alerting, RBAC et audit trail.', live:'#', repo:'#', charts:[ [15,35,65,92], [8,13,19,27], [3,8,14,20] ] }
+    ];
+
+    // Build projects grid
+    function buildProjects(){ const grid=$('#projects'); grid.innerHTML=''; dataProjects.forEach(p=>{ const card=document.createElement('article'); card.className='mitem card mb-4 overflow-hidden hover:-translate-y-1 transition reveal'; card.innerHTML=`<div class="relative"><img src="${p.image}" alt="${p.title}" class="w-full h-48 object-cover" loading="lazy"/><span class='absolute top-3 right-3 text-xs px-2 py-1 rounded-full bg-black/50 border border-white/10'>${p.category}</span></div><div class="p-5"><div class="flex items-center justify-between gap-2"><h3 class="font-semibold">${p.title}</h3><div class='flex gap-2 text-xs text-slate-400'><i class="fa-solid fa-diagram-project"></i><i class="fa-solid fa-tower-broadcast"></i><i class="fa-solid fa-lock"></i></div></div><p class="text-slate-300 mt-1 text-sm">${(p.technologies||[]).join(' • ')}</p><div class='mt-3 flex gap-2'><button class='btn btn-primary open-proj'><i class="fa-solid fa-circle-info"></i> Détails</button><a class='btn btn-ghost' href='${p.live}' target='_blank'><i class="fa-solid fa-arrow-up-right-from-square"></i> Live</a></div></div>`; card.dataset.cat=p.category.toLowerCase(); card.querySelector('.open-proj').addEventListener('click',()=>openProject(p)); grid.appendChild(card); }); bindFilters(); }
+
+    function bindFilters(){
+  $$('.filter-btn').forEach(b =>
+    b.addEventListener('click', (e) => {
+      ripple(e);
+      const f = b.getAttribute('data-filter');
+      $$('#projects .mitem').forEach(it => {
+        // ✅ Laisser l'item en display par défaut (block) pour le layout en colonnes
+        it.style.display = (f === 'all' || it.dataset.cat === f) ? '' : 'none';
+      });
+    })
+  );
+}
+    // Open project modal + charts
+    let modalCharts=[];
+    function openProject(p){ const m=$('#projModal'); $('#mTitle').textContent=p.title; $('#mImg').src=p.image; $('#mText').innerHTML = `<p>${p.description}</p><ul class='list-disc list-inside mt-2 text-sm opacity-90'><li>Scope: ${p.technologies.join(', ')}</li><li>Livrables: UI réactive, API sécurisée, monitoring</li><li>Résultats: perf x2, bugs -37%, satisfaction +24%</li></ul>`; $('#mLive').href=p.live; $('#mRepo').href=p.repo; if(modalCharts.length){ modalCharts.forEach(c=>c.destroy()); modalCharts=[]; }
+      const base = { plugins:{legend:{display:false}}, scales:{x:{display:false}, y:{display:false}}};
+      modalCharts.push(new Chart($('#mChart1'),{type:'line',data:{labels:['T1','T2','T3','T4'],datasets:[{data:p.charts[0]}]},options:base}));
+      modalCharts.push(new Chart($('#mChart2'),{type:'bar',data:{labels:['T1','T2','T3','T4'],datasets:[{data:p.charts[1]}]},options:base}));
+      modalCharts.push(new Chart($('#mChart3'),{type:'line',data:{labels:['T1','T2','T3','T4'],datasets:[{data:p.charts[2]}]},options:base}));
+      if(typeof m.showModal==='function') m.showModal(); else m.classList.remove('hidden');
+    }
+    $('#mClose').addEventListener('click', ()=>{ const m=$('#projModal'); if(m.close) m.close(); else m.classList.add('hidden'); });
+
+
+// --- Données (ajout du "gender": 'male' | 'female' | 'other') ---
+const testimonials = [
+  { text: 'David a transformé notre idée en une application robuste et performante.', author: 'Jean-Luc, Bekam\'Art', gender: 'male', stars: 5 },
+  { text: 'Une collaboration exceptionnelle ! Toujours des solutions créatives.', author: 'Marie, SM', gender: 'female', stars: 5 },
+  { text: 'Expert full-stack, livraison de haute qualité dans les délais.', author: 'Fatima, Entrepreneuse', gender: 'female', stars: 4 },
+  { text: 'Capacité à résoudre les problèmes complexes impressionnante.', author: 'Anonyme, CTO', gender: 'other', stars: 5 },
+  { text: 'Rapide et soigné. Je recommande vivement.', author: 'Hope, Club RFI-Kisangani', gender: 'other', stars: 5 },
+];
+
+const genderIcon = (g) => {
+  switch ((g || 'other').toLowerCase()) {
+    case 'male':   return { icon: 'fa-user',          bg: 'bg-sky-500/15',    ico: 'text-sky-300'    };
+    case 'female': return { icon: 'fa-person-dress',  bg: 'bg-fuchsia-500/15',ico: 'text-fuchsia-300'};
+    default:       return { icon: 'fa-user-large',    bg: 'bg-slate-500/15',  ico: 'text-slate-300'  };
+  }
+};
+
+let cur = 0;
+
+function loadTestimonials() {
+  const track = $('#tTrack');
+  const dots  = $('#tDots');
+  track.innerHTML = '';
+  dots.innerHTML  = '';
+
+  testimonials.forEach((t, i) => {
+    const { icon, bg, ico } = genderIcon(t.gender);
+
+    const slide = document.createElement('div');
+    slide.className = 'shrink-0 w-full md:w-1/2 lg:w-1/3 px-3';
+    slide.innerHTML = `
+      <div class="card grad-border p-6 h-full text-center">
+        <div class="w-14 h-14 mx-auto rounded-full grid place-items-center border border-white/20 ${bg}">
+          <i class="fa-solid ${icon} ${ico} text-xl"></i>
+        </div>
+        <div class="mt-2 text-amber-400">${'★'.repeat(t.stars)}${'☆'.repeat(5 - t.stars)}</div>
+        <p class="italic text-slate-300 mt-2">“${t.text}”</p>
+        <p class="mt-3 font-semibold">— ${t.author}</p>
+      </div>
+    `;
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-600';
+    dot.addEventListener('click', () => goTo(i));
+    dots.appendChild(dot);
+  });
+
+  goTo(0);
+}
+
+function goTo(i) {
+  cur = i;
+  const track = $('#tTrack');
+  const dots  = $$('#tDots button');
+  const firstSlide = track.querySelector('.shrink-0');
+  if (!firstSlide) return;
+  const slideWidth = firstSlide.offsetWidth;
+  track.style.transform = `translateX(${-i * slideWidth}px)`;
+  dots.forEach((d, idx) => d.style.background = idx === i ? '#fff' : '#475569');
+}
+
+// Contrôles et auto défilement (inchangés)
+$('#tPrev').addEventListener('click', () => goTo((cur - 1 + testimonials.length) % testimonials.length));
+$('#tNext').addEventListener('click', () => goTo((cur + 1) % testimonials.length));
+let auto = setInterval(() => { goTo((cur + 1) % testimonials.length); }, 5000);
+$('#tTrack').addEventListener('mouseenter', () => clearInterval(auto));
+$('#tTrack').addEventListener('mouseleave', () => auto = setInterval(() => { goTo((cur + 1) % testimonials.length); }, 5000));
+
+// Lance le rendu
+loadTestimonials();
+
+    // Blog read more
+    $$('.readmore').forEach(btn=> btn.addEventListener('click', ()=>{ const id=btn.dataset.target; const box=document.getElementById(id); const open=box.style.maxHeight && box.style.maxHeight!=='0px'; box.style.maxHeight = open ? '0' : '300px'; btn.textContent = open ? (localStorage.getItem('lang')==='en'?'Read post':'Lire l\'article') : (localStorage.getItem('lang')==='en'?'Collapse':'Réduire l\'article'); }));
+
+    // Gallery images
+    const galleryImages=[
+      'images/fitness.png','images/mshop.png','images/educa.png','images/Capture d’écran 2025-09-24 074314.png','images/Capture d’écran 2025-09-25 071843.png','images/gnsite.jpg'
+    ];
+    function buildGallery(){ const g=$('#galGrid'); g.innerHTML=''; galleryImages.forEach(src=>{ const a=document.createElement('a'); a.href=src; a.className='group block relative overflow-hidden rounded-xl'; a.innerHTML=`<img src='${src}' class='w-full h-40 object-cover group-hover:scale-105 transition' alt='capture'/><div class='absolute inset-0 bg-black/0 group-hover:bg-black/20 transition'></div>`; a.addEventListener('click', (e)=>{ e.preventDefault(); $('#lbImg').src=src; const lb=$('#lightbox'); if(lb.showModal) lb.showModal(); else lb.classList.remove('hidden'); }); g.appendChild(a); }); }
+    $('#lightbox')?.addEventListener('click', e=>{ if(e.target.id==='lightbox') e.currentTarget.close?.(); })
+
+    // Blog & Contact
+    $('#copyMail').addEventListener('click', (e)=>{ ripple(e); navigator.clipboard.writeText('magnum1wawina@gmail.com'); toast(localStorage.getItem('lang')==='en'?'Email copied':'Email copié','success'); });
+
+    // Web3Forms success feedback
+   $('#contactForm').addEventListener('submit', (e)=>{ const name=$('#cName').value.trim(), m=$('#cEmail').value.trim(), msg=$('#cMsg').value.trim(); if(!name||!m||!msg){ e.preventDefault(); toast(localStorage.getItem('lang')==='en'?'Please fill all fields':'Veuillez remplir tous les champs','error'); }
+    // Let the native submission happen; optional: show toast
+      setTimeout(()=> toast(localStorage.getItem('lang')==='en'?'Message sent!':'Message envoyé !','success'), 300);
+    });
+    $('#contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = $('#cName').value.trim(), m = $('#cEmail').value.trim(), msg = $('#cMsg').value.trim();
+      if (!name || !m || !msg) {
+        toast(localStorage.getItem('lang') === 'en' ? 'Please fill all fields' : 'Veuillez remplir tous les champs', 'error');
+        return;
+      }
+      const btn = $('#sendBtn');
+      btn.disabled = true;
+      btn.classList.add('opacity-60', 'cursor-not-allowed');
+      try {
+        const formData = new FormData(e.target);
+        const res = await fetch(e.target.action, { method: 'POST', body: formData });
+        let ok = res.ok;
+        try { const json = await res.json(); if (json && ('success' in json)) ok = ok && json.success; } catch (_) {}
+        if (ok) {
+          // redirect to thank you page
+          window.location.href = 'thanks.html';
+        } else {
+          toast(localStorage.getItem('lang') === 'en' ? 'Submission failed, please try again.' : 'Envoi échoué, veuillez réessayer.', 'error');
+        }
+      } catch (err) {
+        toast(localStorage.getItem('lang') === 'en' ? 'Network error, please try again.' : 'Erreur réseau, veuillez réessayer.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('opacity-60', 'cursor-not-allowed');
+      }
+    });
+
+    // FAB socials
+    $('#fabBtn').addEventListener('click', (e)=>{ ripple(e); $('#fabMenu').classList.toggle('hidden'); });
+
+    // Init
+    document.getElementById('year').textContent = new Date().getFullYear();
+    window.addEventListener('load', ()=>{ startCounters(); reveal(); radar(); buildProjects(); loadTestimonials(); buildGallery(); });
+
+  </script>
+</body>
+</html>
