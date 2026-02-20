@@ -11,7 +11,7 @@
   <meta name="description" content="Portfolio de David Wawina MBULA, David MBULA, David Wawina, Kisangani développeur full-stack (JS/TS, APIs, Tailwind). Applications web rapides, sécurisées et scalables — Kisangani, RDC. Mbula Wawina David." />
 
   <!-- Canonical (URL absolue) -->
-  <link rel="canonical" href="https://portfoliodavidwawina.vercel.app/" />
+  <link rel="canonical" href="https://davidwawina.site/" />
 
   <!-- Favicon / PWA basics -->
   <link rel="icon" href="./images/logof.jpg" type="image/svg+xml">
@@ -26,9 +26,9 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Développeur Full-Stack à Kisangani — David Wawina MBULA">
   <meta property="og:description" content="Apps web rapides et fiables. Front & back, APIs, intégrations paiement, Tailwind. Basé à Kisangani (RDC).">
-  <meta property="og:url" content="https://portfoliodavidwawina.vercel.app/">
+  <meta property="og:url" content="https://davidwawina.site/">
   <meta property="og:site_name" content="David Wawina MBULA — Portfolio">
-  <meta property="og:image" content="https://portfoliodavidwawina.vercel.app/og-cover.jpg">
+  <meta property="og:image" content="https://davidwawina.site/og-cover.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
 
@@ -36,7 +36,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Développeur Full-Stack à Kisangani — David Wawina MBULA">
   <meta name="twitter:description" content="Applications web modernes, performantes et sécurisées. JS/TS, APIs, Tailwind. Kisangani, RDC.">
-  <meta name="twitter:image" content="https://portfoliodavidwawina.vercel.app/og-cover.jpg">
+  <meta name="twitter:image" content="https://davidwawina.site/og-cover.jpg">
 
   <!-- Indexation -->
   <meta name="robots" content="index, follow, max-image-preview:large">
@@ -48,12 +48,12 @@
     "@graph":[
       {
         "@type":"Person",
-        "@id":"https://portfoliodavidwawina.vercel.app/#person",
+        "@id":"https://davidwawina.site/#person",
         "name":"David Wawina MBULA",
         "jobTitle":"Développeur full-stack",
         "description":"Développeur full-stack basé à Kisangani (RDC) — JS/TS, APIs, Tailwind, performance et sécurité.",
-        "url":"https://portfoliodavidwawina.vercel.app/",
-        "image":"https://portfoliodavidwawina.vercel.app/portrait.jpg",
+        "url":"https://davidwawina.site/",
+        "image":"https://davidwawina.site/portrait.jpg",
         "address":{
           "@type":"PostalAddress",
           "addressLocality":"Kisangani",
@@ -61,21 +61,21 @@
           "addressCountry":"CD"
         },
         "sameAs":[
-          "https://github.com/",
+          "https://github.com/davidwawina",
           "https://www.linkedin.com/in/davidwawina/",
           "https://facebook.com/magnumtheone"
         ]
       },
       {
         "@type":"WebSite",
-        "@id":"https://portfoliodavidwawina.vercel.app/#website",
-        "url":"https://portfoliodavidwawina.vercel.app/",
+        "@id":"https://davidwawina.site/#website",
+        "url":"https://davidwawina.site/",
         "name":"David Wawina MBULA — Portfolio",
-        "publisher":{"@id":"https://portfoliodavidwawina.vercel.app/#person"},
+        "publisher":{"@id":"https://davidwawina.site/#person"},
         "inLanguage":"fr-FR",
         "potentialAction":{
           "@type":"SearchAction",
-          "target":"https://portfoliodavidwawina.vercel.app/recherche?q={search_term_string}",
+          "target":"https://davidwawina.site/recherche?q={search_term_string}",
           "query-input":"required name=search_term_string"
         }
       }
@@ -162,12 +162,12 @@
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-1">
-        <a href="#about" class="nav-link" data-i18n="nav.about">À propos</a>
-        <a href="#skills" class="nav-link" data-i18n="nav.skills">Compétences</a>
-        <a href="#projets" class="nav-link" data-i18n="nav.projects">Projets</a>
-        <a href="#temoignages" class="nav-link" data-i18n="nav.testimonials">Témoignages</a>
-        <a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a>
+      <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Navigation principale">
+        <a href="#about" class="nav-link" title="En savoir plus sur moi" data-i18n="nav.about">À propos</a>
+        <a href="#skills" class="nav-link" title="Découvrir mes compétences techniques" data-i18n="nav.skills">Compétences</a>
+        <a href="#projets" class="nav-link" title="Voir mes projets et réalisations" data-i18n="nav.projects">Projets</a>
+        <a href="#temoignages" class="nav-link" title="Lire les témoignages de mes clients" data-i18n="nav.testimonials">Témoignages</a>
+        <a href="#contact" class="nav-link" title="Me contacter" data-i18n="nav.contact">Contact</a>
       </nav>
 
       <div class="flex items-center gap-2">
@@ -182,7 +182,7 @@
           <i class="fa-solid fa-moon" id="themeIcon"></i>
         </button>
         
-        <a href="#contact" class="btn btn-primary h-9 px-4 text-sm hidden sm:inline-flex" data-i18n="cta.contact">Me contacter</a>
+        <a href="#contact" class="btn btn-primary h-9 px-4 text-sm hidden sm:inline-flex" title="Envoyer un message" aria-label="Me contacter" data-i18n="cta.contact">Me contacter</a>
         <button id="menuBtn" class="md:hidden p-2 text-google-textSec dark:text-slate-400"><i class="fa-solid fa-bars text-xl"></i></button>
       </div>
     </div>
@@ -228,13 +228,13 @@
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#projets" class="btn btn-android w-full sm:w-auto shadow-lg shadow-green-500/20" data-i18n="cta.viewProjects">
+          <a href="#projets" title="Parcourez ma sélection de projets et réalisations" aria-label="Voir tous mes projets" class="btn btn-android w-full sm:w-auto shadow-lg shadow-green-500/20" data-i18n="cta.viewProjects">
             <i class="fa-solid fa-code"></i> Voir mes projets
           </a>
-          <a href="cv/MBULA_WAWINA_Développeur_Full_Stack_Cv.pdf" download class="btn btn-outline w-full sm:w-auto" data-i18n="cta.downloadCV">
+          <a href="https://davidwawina.site/cv/MBULA_WAWINA_Développeur_Full_Stack_Cv.pdf" download title="Télécharger mon CV en PDF" aria-label="Télécharger mon curriculum vitae" class="btn btn-outline w-full sm:w-auto" data-i18n="cta.downloadCV">
             <i class="fa-solid fa-download"></i> Télécharger CV
           </a>
-          <button id="copyMail" class="btn btn-ghost w-full sm:w-auto" data-i18n="cta.copyMail">
+          <button id="copyMail" title="Copier mon adresse email" aria-label="Copier email" class="btn btn-ghost w-full sm:w-auto" data-i18n="cta.copyMail">
             <i class="fa-solid fa-envelope"></i> Copier mon email
           </button>
         </div>
@@ -485,10 +485,10 @@
           <div>
             <h4 class="font-bold mb-4 uppercase text-xs tracking-wider text-google-green" data-i18n="footer.social">Réseaux</h4>
             <ul class="space-y-3 text-gray-400 text-sm">
-              <li><a href="https://linkedin.com/in/davidwawina" target="_blank" rel="noopener" class="hover:text-white transition"><i class="fa-brands fa-linkedin mr-2"></i> LinkedIn</a></li>
-              <li><a href="https://github.com/" target="_blank" rel="noopener" class="hover:text-white transition"><i class="fa-brands fa-github mr-2"></i> GitHub</a></li>
-              <li><a href="https://facebook.com/magnumtheone" target="_blank" rel="noopener" class="hover:text-white transition"><i class="fa-brands fa-facebook mr-2"></i> Facebook</a></li>
-              <li><a href="https://wa.me/243816684426" target="_blank" rel="noopener" class="hover:text-white transition"><i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp</a></li>
+              <li><a href="https://www.linkedin.com/in/davidwawina" target="_blank" rel="noopener me" title="Visitez mon profil LinkedIn" aria-label="Profil LinkedIn de David Wawina" class="hover:text-google-blue transition font-medium"><i class="fa-brands fa-linkedin mr-2"></i> LinkedIn</a></li>
+              <li><a href="https://github.com/davidwawina" target="_blank" rel="noopener me" title="Consultez mon code sur GitHub" aria-label="Profil GitHub de David Wawina" class="hover:text-google-blue transition font-medium"><i class="fa-brands fa-github mr-2"></i> GitHub</a></li>
+              <li><a href="https://facebook.com/magnumtheone" target="_blank" rel="noopener me" title="Connectez-vous sur Facebook" aria-label="Profil Facebook de David Wawina" class="hover:text-google-blue transition font-medium"><i class="fa-brands fa-facebook mr-2"></i> Facebook</a></li>
+              <li><a href="https://wa.me/243816684426" target="_blank" rel="noopener" title="Chatez sur WhatsApp" aria-label="WhatsApp - David Wawina" class="hover:text-google-blue transition font-medium"><i class="fa-brands fa-whatsapp mr-2"></i> WhatsApp</a></li>
             </ul>
           </div>
         </div>
@@ -536,9 +536,9 @@
         <i class="fa-solid fa-share-nodes"></i>
       </button>
       <div id="fabMenu" class="hidden mt-2 flex flex-col gap-2">
-        <a href="https://linkedin.com/in/davidwawina" target="_blank" rel="noopener" class="btn btn-outline h-10 text-sm"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-        <a href="https://github.com/" target="_blank" rel="noopener" class="btn btn-outline h-10 text-sm"><i class="fa-brands fa-github"></i> GitHub</a>
-        <a href="https://wa.me/243816684426" target="_blank" rel="noopener" class="btn btn-outline h-10 text-sm"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        <a href="https://www.linkedin.com/in/davidwawina" target="_blank" rel="noopener me" title="Profil LinkedIn" aria-label="LinkedIn" class="btn btn-outline h-10 text-sm"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+        <a href="https://github.com/davidwawina" target="_blank" rel="noopener me" title="Code Source" aria-label="GitHub" class="btn btn-outline h-10 text-sm"><i class="fa-brands fa-github"></i> GitHub</a>
+        <a href="https://wa.me/243816684426" target="_blank" rel="noopener" title="Message WhatsApp" aria-label="WhatsApp" class="btn btn-outline h-10 text-sm"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
       </div>
     </div>
 
