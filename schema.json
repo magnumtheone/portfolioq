@@ -1,0 +1,80 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://davidwawina.site/#person",
+      "name": "David Wawina MBULA",
+      "jobTitle": "Développeur Full-Stack",
+      "description": "Développeur full-stack basé à Kisangani (RDC) spécialisé en JavaScript/TypeScript, React, Python Django/FastAPI",
+      "url": "https://davidwawina.site",
+      "image": "https://davidwawina.site/images/po.jpg",
+      "email": "contact@davidwawina.site",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kisangani",
+        "addressRegion": "Tshopo",
+        "addressCountry": "CD"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/davidwawina/",
+        "https://github.com/davidwawina",
+        "https://facebook.com/magnumtheone"
+      ],
+      "knowsAbout": [
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "Node.js",
+        "Python",
+        "Django",
+        "FastAPI",
+        "PostgreSQL",
+        "Docker",
+        "AWS",
+        "React Native",
+        "Expo",
+        "Flutter",
+        "API Design",
+        "Frontend Architecture",
+        "Database Optimization"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://davidwawina.site/#website",
+      "url": "https://davidwawina.site",
+      "name": "David Wawina MBULA — Portfolio Développeur",
+      "description": "Portfolio professionnel de David Wawina, développeur full-stack à Kisangani",
+      "publisher": {
+        "@id": "https://davidwawina.site/#person"
+      },
+      "inLanguage": "fr-FR",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://davidwawina.site/recherche?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://davidwawina.site/#business",
+      "name": "David Wawina - Services de Développement",
+      "url": "https://davidwawina.site",
+      "telephone": "+243816684426",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Kisangani",
+        "addressLocality": "Kisangani",
+        "addressRegion": "Tshopo",
+        "addressCountry": "CD"
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Democratic Republic of the Congo"
+      },
+      "serviceType": "Web Development, Full-Stack Development, Mobile App Development",
+      "priceRange": "$$"
+    }
+  ]
+}

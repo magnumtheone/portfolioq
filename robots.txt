@@ -1,0 +1,24 @@
+# robots.txt pour davidwawina.site
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.pdf$
+
+# Vitesse de crawl
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://davidwawina.site/sitemap.xml
+
+# Google Search Console
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# Priorité pour les moteurs de recherche
+User-agent: *
+Allow: /
