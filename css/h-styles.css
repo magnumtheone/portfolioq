@@ -420,6 +420,64 @@ html.dark .testimonial-card-modern:hover {
   visibility: visible;
 }
 
+.comment-popup {
+  position: fixed;
+  bottom: 7.6rem;
+  right: 1.5rem;
+  width: min(360px, calc(100vw - 2rem));
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(31, 41, 55, 0.12);
+  border-radius: 28px;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.16);
+  padding: 1rem;
+  z-index: 60;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+.comment-popup.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.comment-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.star-rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.star {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
+  background: var(--bg-secondary);
+  color: var(--google-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.star:hover,
+.star.active {
+  background: linear-gradient(135deg, #1a73e8, #3ddc84);
+  color: white;
+  border-color: rgba(26, 115, 232, 0.3);
+  transform: translateY(-1px);
+}
+
 #toTop {
   position: fixed;
   bottom: 1.5rem;

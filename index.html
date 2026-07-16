@@ -551,6 +551,40 @@
       <i class="fa-solid fa-arrow-up"></i>
     </button>
 
+    <!-- Floating Comment Popup -->
+    <div id="commentPopup" class="comment-popup" aria-hidden="true">
+      <div class="comment-popup-header">
+        <div>
+          <p class="text-sm font-semibold">Laisser un commentaire</p>
+          <p class="text-xs text-google-textSec">Nom, entreprise, rating et message</p>
+        </div>
+        <button type="button" id="closeCommentPopup" class="btn btn-ghost h-9 w-9 p-0" aria-label="Fermer le popup"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="text-xs text-google-textSec mb-4">Partagez un retour rapide sur votre besoin produit : équipe, objectif ou impression générale.</div>
+      <form id="commentPopupForm" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-google-textSec dark:text-slate-400 mb-2" for="cpName">Nom / Entreprise</label>
+          <input type="text" id="cpName" name="cpName" class="form-input" placeholder="Nom ou entreprise">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-google-textSec dark:text-slate-400 mb-2">Étoiles</label>
+          <div id="commentPopupStars" class="star-rating">
+            <button type="button" class="star" data-rating="1"><i class="fa-solid fa-star"></i></button>
+            <button type="button" class="star" data-rating="2"><i class="fa-solid fa-star"></i></button>
+            <button type="button" class="star" data-rating="3"><i class="fa-solid fa-star"></i></button>
+            <button type="button" class="star" data-rating="4"><i class="fa-solid fa-star"></i></button>
+            <button type="button" class="star active" data-rating="5"><i class="fa-solid fa-star"></i></button>
+          </div>
+          <input type="hidden" id="cpRating" name="cpRating" value="5">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-google-textSec dark:text-slate-400 mb-2" for="cpComment">Commentaire</label>
+          <textarea id="cpComment" name="cpComment" rows="4" class="form-input" placeholder="Votre commentaire..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-full text-sm">Envoyer mon commentaire</button>
+      </form>
+    </div>
+
     <!-- Toast Notification Container -->
     <div id="toasts" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2"></div>
 
@@ -755,8 +789,73 @@
     });
 
     commentBtn.addEventListener('click', () => {
-      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      $('#cMsg')?.focus();
+      $('#commentPopup')?.classList.toggle('visible');
+      $('#commentPopup')?.setAttribute('aria-hidden', $('#commentPopup').classList.contains('visible') ? 'false' : 'true');
+      $('#cpComment')?.focus();
+    });
+
+    $('#closeCommentPopup')?.addEventListener('click', () => {
+      $('#commentPopup')?.classList.remove('visible');
+      $('#commentPopup')?.setAttribute('aria-hidden', 'true');
+    });
+
+    $('#commentPopupStars')?.querySelectorAll('.star').forEach(star => {
+      star.addEventListener('click', () => {
+        const rating = star.dataset.rating || '5';
+        $('#cpRating').value = rating;
+        $('#commentPopupStars').querySelectorAll('.star').forEach(s => s.classList.toggle('active', s === star || Number(s.dataset.rating) <= Number(rating)));
+      });
+    });
+
+    $('#commentPopupForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nameOrCompany = $('#cpName')?.value.trim();
+      const rating = $('#cpRating')?.value || '5';
+      const commentText = $('#cpComment')?.value.trim();
+      const lang = localStorage.getItem('lang') || 'fr';
+
+      if (!commentText) {
+        toast('Merci d\'ajouter un commentaire.', 'error');
+        return;
+      }
+
+      const btn = $('#commentPopupForm button[type="submit"]');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ...';
+
+      try {
+        const formData = new FormData();
+        formData.append('access_key', 'db97ebd6-8125-4d33-b78a-507f224beb4f');
+        formData.append('name', nameOrCompany || 'Anonyme');
+        formData.append('company', nameOrCompany || 'N/A');
+        formData.append('rating', rating);
+        formData.append('comment', commentText);
+        formData.append('subject', 'Nouveau commentaire popup');
+        formData.append('redirect', 'thanks.html');
+
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+
+        if (data.success) {
+          toast('Commentaire envoyé !', 'success');
+          $('#commentPopup')?.classList.remove('visible');
+          $('#commentPopup')?.setAttribute('aria-hidden', 'true');
+          $('#commentPopupForm')?.reset();
+          $('#cpRating').value = '5';
+          $('#commentPopupStars').querySelectorAll('.star').forEach(s => s.classList.toggle('active', s.dataset.rating === '5'));
+        } else {
+          toast(`Échec de l\'envoi : ${data.message || 'Erreur'}`, 'error');
+        }
+      } catch (error) {
+        toast(`Erreur réseau : ${error?.message || 'Impossible d\'envoyer'}`, 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      }
     });
 
     toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
