@@ -89,26 +89,31 @@ h1, h2, h3, h4, h5 {
 }
 
 .btn-primary {
-  background-color: var(--google-blue);
+  background: linear-gradient(135deg, #1a73e8 0%, #2f61dc 50%, #3ddc84 100%);
   color: white;
   border: none;
+  box-shadow: 0 16px 40px rgba(26, 115, 232, 0.18);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 
 .btn-primary:hover {
-  background-color: var(--google-blue-dark);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 20px 45px rgba(26, 115, 232, 0.28);
+  background: linear-gradient(135deg, #1f7af2 0%, #32c58d 100%);
 }
 
 .btn-outline {
   background-color: var(--card-bg);
   color: var(--google-blue);
   border: 1px solid var(--border-color);
+  transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease;
 }
 
 .btn-outline:hover {
-  background-color: var(--bg-secondary);
-  border-color: var(--google-blue);
+  background-color: rgba(26, 115, 232, 0.08);
+  border-color: rgba(26, 115, 232, 0.45);
   color: var(--google-blue-dark);
+  transform: translateY(-1px);
 }
 
 .btn-android {
@@ -142,16 +147,16 @@ h1, h2, h3, h4, h5 {
 /* ========== CARDS ========== */
 .card-clean {
   background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(145, 158, 171, 0.16);
+  border-radius: 24px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   overflow: hidden;
 }
 
 .card-clean:hover {
-  border-color: transparent;
-  box-shadow: var(--card-hover-shadow);
-  transform: translateY(-2px);
+  border-color: rgba(26, 115, 232, 0.2);
+  box-shadow: 0 28px 60px rgba(15, 23, 42, 0.12);
+  transform: translateY(-6px);
 }
 
 /* ========== NAVBAR ========== */
@@ -193,12 +198,16 @@ h1, h2, h3, h4, h5 {
 .bg-grid-slate {
   background-size: 40px 40px;
   background-image: linear-gradient(to right, var(--border-color) 1px, transparent 1px),
-                    linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+                    linear-gradient(to bottom, var(--border-color) 1px, transparent 1px),
+                    radial-gradient(circle at top left, rgba(61, 220, 132, 0.12), transparent 40%),
+                    radial-gradient(circle at bottom right, rgba(26, 115, 232, 0.12), transparent 35%);
 }
 
 html.dark .bg-grid-slate {
   background-image: linear-gradient(to right, rgba(71, 85, 105, 0.3) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(71, 85, 105, 0.3) 1px, transparent 1px);
+                    linear-gradient(to bottom, rgba(71, 85, 105, 0.3) 1px, transparent 1px),
+                    radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 40%),
+                    radial-gradient(circle at bottom right, rgba(79, 70, 229, 0.12), transparent 35%);
 }
 
 /* ========== REVEAL ANIMATION ========== */
@@ -396,6 +405,21 @@ html.dark .testimonial-card-modern:hover {
 }
 
 /* ========== BACK TO TOP ========== */
+#commentBtn {
+  position: fixed;
+  bottom: 5rem;
+  right: 1.5rem;
+  z-index: 50;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+#commentBtn.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
 #toTop {
   position: fixed;
   bottom: 1.5rem;
@@ -409,6 +433,17 @@ html.dark .testimonial-card-modern:hover {
 #toTop.visible {
   opacity: 1;
   visibility: visible;
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--google-blue);
+  border: 1px solid rgba(26, 115, 232, 0.16);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(26, 115, 232, 0.08);
+  transform: translateY(-1px);
 }
 
 /* ========== SKIP LINK ========== */

@@ -214,8 +214,8 @@
         </div>
 
         <h1 class="text-5xl md:text-7xl font-bold text-google-text dark:text-white mb-6 tracking-tight leading-tight">
-          <span data-i18n="hero.title1">J'aide les équipes internationales à lancer</span> <span class="text-gradient" id="typing"></span><br>
-          <span class="text-google-textSec dark:text-slate-400" data-i18n="hero.title2">des produits web qui convertissent.</span>
+          <span data-i18n="hero.title1">J'accompagne les équipes locales et internationales pour lancer</span> <span class="text-gradient" id="typing"></span><br>
+          <span class="text-google-textSec dark:text-slate-400" data-i18n="hero.title2">des produits web à fort impact.</span>
         </h1>
 
         <p class="text-xl text-google-textSec dark:text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed" data-i18n="hero.subtitle">
@@ -446,6 +446,11 @@
             </div>
 
             <div>
+              <label class="block text-sm font-medium text-google-textSec dark:text-slate-400 mb-2" data-i18n="contact.commentLabel">Commentaire <span class="text-gray-400 text-xs">(optionnel)</span></label>
+              <textarea name="comment" id="cComment" rows="3" class="form-input" placeholder="Ajoutez votre commentaire..."></textarea>
+            </div>
+
+            <div>
               <label class="block text-sm font-medium text-google-textSec dark:text-slate-400 mb-2" data-i18n="contact.messageLabel">Message <span class="text-red-500">*</span></label>
               <textarea name="message" id="cMsg" rows="5" required class="form-input" placeholder="Décrivez votre projet..."></textarea>
             </div>
@@ -536,6 +541,11 @@
       </div>
     </div>
 
+    <!-- Floating Comment Button -->
+    <button id="commentBtn" class="btn btn-secondary h-12 w-12 p-0 rounded-full shadow-lg" aria-label="Laisser un commentaire" title="Laisser un commentaire">
+      <i class="fa-solid fa-comment-dots"></i>
+    </button>
+
     <!-- Back to Top Button -->
     <button id="toTop" class="btn btn-primary h-12 w-12 p-0 rounded-full shadow-lg" aria-label="Retour en haut">
       <i class="fa-solid fa-arrow-up"></i>
@@ -595,7 +605,7 @@
       fr: {
         'nav.about':'À propos','nav.skills':'Compétences','nav.projects':'Projets','nav.testimonials':'Témoignages','nav.contact':'Contact',
         'cta.contact':'Obtenir mon diagnostic produit','cta.viewProjects':'Voir les études de cas','cta.downloadCV':'Télécharger CV','cta.copyMail':'Copier mon email',
-        'hero.badge':'Disponible pour lancer un produit web','hero.title1':'J\'accompagne les équipes internationales pour lancer','hero.title2':'des produits web à fort impact.',
+        'hero.badge':'Disponible pour lancer un produit web','hero.title1':'J\'accompagne les équipes locales et internationales pour lancer','hero.title2':'des produits web à fort impact.',
         'hero.subtitle':'Je transforme des idées en produits web rapides, scalables et alignés avec les objectifs commerciaux.',
         'hero.stack':'Stack Produit',
         'kpi.years':'Années d\'expérience','kpi.projects':'Projets livrés','kpi.clients':'Clients satisfaits','kpi.commits':'Commits / an',
@@ -606,7 +616,7 @@
         'filter.all':'Tous','filter.web':'Produit Web',
         'testimonials.title':' Témoignages','testimonials.subtitle':'Ce que disent mes clients et collaborateurs.',
         'contact.title':'Évaluez votre produit web','contact.subtitle':'Présentez votre produit web international et je vous envoie une recommandation de lancement.',
-        'contact.nomLabel':'Nom','contact.postnomLabel':'Post-nom','contact.prenomLabel':'Prénom','contact.emailLabel':'Email','contact.telephoneLabel':'Téléphone','contact.entrepriseLabel':'Entreprise','contact.messageLabel':'Message','contact.send':'Demander mon diagnostic',
+        'contact.nomLabel':'Nom','contact.postnomLabel':'Post-nom','contact.prenomLabel':'Prénom','contact.emailLabel':'Email','contact.telephoneLabel':'Téléphone','contact.entrepriseLabel':'Entreprise','contact.commentLabel':'Commentaire','contact.messageLabel':'Message','contact.send':'Demander mon diagnostic',
         'footer.bio':'Développeur Full-Stack basé à Kisangani, RDC. Créateur de solutions numériques utiles et durables.',
         'footer.nav':'Navigation','footer.social':'Réseaux','footer.rights':'Tous droits réservés.','footer.made':'Fait avec','footer.and':'et Code.',
         'modal.source':'Code Source','modal.live':'Voir le site',
@@ -724,17 +734,29 @@
     // =====================================================
     const scrollBar = $('#scrollbar');
     const toTopBtn = $('#toTop');
+    const commentBtn = $('#commentBtn');
 
     window.addEventListener('scroll', () => {
       const h = document.documentElement;
       const p = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
       scrollBar.style.width = p + '%';
       
+      if (window.scrollY > 250) {
+        commentBtn.classList.add('visible');
+      } else {
+        commentBtn.classList.remove('visible');
+      }
+
       if (window.scrollY > 450) {
         toTopBtn.classList.add('visible');
       } else {
         toTopBtn.classList.remove('visible');
       }
+    });
+
+    commentBtn.addEventListener('click', () => {
+      document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      $('#cMsg')?.focus();
     });
 
     toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
@@ -963,6 +985,7 @@
       const email = $('#cEmail').value.trim();
       const telephone = $('#cTelephone').value.trim();
       const entreprise = $('#cEntreprise').value.trim();
+      const comment = $('#cComment').value.trim();
       const msg = $('#cMsg').value.trim();
       
       if (!nom || !prenom || !email || !telephone || !msg) {
@@ -983,6 +1006,7 @@
         formData.append('postnom', postnom);
         formData.append('prenom', prenom);
         formData.append('entreprise', entreprise);
+        formData.append('comment', comment);
         formData.append('email', email);
         formData.append('telephone', telephone);
         formData.append('message', msg);
