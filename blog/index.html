@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog — David Wawina MBULA</title>
+  <meta name="description" content="Blog de David Wawina : articles sur le développement web, les sites statiques et les bonnes pratiques sans back-end." />
+  <link rel="canonical" href="https://davidwawina.site/blog/" />
+  <link rel="icon" href="../images/logof.jpg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../css/h-styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            google: {
+              blue: '#1a73e8',
+              blueDark: '#174ea6',
+              green: '#3ddc84',
+              gray: '#f8f9fa',
+              text: '#202124',
+              textSec: '#5f6368',
+              border: '#dadce0',
+            }
+          },
+          boxShadow: {
+            'google': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-white dark:bg-slate-950 text-google-text dark:text-white">
+  <!-- Page blog principal : affiche les articles et les explications pour le blog statique. -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-b border-google-border dark:border-slate-800 h-16 flex items-center">
+    <div class="container mx-auto px-4 max-w-7xl flex justify-between items-center">
+      <a href="../" class="flex items-center gap-2">
+        <img src="../images/logof.jpg" alt="Logo David Wawina" class="h-8 w-8 rounded-full" loading="lazy" />
+        <span class="font-display font-medium text-xl tracking-tight">David<span class="text-google-textSec dark:text-slate-400 font-normal">Wawina</span></span>
+      </a>
+      <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Navigation principale">
+        <a href="../#about" class="nav-link">À propos</a>
+        <a href="../#skills" class="nav-link">Compétences</a>
+        <a href="../#projets" class="nav-link">Projets</a>
+        <a href="./" class="nav-link font-semibold text-google-blue">Blog</a>
+        <a href="../#contact" class="nav-link">Contact</a>
+      </nav>
+      <a href="../#contact" class="btn btn-primary h-9 px-4 text-sm hidden sm:inline-flex">Me contacter</a>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-4 max-w-6xl py-16">
+    <section class="mb-16 text-center">
+      <p class="text-sm uppercase tracking-[0.3em] text-google-blue font-semibold mb-4">Blog statique</p>
+      <h1 class="text-4xl sm:text-5xl font-bold mb-4">Articles sur le développement web sans back-end</h1>
+      <p class="max-w-2xl mx-auto text-google-textSec">Des guides pratiques, des conseils de structure et des bonnes pratiques pour garder votre blog léger, rapide et facile à maintenir.</p>
+    </section>
+
+    <section class="mb-16">
+      <!-- Section articles récents : cartes d'aperçu des derniers articles publiés. -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <p class="text-sm uppercase tracking-[0.3em] text-google-blue font-semibold">Articles récents</p>
+          <h2 class="text-3xl font-bold">Les derniers articles</h2>
+        </div>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-3">
+      <article class="rounded-3xl border border-google-border bg-white p-6 shadow-google transition hover:-translate-y-1">
+        <p class="text-sm text-google-textSec uppercase tracking-[0.25em] mb-2">4 juin 2026 • 2 min de lecture</p>
+        <h2 class="text-2xl font-semibold mb-3">Pourquoi un blog statique ?</h2>
+        <p class="text-google-textSec mb-4">Les avantages d’un blog sans back-end pour un portfolio personnel.</p>
+        <a href="./pourquoi-blog-statique.html" class="text-google-blue font-semibold hover:text-google-blueDark">Lire l’article →</a>
+      </article>
+      <article class="rounded-3xl border border-google-border bg-white p-6 shadow-google transition hover:-translate-y-1">
+        <p class="text-sm text-google-textSec uppercase tracking-[0.25em] mb-2">10 juin 2026 • 2 min de lecture</p>
+        <h2 class="text-2xl font-semibold mb-3">Comment gérer un blog statique</h2>
+        <p class="text-google-textSec mb-4">Gestion simple des articles et génération automatique de pages à partir de Markdown.</p>
+        <a href="./gerer-un-blog-sans-backend.html" class="text-google-blue font-semibold hover:text-google-blueDark">Lire l’article →</a>
+      </article>
+      </div>
+    </section>
+
+    <section class="grid gap-6 lg:grid-cols-2">
+      <article class="rounded-3xl border border-google-border bg-white p-8 shadow-google transition hover:-translate-y-1">
+        <p class="text-sm text-google-textSec uppercase tracking-[0.25em] mb-3">4 juin 2026</p>
+        <h2 class="text-2xl font-semibold mb-3">Pourquoi un blog statique ?</h2>
+        <p class="text-google-textSec mb-6">Les avantages d’un blog sans back-end pour un portfolio personnel.</p>
+        <a href="./pourquoi-blog-statique.html" class="text-google-blue font-semibold hover:text-google-blueDark">Lire l’article →</a>
+      </article>
+      <article class="rounded-3xl border border-google-border bg-white p-8 shadow-google transition hover:-translate-y-1">
+        <p class="text-sm text-google-textSec uppercase tracking-[0.25em] mb-3">10 juin 2026</p>
+        <h2 class="text-2xl font-semibold mb-3">Comment gérer un blog statique</h2>
+        <p class="text-google-textSec mb-6">Gestion simple des articles et génération automatique de pages à partir de Markdown.</p>
+        <a href="./gerer-un-blog-sans-backend.html" class="text-google-blue font-semibold hover:text-google-blueDark">Lire l’article →</a>
+      </article>
+    </section>
+
+    <section class="mt-16 rounded-3xl border border-google-border bg-slate-50 dark:bg-slate-900 p-8">
+      <h3 class="text-xl font-semibold mb-3">Comment ça marche ?</h3>
+      <p class="text-google-textSec">Les articles sont écrits en Markdown dans <code class="rounded bg-slate-100 px-2 py-1">blog/posts/</code>. Lancez <code class="rounded bg-slate-100 px-2 py-1">node scripts/generate-blog.js</code> pour créer les pages HTML automatiquement.</p>
+    </section>
+  </main>
+</body>
+</html>

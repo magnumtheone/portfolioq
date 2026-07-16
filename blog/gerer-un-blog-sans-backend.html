@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comment gérer un blog statique — Blog de David Wawina</title>
+  <meta name="description" content="Gestion simple des articles et génération automatique de pages à partir de Markdown." />
+  <link rel="canonical" href="https://davidwawina.site/blog/gerer-un-blog-sans-backend.html" />
+  <link rel="icon" href="../images/logof.jpg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../css/h-styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            display: ['Outfit', 'sans-serif'],
+          },
+          colors: {
+            google: {
+              blue: '#1a73e8',
+              blueDark: '#174ea6',
+              green: '#3ddc84',
+              gray: '#f8f9fa',
+              text: '#202124',
+              textSec: '#5f6368',
+              border: '#dadce0',
+            }
+          },
+          boxShadow: {
+            'google': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-white dark:bg-slate-950 text-google-text dark:text-white">
+  <!-- Page article : structure d'article simple pour lecteur et référencement. -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-b border-google-border dark:border-slate-800 h-16 flex items-center">
+    <div class="container mx-auto px-4 max-w-7xl flex justify-between items-center">
+      <a href="../" class="flex items-center gap-2">
+        <img src="../images/logof.jpg" alt="Logo David Wawina" class="h-8 w-8 rounded-full" loading="lazy" />
+        <span class="font-display font-medium text-xl tracking-tight">David<span class="text-google-textSec dark:text-slate-400 font-normal">Wawina</span></span>
+      </a>
+      <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Navigation principale">
+        <a href="../#about" class="nav-link">À propos</a>
+        <a href="../#skills" class="nav-link">Compétences</a>
+        <a href="../#projets" class="nav-link">Projets</a>
+        <a href="./" class="nav-link font-semibold text-google-blue">Blog</a>
+        <a href="../#contact" class="nav-link">Contact</a>
+      </nav>
+      <a href="../#contact" class="btn btn-primary h-9 px-4 text-sm hidden sm:inline-flex">Me contacter</a>
+    </div>
+  </header>
+  <main class="container mx-auto px-4 max-w-4xl py-16">
+    <article class="prose prose-lg dark:prose-invert">
+      <p class="text-sm uppercase tracking-[0.3em] text-google-blue font-semibold mb-4">Blog statique</p>
+      <h1 class="text-4xl font-bold mb-6">Comment gérer un blog statique</h1>
+      <p class="text-google-textSec mb-1">10 juin 2026 • 2 min de lecture</p>
+      <p class="text-sm text-google-textSec mb-8"><a href="https://davidwawina.site/blog/gerer-un-blog-sans-backend.html" class="text-google-blue hover:text-google-blueDark">https://davidwawina.site/blog/gerer-un-blog-sans-backend.html</a></p>
+      <p>Pour éviter de créer manuellement chaque page, on utilise un petit générateur local.</p>
+<h2>Workflow recommandé</h2>
+<p>1. Écrire un article en Markdown dans <code>blog/posts/</code>
+<br>2. Lancer le script local pour générer les pages HTML
+<br>3. Vérifier le résultat dans le dossier <code>blog/</code></p>
+<h2>Pourquoi le générateur ?</h2>
+<ul><li>Il évite les erreurs de mise en forme</li>
+<li>Il permet d'ajouter un sommaire automatiquement</li>
+<li>Il garde la structure propre et homogène</li></ul>
+<h2>Astuce</h2>
+<p>N'utilise pas de back-end pour les articles : garde tout statique et génère-le localement avant chaque mise à jour.</p>
+      <div class="mt-12 pt-8 border-t border-google-border">
+        <a href="./" class="text-google-blue font-semibold">← Retour au blog</a>
+      </div>
+    </article>
+  </main>
+</body>
+</html>
