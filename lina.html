@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lina Mg | Artiste Slameuse & Oratrice</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-black': '#0a0a0a',
+                        'brand-offwhite': '#f5f5f0',
+                        'brand-gold': '#d4af37',
+                        'brand-burgundy': '#800020',
+                        'brand-darkgray': '#1a1a1a',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'serif': ['Merriweather', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Merriweather:ital,wght@0,300;0,700;1,300&display=swap" rel="stylesheet">
+    <!-- FontAwesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold-soft: rgba(212, 175, 55, 0.18);
+            --gold-strong: rgba(212, 175, 55, 0.42);
+            --panel-border: rgba(255,255,255,0.12);
+            --google-bg: #f5f5f3;
+            --google-surface: #ffffff;
+            --google-surface-2: #f1f3f4;
+            --google-border: rgba(60,64,67,0.15);
+            --google-text: #202124;
+            --google-muted: #5f6368;
+            --google-soft: #e8eaed;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--google-bg);
+            color: var(--google-text);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translate3d(0, 24px, 0);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+            filter: blur(0);
+        }
+
+        .service-card::before,
+        .gallery-item::before,
+        .news-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), transparent 48%, rgba(255,255,255,0.04));
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .service-card:hover::before,
+        .gallery-item:hover::before,
+        .news-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card,
+        .gallery-item,
+        .news-card,
+        .event-row,
+        .social-link,
+        .cta-primary,
+        .cta-secondary {
+            will-change: transform, box-shadow, border-color, opacity;
+        }
+
+        .google-card {
+            background: rgba(255,255,255,0.9);
+            border: 1px solid var(--google-border);
+            box-shadow: 0 1px 2px rgba(60,64,67,0.08);
+        }
+
+        .google-soft {
+            background: var(--google-surface-2);
+            border: 1px solid rgba(60,64,67,0.08);
+        }
+
+        .bio-panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transform: translateY(10px);
+            transition: max-height 0.45s ease, opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .bio-panel.is-open {
+            max-height: 620px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -0.3rem;
+            width: 100%;
+            height: 1px;
+            background: rgba(212, 175, 55, 0.8);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.25s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link:focus-visible::after {
+            transform: scaleX(1);
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.4rem;
+            transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+        }
+
+        .gallery-item img {
+            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.7s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.06);
+            filter: grayscale(0);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 35px rgba(0,0,0,0.08);
+        }
+
+        .news-card,
+        .event-row {
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+
+        .news-card:hover,
+        .event-row:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 48px rgba(60,64,67,0.08);
+        }
+
+        .social-link {
+            transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+        }
+
+        .social-link:hover,
+        .social-link:focus-visible {
+            transform: translateY(-2px) scale(1.03);
+            background: rgba(212, 175, 55, 0.15);
+            border-color: rgba(212, 175, 55, 0.7);
+            color: #f5f5f0;
+        }
+
+        .glass-wa {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.2), inset 0 1px 1px rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .glass-wa:hover,
+        .glass-wa:focus-visible {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 16px 40px rgba(37, 211, 102, 0.28), inset 0 1px 1px rgba(255,255,255,0.2);
+            background: rgba(37, 211, 102, 0.18);
+        }
+
+        .cta-primary,
+        .cta-secondary {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .cta-primary:hover,
+        .cta-primary:focus-visible,
+        .cta-secondary:hover,
+        .cta-secondary:focus-visible {
+            transform: translateY(-2px);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden bg-[#f5f5f3] text-[#202124] antialiased selection:bg-[#d4af37] selection:text-[#202124]">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-[100] focus:rounded-full focus:bg-brand-gold focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-black">
+        Aller au contenu principal
+    </a>
+
+    <header class="fixed inset-x-0 top-0 z-50 transition-all duration-300" id="navbar" aria-label="En-tête de navigation">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="mt-4 rounded-full border border-[#dfe1e5] bg-white/75 px-4 py-3 shadow-[0_1px_2px_rgba(60,64,67,0.1)] backdrop-blur-xl transition-all duration-300 md:px-6">
+                <div class="flex items-center justify-between gap-4">
+                    <a href="#top" class="text-xl font-serif font-bold tracking-[0.24em] text-[#202124] transition-colors duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Accueil Lina Mg">
+                        LINA<span class="text-[#d4af37]">.</span>MG
+                    </a>
+
+                    <nav class="hidden items-center gap-7 lg:flex" aria-label="Menu principal">
+                        <a href="#about" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">À propos</a>
+                        <a href="#services" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Prestations</a>
+                        <a href="#events" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Agenda</a>
+                        <a href="#gallery" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Galerie</a>
+                        <a href="#works" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Œuvres</a>
+                        <a href="#support" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Soutien</a>
+                        <a href="#blog" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Actualités</a>
+                    </nav>
+
+                    <div class="hidden items-center gap-3 lg:flex">
+                        <a href="#contact" class="inline-flex items-center justify-center rounded-full border border-[#d4af37]/70 bg-[#d4af37]/10 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#d4af37] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Contacter Lina Mg">
+                            Contact
+                        </a>
+                    </div>
+
+                    <button type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#dadce0] bg-white text-xl text-[#202124] transition-all duration-300 hover:border-[#d4af37] hover:bg-[#fffaf0] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white lg:hidden" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu" id="menu-toggle">
+                        <i class="fas fa-bars" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <nav id="mobile-menu" class="hidden border-t border-[#dadce0] pt-4 lg:hidden" aria-label="Menu mobile">
+                    <ul class="flex flex-col gap-2">
+                        <li><a href="#about" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">À propos</a></li>
+                        <li><a href="#services" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Prestations</a></li>
+                        <li><a href="#events" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Agenda</a></li>
+                        <li><a href="#gallery" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Galerie</a></li>
+                        <li><a href="#works" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Œuvres</a></li>
+                        <li><a href="#support" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Soutien</a></li>
+                        <li><a href="#blog" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Actualités</a></li>
+                        <li class="pt-2"><a href="#contact" class="inline-flex w-full items-center justify-center rounded-full border border-[#d4af37]/70 bg-[#d4af37]/10 px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:bg-[#d4af37] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <a href="https://wa.me/243xxxxxxxxx" target="_blank" rel="noreferrer" class="glass-wa fixed bottom-5 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366]/80 text-2xl text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Écrire sur WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <main id="main-content">
+        <section class="relative flex min-h-screen items-center justify-center overflow-hidden" aria-labelledby="hero-title">
+            <div class="absolute inset-0 z-0">
+                <img src="./images/lina/lina-bg.jpg" alt="Scène sombre avec un micro" class="h-full w-full object-cover object-center opacity-40" loading="lazy" decoding="async" />
+                <div class="absolute inset-0 bg-gradient-to-t from-[#101010] via-[#101010]/65 to-[#101010]/20"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.18),transparent_35%)]"></div>
+            </div>
+
+            <div class="relative z-10 mx-auto mt-20 w-full max-w-5xl px-6 text-center sm:px-8">
+                <div class="reveal active">
+                    <p class="mb-5 text-[11px] font-medium uppercase tracking-[0.35em] text-[#d4af37] sm:text-xs">
+                        Poésie • Slam • Art Oratoire
+                    </p>
+                    <h1 id="hero-title" class="mx-auto max-w-4xl text-5xl font-serif font-light leading-[0.95] tracking-[-0.05em] text-[#202124] sm:text-6xl md:text-7xl lg:text-[5.4rem]">
+                        La puissance des mots,
+                        <span class="mt-2 block font-bold italic text-[#202124]">l’écho de l’âme.</span>
+                    </h1>
+                    <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#5f6368] sm:text-lg md:text-xl">
+                        De Kisangani aux scènes internationales. Une voix authentique pour inspirer, transmettre et transformer.
+                    </p>
+
+                    <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                        <a href="#about" class="group inline-flex items-center justify-center rounded-full bg-[#d4af37] px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] shadow-[0_18px_40px_rgba(212,175,55,0.18)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#c9a73d] hover:shadow-[0_22px_45px_rgba(212,175,55,0.22)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Découvrir l'univers de Lina Mg">
+                            Découvrir l’univers
+                            <span class="ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>
+                        </a>
+                        <a href="#events" class="inline-flex items-center justify-center rounded-full border border-[#dfe1e5] bg-white/80 px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:-translate-y-1 hover:border-[#d4af37] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Voir les prochains spectacles">
+                            Voir les spectacles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <!-- 2. À propos -->
+    <section id="about" class="relative overflow-hidden bg-[#f5f5f3] py-24 sm:py-28" aria-labelledby="about-title">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(212,175,55,0.08),transparent_30%)]"></div>
+        <div class="relative mx-auto max-w-7xl px-6 sm:px-8">
+            <div class="grid items-center gap-12 md:grid-cols-[1.05fr_1.2fr] lg:gap-16">
+                <div class="relative reveal">
+                    <div class="absolute -bottom-6 -right-6 h-full w-full rounded-[2rem] border border-[#d4af37]/60 bg-transparent"></div>
+                    <div class="absolute -left-6 top-6 h-[84%] w-[22%] rounded-[1.5rem] border border-[#d4af37]/30 bg-[#d4af37]/5"></div>
+                    <figure class="relative overflow-hidden rounded-[2rem] border border-[#dadce0] bg-white shadow-[0_12px_30px_rgba(60,64,67,0.08)]">
+                        <img src="./images/lina/lina-bg.jpg" alt="Portrait de Lina Mg" class="h-[530px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0" loading="lazy" decoding="async" />
+                    </figure>
+                </div>
+
+                <article class="reveal" aria-labelledby="about-title">
+                    <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Biographie</p>
+                    <h2 id="about-title" class="mb-6 max-w-xl text-4xl font-serif font-light leading-tight tracking-[-0.04em] text-[#202124] sm:text-5xl">
+                        Lina Mg.<br>
+                        <span class="text-[#5f6368]">Une voix qui traverse les douleurs et les espoirs.</span>
+                    </h2>
+
+                    <div class="space-y-6 text-base leading-relaxed text-[#5f6368] sm:text-lg">
+                        <p>
+                            Lina MG, de son vrai nom Bintu Mugobe Pascaline, est une artiste slameuse et poétesse congolaise née à Bukavu. Passionnée d’art oratoire depuis 2017, elle découvre dans la parole un espace de liberté, d’identité et de résistance.
+                        </p>
+                        <p>
+                            Elle se lance pleinement dans le slam en 2020 et remporte en 2021 le concours “Speech to Binti”, une reconnaissance qui propulse sa voix sur les scènes locales et nationales. Membre active de Passe-moi l’Mic / Bukavu Slam Session et de YALT, elle explore dans ses textes l’identité africaine, la mémoire collective, la condition et la résilience féminine.
+                        </p>
+                        <div id="bio-extra" class="bio-panel space-y-6" aria-hidden="true">
+                            <p>
+                                Sa plume, à la fois douce et frontale, dévoile les silences, interroge les blessures et célèbre les renaissances. Artiste prolifique, elle a déjà signé plusieurs morceaux enregistrés dont “Grâce à la Rue”, “Alkebulan”, “Pourquoi moi”, et bien d’autres œuvres qui reflètent son univers poétique engagé.
+                            </p>
+                            <p>
+                                Elle a performé dans plusieurs festivals majeurs tels que IDHURU Fest, Festival de Vuga, Musika na Kipaji 2023, Festiras 2025, ainsi que Semaines Vibrantes, sans oublier des scènes à Bukavu, Goma et Kinshasa. Elle est aussi la coordinatrice du projet Slam Électoral, une initiative citoyenne visant à sensibiliser la jeunesse par l’art.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 flex flex-wrap items-center gap-4">
+                        <button id="bio-toggle" type="button" class="inline-flex items-center justify-center rounded-full border border-[#dadce0] bg-white px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:border-[#d4af37] hover:bg-[#fffaf0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-expanded="false" aria-controls="bio-extra">
+                            En savoir plus
+                        </button>
+                        <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-[#202124] transition-colors duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                            Travailler avec elle
+                            <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Prestations -->
+    <section id="services" class="bg-[#f5f5f3] py-24 sm:py-28" aria-labelledby="services-title">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8">
+            <div class="reveal mb-14 text-center">
+                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Expertise</p>
+                <h2 id="services-title" class="text-4xl font-serif font-light tracking-[-0.04em] text-[#202124] sm:text-5xl">
+                    Prestations & Collaborations
+                </h2>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-3 md:items-stretch">
+                <article class="service-card reveal group relative overflow-hidden rounded-[1.75rem] border border-[#dadce0] bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#d4af37]/60 hover:shadow-[0_24px_55px_rgba(60,64,67,0.08)] md:p-8 md:pt-9">
+                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d4af37]/40 bg-[#d4af37]/10 text-2xl text-[#d4af37] transition-transform duration-300 group-hover:scale-110">
+                        <i class="fas fa-microphone-alt" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="mb-4 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124]">Performances Slam</h3>
+                    <p class="mb-7 text-sm leading-relaxed text-[#5f6368]">
+                        Des textes sur-mesure ou tirés de son répertoire pour vos événements culturels, galas et festivals. Une présence scénique inoubliable.
+                    </p>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#202124] transition-all duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        Réserver
+                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <article class="service-card reveal group relative overflow-hidden rounded-[1.75rem] border border-[#dadce0] bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#d4af37]/60 hover:shadow-[0_26px_60px_rgba(60,64,67,0.08)] md:translate-y-8 md:p-8 md:pt-9">
+                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d4af37]/40 bg-[#d4af37]/10 text-2xl text-[#d4af37] transition-transform duration-300 group-hover:scale-110">
+                        <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="mb-4 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124]">Formations Oratoires</h3>
+                    <p class="mb-7 text-sm leading-relaxed text-[#5f6368]">
+                        Ateliers et masterclasses dédiés à la prise de parole en public, la confiance en soi et l’écriture créative pour professionnels et passionnés.
+                    </p>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#202124] transition-all duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        Découvrir
+                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <article class="service-card reveal group relative overflow-hidden rounded-[1.75rem] border border-[#dadce0] bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#d4af37]/60 hover:shadow-[0_24px_55px_rgba(60,64,67,0.08)] md:p-8 md:pt-9">
+                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d4af37]/40 bg-[#d4af37]/10 text-2xl text-[#d4af37] transition-transform duration-300 group-hover:scale-110">
+                        <i class="fas fa-handshake" aria-hidden="true"></i>
+                    </div>
+                    <h3 class="mb-4 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124]">Animations & Collaborations</h3>
+                    <p class="mb-7 text-sm leading-relaxed text-[#5f6368]">
+                        Maîtrise de cérémonie (MC) pour des événements de prestige et collaborations artistiques interdisciplinaires (musique, théâtre, danse).
+                    </p>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#202124] transition-all duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        Proposer
+                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Agenda (Événements) -->
+    <section id="events" class="bg-[#f5f5f3] py-24">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-[#d4af37] font-sans tracking-[0.2em] uppercase text-sm mb-2">Sur Scène</h2>
+                <h3 class="text-4xl font-serif font-light text-[#202124]">Prochains Événements</h3>
+            </div>
+
+            <div class="space-y-6">
+                <div class="event-row reveal flex flex-col items-center justify-between gap-5 rounded-[1.5rem] border border-[#dadce0] bg-white p-6 md:flex-row md:gap-6">
+                    <div class="flex items-center gap-5 text-center md:text-left">
+                        <div class="w-20 rounded-2xl border border-[#d4af37]/40 bg-[#d4af37]/10 px-3 py-4 text-[#d4af37]">
+                            <span class="block text-3xl font-bold leading-none">15</span>
+                            <span class="mt-1 block text-[10px] uppercase tracking-[0.2em]">Sept</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-[#202124]">Nuit de l'Éloquence</h4>
+                            <p class="mt-1 text-sm text-[#5f6368]"><i class="fas fa-map-marker-alt mr-2"></i>Espace Culturel, Kisangani</p>
+                        </div>
+                    </div>
+                    <a href="#contact" class="cta-secondary inline-flex w-full items-center justify-center rounded-full border border-[#d4af37] text-[#202124] px-6 py-2.5 text-sm font-semibold uppercase tracking-[0.16em] transition-all duration-300 hover:bg-[#d4af37] hover:text-[#202124] md:w-auto">
+                        Billetterie
+                    </a>
+                </div>
+
+                <div class="event-row reveal flex flex-col items-center justify-between gap-5 rounded-[1.5rem] border border-[#dadce0] bg-white p-6 md:flex-row md:gap-6" style="transition-delay: 100ms;">
+                    <div class="flex items-center gap-5 text-center md:text-left">
+                        <div class="w-20 rounded-2xl border border-[#800020]/40 bg-[#800020]/10 px-3 py-4 text-[#800020]">
+                            <span class="block text-3xl font-bold leading-none">02</span>
+                            <span class="mt-1 block text-[10px] uppercase tracking-[0.2em]">Oct</span>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold text-[#202124]">Masterclass : Voix & Impact</h4>
+                            <p class="mt-1 text-sm text-[#5f6368]"><i class="fas fa-map-marker-alt mr-2"></i>Alliance Française</p>
+                        </div>
+                    </div>
+                    <a href="#contact" class="cta-secondary inline-flex w-full items-center justify-center rounded-full border border-[#dfe1e5] bg-[#f1f3f4] px-6 py-2.5 text-sm font-semibold uppercase tracking-[0.16em] text-[#202124] transition-all duration-300 hover:bg-[#202124] hover:text-white md:w-auto">
+                        S'inscrire
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Galerie -->
+    <section id="gallery" class="bg-brand-darkgray py-24 sm:py-28" aria-labelledby="gallery-title">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8">
+            <div class="reveal mb-16 text-center">
+                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-brand-gold">Visuel</p>
+                <h2 id="gallery-title" class="text-4xl font-serif font-light tracking-[-0.04em] text-brand-offwhite sm:text-5xl">
+                    Moments Forts
+                </h2>
+            </div>
+
+            <div class="grid auto-rows-[220px] grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:auto-rows-[260px]">
+                <figure class="gallery-item reveal group col-span-1 row-span-1 md:row-span-2">
+                    <img src="./images/lina/temoignage.png" alt="Scène de slam en mouvement" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/80 via-brand-black/30 to-transparent p-4 text-sm text-brand-offwhite opacity-0 transition-opacity duration-300 group-hover:opacity-100">Scène</figcaption>
+                </figure>
+                <figure class="gallery-item reveal group col-span-1 row-span-1 md:col-span-1 md:row-span-1">
+                    <img src="./images/lina/capture.png" alt="Micro de scène" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/80 via-brand-black/30 to-transparent p-4 text-sm text-brand-offwhite opacity-0 transition-opacity duration-300 group-hover:opacity-100">Micro</figcaption>
+                </figure>
+                <figure class="gallery-item reveal group col-span-1 row-span-1 md:col-span-1 md:row-span-2">
+                    <img src="./images/lina/temoignage.png" alt="Spectacle artistique capturé sur scène" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/80 via-brand-black/30 to-transparent p-4 text-sm text-brand-offwhite opacity-0 transition-opacity duration-300 group-hover:opacity-100">Spectacle</figcaption>
+                </figure>
+                <figure class="gallery-item reveal group col-span-1 row-span-1 md:col-span-2 md:row-span-1">
+                    <img src="./images/lina/public.png" alt="Public inspiré lors d’un moment fort" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/80 via-brand-black/30 to-transparent p-4 text-sm text-brand-offwhite opacity-0 transition-opacity duration-300 group-hover:opacity-100">Public</figcaption>
+                </figure>
+            </div>
+
+            <div class="mt-12 text-center reveal">
+                <a href="https://instagram.com" target="_blank" rel="noreferrer" class="inline-flex items-center gap-3 border-b border-brand-gold pb-1 text-base font-medium text-brand-offwhite transition-colors duration-300 hover:text-brand-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-gold focus-visible:ring-offset-2 focus-visible:ring-offset-brand-black">
+                    Voir plus sur Instagram
+                    <i class="fab fa-instagram" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Œuvres & Médias -->
+    <section id="works" class="bg-white py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8">
+            <div class="reveal mb-16 text-center">
+                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Œuvres</p>
+                <h2 class="text-4xl font-serif font-light tracking-[-0.04em] text-[#202124] sm:text-5xl">
+                    Podcasts, vidéos & textes
+                </h2>
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-3">
+                <article class="reveal group rounded-[1.75rem] border border-[#dadce0] bg-[#f8f9fa] p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_18px_40px_rgba(60,64,67,0.08)]">
+                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d4af37]/12 text-[#d4af37]">
+                        <i class="fas fa-microphone-lines" aria-hidden="true"></i>
+                    </div>
+                    <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5f6368]">Podcast</p>
+                    <h3 class="mb-3 text-2xl font-serif font-light text-[#202124]">Voix humbles, récits profonds</h3>
+                    <p class="mb-5 text-sm leading-relaxed text-[#5f6368]">Des conversations autour de la création, de l’identité, de la mémoire et des voix qui refusent le silence.</p>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        Écouter
+                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <article class="reveal group rounded-[1.75rem] border border-[#dadce0] bg-[#f8f9fa] p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_18px_40px_rgba(60,64,67,0.08)]" style="transition-delay: 120ms;">
+                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d4af37]/12 text-[#d4af37]">
+                        <i class="fas fa-play-circle" aria-hidden="true"></i>
+                    </div>
+                    <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5f6368]">Vidéos</p>
+                    <h3 class="mb-3 text-2xl font-serif font-light text-[#202124]">Performances et moments de scène</h3>
+                    <p class="mb-5 text-sm leading-relaxed text-[#5f6368]">Des captations de performances, atelier, intervention publique et émotions partagées sur scène.</p>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        Regarder
+                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <article class="reveal group rounded-[1.75rem] border border-[#dadce0] bg-[#f8f9fa] p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_18px_40px_rgba(60,64,67,0.08)]" style="transition-delay: 240ms;">
+                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d4af37]/12 text-[#d4af37]">
+                        <i class="fas fa-pen-fancy" aria-hidden="true"></i>
+                    </div>
+                    <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5f6368]">Textes</p>
+                    <h3 class="mb-3 text-2xl font-serif font-light text-[#202124]">Poèmes et écrits engagés</h3>
+                    <p class="mb-5 text-sm leading-relaxed text-[#5f6368]">Une sélection de réflexions, poèmes et textes inspirés de la douleur, de l’espoir et de la renaissance.</p>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        Lire
+                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Soutien -->
+    <section id="support" class="bg-[#f5f5f3] py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8">
+            <div class="reveal mb-16 text-center">
+                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Soutien</p>
+                <h2 class="text-4xl font-serif font-light tracking-[-0.04em] text-[#202124] sm:text-5xl">
+                    Soutenez la création
+                </h2>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+                <div class="reveal rounded-[2rem] border border-[#dadce0] bg-white p-8 shadow-[0_12px_30px_rgba(60,64,67,0.06)]">
+                    <h3 class="mb-4 text-3xl font-serif font-light text-[#202124]">Votre soutien aide à faire vivre la parole.</h3>
+                    <p class="mb-8 text-base leading-relaxed text-[#5f6368]">
+                        En soutenant Lina MG, vous contribuez à la production de nouvelles performances, à la diffusion de ses écrits et au développement d’initiatives culturelles avec un impact social et citoyen.
+                    </p>
+
+                    <div class="grid gap-4 sm:grid-cols-3">
+                        <div class="rounded-[1.25rem] bg-[#f8f9fa] p-4 border border-[#dadce0]">
+                            <p class="text-2xl font-serif font-light text-[#202124]">05</p>
+                            <p class="mt-2 text-sm text-[#5f6368]">projets aidés</p>
+                        </div>
+                        <div class="rounded-[1.25rem] bg-[#f8f9fa] p-4 border border-[#dadce0]">
+                            <p class="text-2xl font-serif font-light text-[#202124]">12</p>
+                            <p class="mt-2 text-sm text-[#5f6368]">ateliers réalisés</p>
+                        </div>
+                        <div class="rounded-[1.25rem] bg-[#f8f9fa] p-4 border border-[#dadce0]">
+                            <p class="text-2xl font-serif font-light text-[#202124]">+800</p>
+                            <p class="mt-2 text-sm text-[#5f6368]">jeunes touchés</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reveal rounded-[2rem] border border-[#dadce0] bg-[#202124] p-8 text-white shadow-[0_12px_30px_rgba(32,33,36,0.12)]">
+                    <p class="mb-3 text-[10px] font-semibold uppercase tracking-[0.24em] text-[#d4af37]">Contribution</p>
+                    <h3 class="mb-6 text-3xl font-serif font-light text-white">Faîtes un acte concret</h3>
+                    <div class="space-y-3">
+                        <a href="#contact" class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10">
+                            <span>Financer un atelier</span>
+                            <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                        </a>
+                        <a href="#contact" class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10">
+                            <span>Sponsoriser une tournée</span>
+                            <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                        </a>
+                        <a href="#contact" class="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10">
+                            <span>Devenir partenaire</span>
+                            <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Collaborations -->
+    <section id="collaborations" class="bg-white py-24">
+        <div class="mx-auto max-w-7xl px-6 sm:px-8">
+            <div class="reveal mb-16 text-center">
+                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Collaborations</p>
+                <h2 class="text-4xl font-serif font-light tracking-[-0.04em] text-[#202124] sm:text-5xl">
+                    Ils l’ont déjà accompagnée
+                </h2>
+            </div>
+
+            <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="reveal rounded-[1.5rem] border border-[#dadce0] bg-[#f8f9fa] p-6 text-center">
+                    <i class="fas fa-music text-2xl text-[#d4af37]"></i>
+                    <p class="mt-4 text-lg font-medium text-[#202124]">Festivals culturels</p>
+                </div>
+                <div class="reveal rounded-[1.5rem] border border-[#dadce0] bg-[#f8f9fa] p-6 text-center" style="transition-delay: 80ms;">
+                    <i class="fas fa-broadcast-tower text-2xl text-[#d4af37]"></i>
+                    <p class="mt-4 text-lg font-medium text-[#202124]">Médias & radios</p>
+                </div>
+                <div class="reveal rounded-[1.5rem] border border-[#dadce0] bg-[#f8f9fa] p-6 text-center" style="transition-delay: 160ms;">
+                    <i class="fas fa-school text-2xl text-[#d4af37]"></i>
+                    <p class="mt-4 text-lg font-medium text-[#202124]">Écoles & universités</p>
+                </div>
+                <div class="reveal rounded-[1.5rem] border border-[#dadce0] bg-[#f8f9fa] p-6 text-center" style="transition-delay: 240ms;">
+                    <i class="fas fa-handshake text-2xl text-[#d4af37]"></i>
+                    <p class="mt-4 text-lg font-medium text-[#202124]">Partenaires institutionnels</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Blog / Actualités -->
+    <section id="blog" class="bg-[#f5f5f3] py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-[#d4af37] font-sans tracking-[0.2em] uppercase text-sm mb-2">Chroniques</h2>
+                <h3 class="text-4xl font-serif font-light text-[#202124]">Dernières Actualités</h3>
+            </div>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+                <article class="news-card reveal group relative overflow-hidden rounded-[1.7rem] border border-[#dadce0] bg-white p-4 sm:p-5">
+                    <div class="relative mb-4 overflow-hidden rounded-[1.2rem]">
+                        <img src="https://images.unsplash.com/photo-1455390582262-044cdead2708?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Carnet et stylo" class="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
+                        <span class="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#d4af37] backdrop-blur-sm">Poésie</span>
+                    </div>
+                    <p class="mb-2 text-sm text-[#5f6368]">24 Août 2026</p>
+                    <h4 class="mb-3 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124] transition-colors duration-300 group-hover:text-[#800020]">L’art de l’écriture : comment trouver sa voix intérieure</h4>
+                    <p class="mb-4 text-sm leading-relaxed text-[#5f6368]">Une réflexion personnelle sur le processus créatif derrière mes textes de slam et l’importance de la vulnérabilité dans la création artistique.</p>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-colors duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        Lire l’article
+                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+                <article class="news-card reveal group relative overflow-hidden rounded-[1.7rem] border border-[#dadce0] bg-white p-4 sm:p-5" style="transition-delay: 150ms;">
+                    <div class="relative mb-4 overflow-hidden rounded-[1.2rem]">
+                        <img src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Formation artistique" class="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
+                        <span class="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#d4af37] backdrop-blur-sm">Média</span>
+                    </div>
+                    <p class="mb-2 text-sm text-[#5f6368]">12 Juillet 2026</p>
+                    <h4 class="mb-3 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124] transition-colors duration-300 group-hover:text-[#800020]">Interview : l’impact du slam sur la jeunesse de Kisangani</h4>
+                    <p class="mb-4 text-sm leading-relaxed text-[#5f6368]">Retour sur mon passage à la radio locale pour discuter du rôle de l’art oratoire dans le développement personnel des jeunes et la culture de paix.</p>
+                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-colors duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        Lire l’article
+                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Contact -->
+    <section id="contact" class="relative overflow-hidden bg-[#f5f5f3] py-24">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(212,175,55,0.08),transparent_30%)]"></div>
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 gap-16 md:grid-cols-2">
+                <div class="reveal">
+                    <h2 class="text-[#d4af37] font-sans tracking-[0.2em] uppercase text-sm mb-2">Contact</h2>
+                    <h3 class="text-4xl md:text-5xl font-serif font-light mb-8 text-[#202124]">Collaborons ensemble.</h3>
+                    <p class="text-[#5f6368] mb-8 font-light leading-relaxed">
+                        Pour toute demande de prestation, atelier, ou interview, n'hésitez pas à me contacter via ce formulaire ou directement sur mes réseaux sociaux.
+                    </p>
+                    
+                    <div class="space-y-6 text-[#202124]">
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-[#d4af37] w-8 text-xl"></i>
+                            <span>contact@linamg-art.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-[#d4af37] w-8 text-xl"></i>
+                            <span>+243 XX XXX XX XX</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-[#d4af37] w-8 text-xl"></i>
+                            <span>Kisangani, Tshopo, RDC</span>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-6 mt-10">
+                        <a href="#" class="social-link w-12 h-12 rounded-full border border-[#dadce0] bg-white flex items-center justify-center text-xl text-[#202124]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link w-12 h-12 rounded-full border border-[#dadce0] bg-white flex items-center justify-center text-xl text-[#202124]" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link w-12 h-12 rounded-full border border-[#dadce0] bg-white flex items-center justify-center text-xl text-[#202124]" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <div class="google-card reveal rounded-[2rem] p-8" style="transition-delay: 200ms;">
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            <div>
+                                <label for="nom" class="mb-2 block text-xs uppercase tracking-[0.18em] text-[#5f6368]">Nom complet</label>
+                                <input id="nom" type="text" class="w-full rounded-xl border border-[#dadce0] bg-[#f8f9fa] p-3 text-[#202124] placeholder:text-[#5f6368] focus:border-[#d4af37] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20" placeholder="Votre nom" aria-label="Nom complet">
+                            </div>
+                            <div>
+                                <label for="email" class="mb-2 block text-xs uppercase tracking-[0.18em] text-[#5f6368]">Email</label>
+                                <input id="email" type="email" class="w-full rounded-xl border border-[#dadce0] bg-[#f8f9fa] p-3 text-[#202124] placeholder:text-[#5f6368] focus:border-[#d4af37] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20" placeholder="Votre email" aria-label="Email">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="sujet" class="mb-2 block text-xs uppercase tracking-[0.18em] text-[#5f6368]">Sujet</label>
+                            <select id="sujet" class="w-full appearance-none rounded-xl border border-[#dadce0] bg-[#f8f9fa] p-3 text-[#202124] focus:border-[#d4af37] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20" aria-label="Sujet">
+                                <option>Demande de prestation Slam</option>
+                                <option>Formation / Atelier</option>
+                                <option>Interview / Presse</option>
+                                <option>Autre</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="mb-2 block text-xs uppercase tracking-[0.18em] text-[#5f6368]">Message</label>
+                            <textarea id="message" rows="4" class="w-full rounded-xl border border-[#dadce0] bg-[#f8f9fa] p-3 text-[#202124] placeholder:text-[#5f6368] focus:border-[#d4af37] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/20" placeholder="Parlez-moi de votre projet..." aria-label="Message"></textarea>
+                        </div>
+                        <button type="submit" class="w-full rounded-full bg-[#202124] py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-[#3c4043] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                            Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-8 border-t border-[#dadce0] text-center">
+        <p class="text-[#5f6368] text-sm font-light">
+            &copy; 2026 Lina Mg. Tous droits réservés. <br>
+            <span class="text-xs mt-2 block opacity-70">Propulsé par David Wawina</span>
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const revealElements = document.querySelectorAll('.reveal');
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const navbar = document.getElementById('navbar');
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (prefersReducedMotion) {
+                revealElements.forEach((element) => element.classList.add('active'));
+            } else {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: [0.12, 0.2, 0.4],
+                    rootMargin: '0px 0px -8% 0px'
+                });
+
+                revealElements.forEach((element) => observer.observe(element));
+            }
+
+            const handleNavbarState = () => {
+                if (!navbar) return;
+                const headerBar = navbar.querySelector('.rounded-full');
+                if (!headerBar) return;
+
+                if (window.scrollY > 32) {
+                    navbar.classList.add('has-scrolled');
+                    headerBar.classList.add('shadow-[0_4px_16px_rgba(60,64,67,0.08)]');
+                    headerBar.classList.remove('shadow-[0_1px_2px_rgba(60,64,67,0.1)]');
+                } else {
+                    navbar.classList.remove('has-scrolled');
+                    headerBar.classList.add('shadow-[0_1px_2px_rgba(60,64,67,0.1)]');
+                    headerBar.classList.remove('shadow-[0_4px_16px_rgba(60,64,67,0.08)]');
+                }
+            };
+
+            handleNavbarState();
+            window.addEventListener('scroll', handleNavbarState, { passive: true });
+
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', function() {
+                    const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+                    menuToggle.setAttribute('aria-expanded', String(!expanded));
+                    mobileMenu.classList.toggle('hidden');
+                    menuToggle.innerHTML = expanded ? '<i class="fas fa-bars" aria-hidden="true"></i>' : '<i class="fas fa-times" aria-hidden="true"></i>';
+                });
+
+                mobileMenu.querySelectorAll('a').forEach((link) => {
+                    link.addEventListener('click', function() {
+                        menuToggle.setAttribute('aria-expanded', 'false');
+                        mobileMenu.classList.add('hidden');
+                        menuToggle.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+                    });
+                });
+            }
+
+            const bioToggle = document.getElementById('bio-toggle');
+            const bioExtra = document.getElementById('bio-extra');
+            if (bioToggle && bioExtra) {
+                bioToggle.addEventListener('click', function() {
+                    const isOpen = bioExtra.classList.toggle('is-open');
+                    bioToggle.setAttribute('aria-expanded', String(isOpen));
+                    bioExtra.setAttribute('aria-hidden', String(!isOpen));
+                    bioToggle.textContent = isOpen ? 'Voir moins' : 'En savoir plus';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
