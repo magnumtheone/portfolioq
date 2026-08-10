@@ -5,10 +5,10 @@
       "@type": "Person",
       "@id": "https://davidwawina.site/#person",
       "name": "David Wawina MBULA",
-      "jobTitle": "Développeur Full-Stack",
-      "description": "Développeur full-stack basé à Kisangani (RDC) spécialisé en JavaScript/TypeScript, React, Python Django/FastAPI",
+      "jobTitle": "Développeur Web & Consultant Digital",
+      "description": "Développeur web et consultant digital basé à Kisangani (RDC), spécialisé dans la création de sites et solutions digitales utiles.",
       "url": "https://davidwawina.site",
-      "image": "https://davidwawina.site/images/po.jpg",
+      "image": "https://davidwawina.site/images/webmaster.jpg",
       "email": "contact@davidwawina.site",
       "address": {
         "@type": "PostalAddress",

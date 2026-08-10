@@ -5,64 +5,33 @@
   <!-- Page d'accueil (principale) -->
   <url>
     <loc>https://davidwawina.site/</loc>
-    <lastmod>2026-02-20</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://davidwawina.site/og-cover.jpg</image:loc>
-      <image:title>David Wawina MBULA - Développeur Full-Stack</image:title>
+      <image:loc>https://davidwawina.site/images/webmaster.jpg</image:loc>
+      <image:title>David Mbula Wawina - Développeur Web et Consultant Digital</image:title>
     </image:image>
   </url>
 
-  <!-- Sections internes (ancres) -->
   <url>
-    <loc>https://davidwawina.site/#about</loc>
-    <lastmod>2026-02-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://davidwawina.site/#skills</loc>
-    <lastmod>2026-02-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://davidwawina.site/#projets</loc>
-    <lastmod>2026-02-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-  
-  <url>
-    <loc>https://davidwawina.site/#temoignages</loc>
-    <lastmod>2026-02-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://davidwawina.site/#contact</loc>
-    <lastmod>2026-02-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.95</priority>
-  </url>
-
-  <!-- Pages additionnelles -->
-  <url>
-    <loc>https://davidwawina.site/thanks.html</loc>
-    <lastmod>2026-02-20</lastmod>
-    <changefreq>never</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <!-- CV/Médias -->
-  <url>
-    <loc>https://davidwawina.site/cv/MBULA_WAWINA_Développeur_Full_Stack_Cv.pdf</loc>
-    <lastmod>2026-02-20</lastmod>
+    <loc>https://davidwawina.site/blog/</loc>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://davidwawina.site/blog/pourquoi-blog-statique.html</loc>
+    <lastmod>2026-06-04</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://davidwawina.site/blog/gerer-un-blog-sans-backend.html</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
