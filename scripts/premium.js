@@ -5,6 +5,25 @@ const cursor = document.querySelector('.cursor');
 const projectFilters = document.querySelectorAll('.project-filter');
 const projects = document.querySelectorAll('.project');
 const contactForm = document.querySelector('#premiumContactForm');
+const processSection = document.querySelector('.process');
+const processSteps = processSection ? [...processSection.querySelectorAll('.process-step')] : [];
+const voicesGrid = document.querySelector('.voices-grid');
+
+if (voicesGrid) {
+  [...voicesGrid.querySelectorAll('.voice')].forEach((voice) => {
+    const clone = voice.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    clone.querySelectorAll('a, button, input, textarea, select').forEach((control) => control.setAttribute('tabindex', '-1'));
+    voicesGrid.append(clone);
+  });
+}
+document.querySelectorAll('main > section > .section-kicker').forEach((kicker, index) => {
+  const number = kicker.querySelector('span');
+  if (number) number.textContent = String(index + 1).padStart(2, '0');
+});
+const projectCarousel = document.querySelector('.project-list');
+const carouselPrevious = document.querySelector('[data-carousel-prev]');
+const carouselNext = document.querySelector('[data-carousel-next]');
 const manifest = document.querySelector('[data-manifest]');
 const manifestWords = manifest ? [...manifest.querySelectorAll('.manifest-word')] : [];
 const manifestProgress = document.querySelector('.manifest-progress span');
@@ -55,9 +74,21 @@ function updateManifest() {
   });
 }
 
+function updateProcess() {
+  if (!processSection || !processSteps.length) return;
+
+  const scrollableDistance = processSection.offsetHeight - window.innerHeight;
+  const progress = Math.min(1, Math.max(0, (window.scrollY - processSection.offsetTop) / scrollableDistance));
+  const activeIndex = Math.min(processSteps.length - 1, Math.floor(progress * processSteps.length));
+  processSteps.forEach((step, index) => step.classList.toggle('is-active', index === activeIndex));
+}
+
 window.addEventListener('scroll', updateManifest, { passive: true });
+window.addEventListener('scroll', updateProcess, { passive: true });
 window.addEventListener('resize', updateManifest);
+window.addEventListener('resize', updateProcess);
 updateManifest();
+updateProcess();
 
 function setMenu(open) {
   mobileMenu.classList.toggle('open', open);
@@ -86,6 +117,16 @@ projectFilters.forEach((filter) => {
     });
   });
 });
+
+function moveProjectCarousel(direction) {
+  if (!projectCarousel) return;
+  const card = projectCarousel.querySelector('.project:not(.is-hidden)');
+  const distance = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(projectCarousel).gap || '0') : projectCarousel.clientWidth;
+  projectCarousel.scrollBy({ left: direction * distance, behavior: 'smooth' });
+}
+
+carouselPrevious?.addEventListener('click', () => moveProjectCarousel(-1));
+carouselNext?.addEventListener('click', () => moveProjectCarousel(1));
 
 contactForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
