@@ -5,6 +5,21 @@ const cursor = document.querySelector('.cursor');
 const projectFilters = document.querySelectorAll('.project-filter');
 const projects = document.querySelectorAll('.project');
 const contactForm = document.querySelector('#premiumContactForm');
+const manifest = document.querySelector('[data-manifest]');
+const manifestWords = manifest ? [...manifest.querySelectorAll('.manifest-word')] : [];
+const manifestProgress = document.querySelector('.manifest-progress span');
+const manifestFill = document.querySelector('.manifest-fill');
+const manifestTiles = [];
+
+if (manifestFill) {
+  for (let index = 0; index < 48; index += 1) {
+    const tile = document.createElement('span');
+    tile.className = 'manifest-tile';
+    tile.dataset.index = String(index);
+    manifestFill.append(tile);
+    manifestTiles.push(tile);
+  }
+}
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -20,6 +35,29 @@ document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe
 window.addEventListener('scroll', () => {
   header.classList.toggle('scrolled', window.scrollY > 30);
 }, { passive: true });
+
+function updateManifest() {
+  if (!manifest || !manifestWords.length) return;
+
+  const section = manifest.closest('.manifest');
+  const scrollableDistance = section.offsetHeight - window.innerHeight;
+  const progress = Math.min(1, Math.max(0, (window.scrollY - section.offsetTop) / scrollableDistance));
+  const activeIndex = Math.min(manifestWords.length - 1, Math.floor(progress * manifestWords.length));
+
+  manifestWords.forEach((word, index) => word.classList.toggle('is-active', index === activeIndex));
+  if (manifestProgress) manifestProgress.style.transform = `scaleX(${progress})`;
+  manifestTiles.forEach((tile, index) => {
+    const tileProgress = Math.min(1, Math.max(0, (progress - (index / manifestTiles.length) * 0.72) * 3.6));
+    const horizontalOrigin = index % 2 === 0 ? -110 : 110;
+    const verticalOrigin = index % 3 === 0 ? 70 : -70;
+    tile.style.opacity = String(tileProgress);
+    tile.style.transform = `translate(${(1 - tileProgress) * horizontalOrigin}%, ${(1 - tileProgress) * verticalOrigin}%) scale(${0.78 + tileProgress * 0.22})`;
+  });
+}
+
+window.addEventListener('scroll', updateManifest, { passive: true });
+window.addEventListener('resize', updateManifest);
+updateManifest();
 
 function setMenu(open) {
   mobileMenu.classList.toggle('open', open);
