@@ -13,8 +13,8 @@
                     colors: {
                         'brand-black': '#0a0a0a',
                         'brand-offwhite': '#f5f5f0',
-                        'brand-gold': '#d4af37',
-                        'brand-burgundy': '#800020',
+                        'brand-gold': '#a855f7',
+                        'brand-burgundy': '#7e22ce',
                         'brand-darkgray': '#1a1a1a',
                     },
                     fontFamily: {
@@ -32,16 +32,16 @@
     
     <style>
         :root {
-            --gold-soft: rgba(212, 175, 55, 0.18);
-            --gold-strong: rgba(212, 175, 55, 0.42);
+            --gold-soft: rgba(168, 85, 247, 0.18);
+            --gold-strong: rgba(168, 85, 247, 0.42);
             --panel-border: rgba(255,255,255,0.12);
-            --google-bg: #f5f5f3;
-            --google-surface: #ffffff;
-            --google-surface-2: #f1f3f4;
-            --google-border: rgba(60,64,67,0.15);
-            --google-text: #202124;
-            --google-muted: #5f6368;
-            --google-soft: #e8eaed;
+            --google-bg: #08060d;
+            --google-surface: #110d18;
+            --google-surface-2: #1b1326;
+            --google-border: rgba(168,85,247,0.22);
+            --google-text: #f7f2ff;
+            --google-muted: #c4b5d4;
+            --google-soft: #2a1d38;
         }
 
         html {
@@ -211,6 +211,82 @@
             transform: translateY(-2px);
         }
 
+        .skill-stage {
+            position: relative;
+            min-height: 100svh;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .skill-stage::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background: radial-gradient(circle at 75% 20%, rgba(255,255,255,0.12), transparent 32%), linear-gradient(115deg, rgba(0,0,0,0.35), transparent 58%);
+        }
+
+        .skill-content {
+            opacity: 0;
+            transform: translate3d(0, 48px, 0) scale(0.96);
+            filter: blur(10px);
+            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.9s ease;
+        }
+
+        .skill-stage.is-visible .skill-content {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+            filter: blur(0);
+        }
+
+        .skill-index {
+            transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease;
+        }
+
+        .skill-stage.is-visible .skill-index {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .skill-stage:nth-child(odd) .skill-content { transition-delay: 120ms; }
+        .skill-stage:nth-child(even) .skill-content { transition-delay: 220ms; }
+
+        body,
+        [class*="bg-[#f5f5f3]"],
+        [class*="bg-white"],
+        [class*="bg-[#f8f9fa]"],
+        [class*="bg-[#f1f3f4]"] {
+            background-color: #08060d !important;
+            color: #f7f2ff;
+        }
+
+        [class*="text-[#202124]"],
+        [class*="text-[#5f6368]"] {
+            color: #eadff5 !important;
+        }
+
+        [class*="border-[#dadce0]"],
+        [class*="border-[#dfe1e5]"] {
+            border-color: rgba(168, 85, 247, 0.24) !important;
+        }
+
+        [class*="text-[#d4af37]"],
+        [class*="bg-[#d4af37]"],
+        [class*="border-[#d4af37]"] {
+            color: #d8b4ff !important;
+            border-color: rgba(168, 85, 247, 0.7) !important;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .skill-content,
+            .skill-index {
+                opacity: 1;
+                transform: none;
+                filter: none;
+                transition: none;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             html {
                 scroll-behavior: auto;
@@ -228,6 +304,451 @@
                 transform: none !important;
                 filter: none !important;
             }
+        }
+
+        .skill-list {
+            position: relative;
+            height: 500vh;
+            background: #08060d;
+        }
+
+        .skill-sticky {
+            position: sticky;
+            top: 0;
+            height: 100svh;
+            overflow: hidden;
+        }
+
+        .skill-stage {
+            position: absolute;
+            inset: 0;
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            visibility: hidden;
+            opacity: 0;
+            transform: scale(1.025);
+            transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.65s;
+        }
+
+        .skill-stage.is-visible {
+            visibility: visible;
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0s;
+        }
+
+        .skill-stage::after {
+            background: linear-gradient(115deg, rgba(0,0,0,0.34), transparent 58%);
+        }
+
+        .skill-content {
+            opacity: 0;
+            filter: blur(12px);
+            transform: translate3d(-13vw, 0, 0);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.9s ease;
+        }
+
+        .skill-stage:nth-child(even) .skill-content {
+            transform: translate3d(13vw, 0, 0);
+        }
+
+        .skill-stage.is-visible .skill-content {
+            opacity: 1;
+            filter: blur(0);
+            transform: translate3d(0, 0, 0);
+            transition-delay: 0.18s;
+        }
+
+        .skill-index {
+            opacity: 0;
+            transform: translate3d(-5vw, 0, 0);
+            transition: opacity 0.8s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .skill-stage:nth-child(even) .skill-index {
+            transform: translate3d(5vw, 0, 0);
+        }
+
+        .skill-stage.is-visible .skill-index {
+            opacity: 1;
+            transform: translate3d(0, 0, 0);
+            transition-delay: 0.05s;
+        }
+
+        .skill-progress {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            z-index: 2;
+            width: 1px;
+            height: 9rem;
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-50%);
+        }
+
+        .skill-progress span {
+            display: block;
+            width: 100%;
+            height: 20%;
+            background: #d8b4ff;
+            transform-origin: top;
+            transition: transform 0.2s ease-out;
+        }
+
+        @media (max-width: 640px) {
+            .skill-list { height: 500vh; }
+            .skill-content { transform: translate3d(-24vw, 0, 0); }
+            .skill-stage:nth-child(even) .skill-content { transform: translate3d(24vw, 0, 0); }
+            .skill-progress { right: 1.25rem; height: 6rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .skill-stage,
+            .skill-content,
+            .skill-index {
+                transition: none;
+                transform: none !important;
+                filter: none;
+            }
+        }
+
+        .about-section {
+            background: #0c0811 !important;
+            color: #f7f2ff;
+        }
+
+        .about-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(168,85,247,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.07) 1px, transparent 1px), radial-gradient(circle at 18% 18%, rgba(126,34,206,0.18), transparent 28%);
+            background-size: 4rem 4rem, 4rem 4rem, 100% 100%;
+            mask-image: linear-gradient(to bottom, black, transparent 76%);
+            pointer-events: none;
+        }
+
+        .about-layout {
+            position: relative;
+        }
+
+        .about-visual {
+            padding: 0 1.5rem 1.5rem 0;
+        }
+
+        .about-visual::after {
+            content: "LINA MG";
+            position: absolute;
+            right: -0.25rem;
+            bottom: 0;
+            color: #c084fc;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.32em;
+            writing-mode: vertical-rl;
+        }
+
+        .about-visual > div:first-child,
+        .about-visual > div:nth-child(2) {
+            display: none;
+        }
+
+        .about-portrait {
+            border: 1px solid rgba(192,132,252,0.38) !important;
+            border-radius: 0.5rem !important;
+            background: #140d1d !important;
+            box-shadow: 1.25rem 1.25rem 0 rgba(91,33,182,0.22), 0 1.5rem 4rem rgba(0,0,0,0.35) !important;
+        }
+
+        .about-portrait img {
+            filter: grayscale(1) contrast(1.06);
+        }
+
+        .about-portrait:hover img {
+            filter: grayscale(0) sepia(0.12) hue-rotate(245deg) saturate(1.15);
+        }
+
+        .about-caption {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 1.1rem;
+            color: #bda9d1;
+            font-size: 0.68rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .about-copy-panel {
+            border-left: 1px solid rgba(192,132,252,0.3);
+            padding-left: clamp(1.5rem, 4vw, 4rem);
+        }
+
+        .about-section .about-kicker,
+        .about-section .about-action {
+            color: #d8b4ff !important;
+        }
+
+        .about-section .about-title {
+            color: #ffffff !important;
+        }
+
+        .about-section .about-title span {
+            color: #c9b5d7 !important;
+        }
+
+        .about-section .about-body {
+            color: #c9b5d7 !important;
+        }
+
+        .about-section .about-toggle {
+            border-color: rgba(192,132,252,0.5) !important;
+            background: rgba(168,85,247,0.1) !important;
+            color: #f7f2ff !important;
+        }
+
+        .about-section .about-toggle:hover {
+            background: #7e22ce !important;
+            border-color: #c084fc !important;
+        }
+
+        @media (max-width: 767px) {
+            .about-visual { padding-right: 1rem; }
+            .about-copy-panel { border-left: 0; padding-left: 0; }
+            .about-visual::after { right: -0.1rem; }
+        }
+
+        .hero-section {
+            isolation: isolate;
+            background-color: #08060d;
+            background-image: linear-gradient(rgba(168,85,247,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.07) 1px, transparent 1px);
+            background-size: 4rem 4rem;
+        }
+
+        .hero-section::after {
+            content: "";
+            position: absolute;
+            inset: 8% 5%;
+            border: 1px solid rgba(216,180,255,0.2);
+            pointer-events: none;
+        }
+
+        .hero-section .hero-image {
+            filter: grayscale(0.35) saturate(0.8) contrast(1.12);
+            transform: scale(1.04);
+            transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1), filter 1.4s ease;
+        }
+
+        .hero-section:hover .hero-image {
+            filter: grayscale(0.08) saturate(0.95) contrast(1.08);
+            transform: scale(1.08);
+        }
+
+        .hero-section .hero-overlay {
+            background: linear-gradient(90deg, rgba(8,6,13,0.86), rgba(8,6,13,0.42) 55%, rgba(8,6,13,0.7)), linear-gradient(0deg, rgba(8,6,13,0.92), transparent 48%);
+        }
+
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .hero-kicker::before,
+        .hero-kicker::after {
+            content: "";
+            display: block;
+            height: 1px;
+            width: 2.5rem;
+            background: #c084fc;
+        }
+
+        .hero-title {
+            text-shadow: 0 1rem 3rem rgba(0,0,0,0.35);
+        }
+
+        .hero-meta-line {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #bda9d1;
+            font-size: 0.68rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .hero-meta-line::before {
+            content: "";
+            height: 1px;
+            width: 3rem;
+            background: rgba(192,132,252,0.7);
+        }
+
+        .hero-scroll {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: #c9b5d7;
+            font-size: 0.62rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            transform: translateX(-50%);
+        }
+
+        .hero-scroll span {
+            display: block;
+            height: 2.6rem;
+            width: 1px;
+            background: linear-gradient(#c084fc, transparent);
+            animation: hero-scroll-line 2.2s ease-in-out infinite;
+        }
+
+        @keyframes hero-scroll-line {
+            0%, 100% { opacity: 0.35; transform: scaleY(0.55); transform-origin: top; }
+            50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+        }
+
+        @media (max-width: 640px) {
+            .hero-section::after { inset: 6% 1.25rem; }
+            .hero-scroll { bottom: 1.25rem; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-section .hero-image,
+            .hero-scroll span { animation: none; transition: none; }
+        }
+
+        .works-section {
+            position: relative;
+            overflow: hidden;
+            background: #f5f1fa !important;
+        }
+
+        .works-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(126,34,206,0.07) 1px, transparent 1px), linear-gradient(rgba(126,34,206,0.07) 1px, transparent 1px);
+            background-size: 4rem 4rem;
+            mask-image: linear-gradient(to bottom, black, transparent 80%);
+            pointer-events: none;
+        }
+
+        .works-filter {
+            border: 1px solid rgba(126,34,206,0.28);
+            background: rgba(255,255,255,0.58);
+            color: #4c1d6d;
+            transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .works-filter:hover,
+        .works-filter.is-active {
+            border-color: #7e22ce;
+            background: #7e22ce;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .work-card {
+            border: 1px solid rgba(126,34,206,0.18);
+            background: rgba(255,255,255,0.88);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.35s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 1.5rem 3rem rgba(66,22,102,0.14);
+        }
+
+        .work-card.is-hidden {
+            display: none;
+        }
+
+        .work-media {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16 / 10;
+            background: #21102f;
+        }
+
+        .work-media img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            filter: saturate(0.78) contrast(1.04);
+            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.7s ease;
+        }
+
+        .work-card:hover .work-media img {
+            transform: scale(1.06);
+            filter: saturate(1) contrast(1.04);
+        }
+
+        .work-play {
+            position: absolute;
+            inset: 50% auto auto 50%;
+            display: grid;
+            height: 3.5rem;
+            width: 3.5rem;
+            place-items: center;
+            border: 1px solid rgba(255,255,255,0.55);
+            border-radius: 999px;
+            background: rgba(25,9,38,0.72);
+            color: #ffffff;
+            transform: translate(-50%, -50%);
+            backdrop-filter: blur(10px);
+        }
+
+        .work-lock {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 999px;
+            background: rgba(25,9,38,0.76);
+            padding: 0.45rem 0.7rem;
+            color: #f3dcff;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+        }
+
+        .work-type {
+            color: #7e22ce;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .work-buy {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            border-radius: 999px;
+            background: #21102f;
+            color: #ffffff;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .work-buy:hover,
+        .work-buy:focus-visible {
+            background: #7e22ce;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 640px) {
+            .works-filter { flex: 1 1 calc(50% - 0.5rem); }
         }
     </style>
 </head>
@@ -286,24 +807,24 @@
     </a>
 
     <main id="main-content">
-        <section class="relative flex min-h-screen items-center justify-center overflow-hidden" aria-labelledby="hero-title">
+        <section class="hero-section relative flex min-h-screen items-center justify-center overflow-hidden" aria-labelledby="hero-title">
             <div class="absolute inset-0 z-0">
-                <img src="./images/lina/lina-bg.jpg" alt="Scène sombre avec un micro" class="h-full w-full object-cover object-center opacity-40" loading="lazy" decoding="async" />
-                <div class="absolute inset-0 bg-gradient-to-t from-[#101010] via-[#101010]/65 to-[#101010]/20"></div>
+                <img src="./images/lina/lina-bg.jpg" alt="Scène sombre avec un micro" class="hero-image h-full w-full object-cover object-center opacity-40" loading="lazy" decoding="async" />
+                <div class="hero-overlay absolute inset-0"></div>
                 <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.18),transparent_35%)]"></div>
             </div>
 
-            <div class="relative z-10 mx-auto mt-20 w-full max-w-5xl px-6 text-center sm:px-8">
+            <div class="relative z-10 mx-auto mt-20 w-full max-w-6xl px-6 text-center sm:px-8">
                 <div class="reveal active">
-                    <p class="mb-5 text-[11px] font-medium uppercase tracking-[0.35em] text-[#d4af37] sm:text-xs">
+                    <p class="hero-kicker mb-7 text-[11px] font-medium uppercase tracking-[0.35em] text-[#d8b4ff] sm:text-xs">
                         Poésie • Slam • Art Oratoire
                     </p>
-                    <h1 id="hero-title" class="mx-auto max-w-4xl text-5xl font-serif font-light leading-[0.95] tracking-[-0.05em] text-[#202124] sm:text-6xl md:text-7xl lg:text-[5.4rem]">
-                        La puissance des mots,
-                        <span class="mt-2 block font-bold italic text-[#202124]">l’écho de l’âme.</span>
+                    <h1 id="hero-title" class="hero-title mx-auto max-w-5xl text-5xl font-serif font-light leading-[0.95] tracking-[-0.05em] text-white sm:text-6xl md:text-7xl lg:text-[6.2rem]">
+                        Le Slam est une voix.
+                        <span class="mt-2 block font-bold italic text-[#d8b4ff]">Que le Slam vous accompagne.</span>
                     </h1>
-                    <p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-[#5f6368] sm:text-lg md:text-xl">
-                        De Kisangani aux scènes internationales. Une voix authentique pour inspirer, transmettre et transformer.
+                    <p class="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-[#eadff5] sm:text-lg md:text-xl">
+                        Lina Mg transforme la parole en présence, en mémoire et en mouvement.
                     </p>
 
                     <div class="mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -315,31 +836,34 @@
                             Voir les spectacles
                         </a>
                     </div>
+                    <div class="hero-meta-line mx-auto mt-10 w-fit">Bukavu · RDC · Depuis 2017</div>
                 </div>
             </div>
+            <div class="hero-scroll" aria-hidden="true"><span></span>Découvrir</div>
         </section>
 
     <!-- 2. À propos -->
-    <section id="about" class="relative overflow-hidden bg-[#f5f5f3] py-24 sm:py-28" aria-labelledby="about-title">
+    <section id="about" class="about-section relative overflow-hidden py-24 sm:py-28" aria-labelledby="about-title">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(212,175,55,0.08),transparent_30%)]"></div>
         <div class="relative mx-auto max-w-7xl px-6 sm:px-8">
-            <div class="grid items-center gap-12 md:grid-cols-[1.05fr_1.2fr] lg:gap-16">
-                <div class="relative reveal">
+            <div class="about-layout grid items-center gap-12 md:grid-cols-[1.05fr_1.2fr] lg:gap-16">
+                <div class="about-visual relative reveal">
                     <div class="absolute -bottom-6 -right-6 h-full w-full rounded-[2rem] border border-[#d4af37]/60 bg-transparent"></div>
                     <div class="absolute -left-6 top-6 h-[84%] w-[22%] rounded-[1.5rem] border border-[#d4af37]/30 bg-[#d4af37]/5"></div>
-                    <figure class="relative overflow-hidden rounded-[2rem] border border-[#dadce0] bg-white shadow-[0_12px_30px_rgba(60,64,67,0.08)]">
+                    <figure class="about-portrait relative overflow-hidden rounded-[2rem] border border-[#dadce0] bg-white shadow-[0_12px_30px_rgba(60,64,67,0.08)]">
                         <img src="./images/lina/lina-bg.jpg" alt="Portrait de Lina Mg" class="h-[530px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0" loading="lazy" decoding="async" />
                     </figure>
+                    <div class="about-caption"><span>Bintu Mugobe Pascaline</span><span>Bukavu · RDC</span></div>
                 </div>
 
-                <article class="reveal" aria-labelledby="about-title">
-                    <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Biographie</p>
-                    <h2 id="about-title" class="mb-6 max-w-xl text-4xl font-serif font-light leading-tight tracking-[-0.04em] text-[#202124] sm:text-5xl">
+                <article class="about-copy-panel reveal" aria-labelledby="about-title">
+                    <p class="about-kicker mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Biographie · Depuis 2017</p>
+                    <h2 id="about-title" class="about-title mb-6 max-w-xl text-4xl font-serif font-light leading-tight tracking-[-0.04em] text-[#202124] sm:text-5xl">
                         Lina Mg.<br>
                         <span class="text-[#5f6368]">Une voix qui traverse les douleurs et les espoirs.</span>
                     </h2>
 
-                    <div class="space-y-6 text-base leading-relaxed text-[#5f6368] sm:text-lg">
+                    <div class="about-body space-y-6 text-base leading-relaxed text-[#5f6368] sm:text-lg">
                         <p>
                             Lina MG, de son vrai nom Bintu Mugobe Pascaline, est une artiste slameuse et poétesse congolaise née à Bukavu. Passionnée d’art oratoire depuis 2017, elle découvre dans la parole un espace de liberté, d’identité et de résistance.
                         </p>
@@ -357,10 +881,10 @@
                     </div>
 
                     <div class="mt-8 flex flex-wrap items-center gap-4">
-                        <button id="bio-toggle" type="button" class="inline-flex items-center justify-center rounded-full border border-[#dadce0] bg-white px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:border-[#d4af37] hover:bg-[#fffaf0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-expanded="false" aria-controls="bio-extra">
+                        <button id="bio-toggle" type="button" class="about-toggle inline-flex items-center justify-center rounded-full border border-[#dadce0] bg-white px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:border-[#d4af37] hover:bg-[#fffaf0] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-expanded="false" aria-controls="bio-extra">
                             En savoir plus
                         </button>
-                        <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-[#202124] transition-colors duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
+                        <a href="#contact" class="about-action inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.24em] text-[#202124] transition-colors duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
                             Travailler avec elle
                             <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
                         </a>
@@ -370,63 +894,75 @@
         </div>
     </section>
 
-    <!-- 3. Prestations -->
-    <section id="services" class="bg-[#f5f5f3] py-24 sm:py-28" aria-labelledby="services-title">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8">
-            <div class="reveal mb-14 text-center">
-                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Expertise</p>
-                <h2 id="services-title" class="text-4xl font-serif font-light tracking-[-0.04em] text-[#202124] sm:text-5xl">
-                    Prestations & Collaborations
-                </h2>
+    <!-- 3. Compétences -->
+    <section id="services" class="bg-[#08060d]" aria-labelledby="services-title">
+        <div class="relative z-10 flex min-h-[32vh] items-end bg-[#08060d] px-6 pb-10 pt-24 sm:px-10 lg:px-16">
+            <div class="mx-auto flex w-full max-w-7xl items-end justify-between gap-6">
+                <div>
+                    <p class="mb-4 text-[11px] font-semibold uppercase tracking-[0.32em] text-[#c084fc]">La palette de Lina</p>
+                    <h2 id="services-title" class="max-w-3xl text-4xl font-serif font-light leading-tight tracking-[-0.04em] text-white sm:text-6xl">Cinq façons de faire vibrer la parole.</h2>
+                </div>
+                <span class="hidden text-right text-xs uppercase tracking-[0.2em] text-[#a78bbd] md:block">Scroll pour entrer<br>dans son univers</span>
             </div>
+        </div>
 
-            <div class="grid gap-6 md:grid-cols-3 md:items-stretch">
-                <article class="service-card reveal group relative overflow-hidden rounded-[1.75rem] border border-[#dadce0] bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#d4af37]/60 hover:shadow-[0_24px_55px_rgba(60,64,67,0.08)] md:p-8 md:pt-9">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d4af37]/40 bg-[#d4af37]/10 text-2xl text-[#d4af37] transition-transform duration-300 group-hover:scale-110">
-                        <i class="fas fa-microphone-alt" aria-hidden="true"></i>
+        <div class="skill-list" data-skills-section>
+            <div class="skill-sticky">
+            <article class="skill-stage bg-[#12091f]" data-skill-stage>
+                <div class="mx-auto flex min-h-[100svh] max-w-7xl items-center px-6 py-24 sm:px-10 lg:px-16">
+                    <span class="skill-index absolute left-6 top-1/2 -translate-x-8 -translate-y-1/2 text-[clamp(8rem,24vw,22rem)] font-bold leading-none text-[#251238] opacity-0 sm:left-10 lg:left-16">01</span>
+                    <div class="skill-content relative max-w-3xl">
+                        <p class="mb-6 text-sm uppercase tracking-[0.3em] text-[#d8b4ff]">01 / La scène</p>
+                        <h3 class="text-6xl font-serif font-light leading-[0.9] tracking-[-0.06em] text-white sm:text-8xl">Slam<br><em class="text-[#d8b4ff]">vivant.</em></h3>
+                        <p class="mt-8 max-w-xl text-lg leading-relaxed text-[#e9dcf5]">Une présence scénique intense, où chaque silence devient rythme et chaque mot rencontre le public.</p>
                     </div>
-                    <h3 class="mb-4 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124]">Performances Slam</h3>
-                    <p class="mb-7 text-sm leading-relaxed text-[#5f6368]">
-                        Des textes sur-mesure ou tirés de son répertoire pour vos événements culturels, galas et festivals. Une présence scénique inoubliable.
-                    </p>
-                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#202124] transition-all duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                        Réserver
-                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
-                    </a>
-                </article>
-
-                <article class="service-card reveal group relative overflow-hidden rounded-[1.75rem] border border-[#dadce0] bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#d4af37]/60 hover:shadow-[0_26px_60px_rgba(60,64,67,0.08)] md:translate-y-8 md:p-8 md:pt-9">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d4af37]/40 bg-[#d4af37]/10 text-2xl text-[#d4af37] transition-transform duration-300 group-hover:scale-110">
-                        <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+                </div>
+            </article>
+            <article class="skill-stage bg-[#24103b]" data-skill-stage>
+                <div class="mx-auto flex min-h-[100svh] max-w-7xl items-center px-6 py-24 sm:px-10 lg:px-16">
+                    <span class="skill-index absolute right-6 top-1/2 translate-x-8 -translate-y-1/2 text-[clamp(8rem,24vw,22rem)] font-bold leading-none text-[#351650] opacity-0 sm:right-10 lg:right-16">02</span>
+                    <div class="skill-content relative ml-auto max-w-3xl text-right">
+                        <p class="mb-6 text-sm uppercase tracking-[0.3em] text-[#e9b8ff]">02 / La voix</p>
+                        <h3 class="text-6xl font-serif font-light leading-[0.9] tracking-[-0.06em] text-white sm:text-8xl">Art<br><em class="text-[#e9b8ff]">oratoire.</em></h3>
+                        <p class="mt-8 ml-auto max-w-xl text-lg leading-relaxed text-[#eedff7]">Clarté, souffle et impact : une parole qui porte les idées aussi loin que les émotions.</p>
                     </div>
-                    <h3 class="mb-4 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124]">Formations Oratoires</h3>
-                    <p class="mb-7 text-sm leading-relaxed text-[#5f6368]">
-                        Ateliers et masterclasses dédiés à la prise de parole en public, la confiance en soi et l’écriture créative pour professionnels et passionnés.
-                    </p>
-                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#202124] transition-all duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                        Découvrir
-                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
-                    </a>
-                </article>
-
-                <article class="service-card reveal group relative overflow-hidden rounded-[1.75rem] border border-[#dadce0] bg-white p-7 transition-all duration-300 hover:-translate-y-2 hover:border-[#d4af37]/60 hover:shadow-[0_24px_55px_rgba(60,64,67,0.08)] md:p-8 md:pt-9">
-                    <div class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-[#d4af37]/40 bg-[#d4af37]/10 text-2xl text-[#d4af37] transition-transform duration-300 group-hover:scale-110">
-                        <i class="fas fa-handshake" aria-hidden="true"></i>
+                </div>
+            </article>
+            <article class="skill-stage bg-[#351457]" data-skill-stage>
+                <div class="mx-auto flex min-h-[100svh] max-w-7xl items-center px-6 py-24 sm:px-10 lg:px-16">
+                    <span class="skill-index absolute left-6 top-1/2 -translate-x-8 -translate-y-1/2 text-[clamp(8rem,24vw,22rem)] font-bold leading-none text-[#4c1d6d] opacity-0 sm:left-10 lg:left-16">03</span>
+                    <div class="skill-content relative max-w-3xl">
+                        <p class="mb-6 text-sm uppercase tracking-[0.3em] text-[#f0c7ff]">03 / La transmission</p>
+                        <h3 class="text-6xl font-serif font-light leading-[0.9] tracking-[-0.06em] text-white sm:text-8xl">Écriture<br><em class="text-[#f0c7ff]">créative.</em></h3>
+                        <p class="mt-8 max-w-xl text-lg leading-relaxed text-[#f3e4fa]">Des ateliers qui libèrent la plume, aiguisent l’écoute et donnent une forme neuve à ce qui cherche à se dire.</p>
                     </div>
-                    <h3 class="mb-4 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124]">Animations & Collaborations</h3>
-                    <p class="mb-7 text-sm leading-relaxed text-[#5f6368]">
-                        Maîtrise de cérémonie (MC) pour des événements de prestige et collaborations artistiques interdisciplinaires (musique, théâtre, danse).
-                    </p>
-                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.2em] text-[#202124] transition-all duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                        Proposer
-                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
-                    </a>
-                </article>
+                </div>
+            </article>
+            <article class="skill-stage bg-[#4b176d]" data-skill-stage>
+                <div class="mx-auto flex min-h-[100svh] max-w-7xl items-center px-6 py-24 sm:px-10 lg:px-16">
+                    <span class="skill-index absolute right-6 top-1/2 translate-x-8 -translate-y-1/2 text-[clamp(8rem,24vw,22rem)] font-bold leading-none text-[#63238c] opacity-0 sm:right-10 lg:right-16">04</span>
+                    <div class="skill-content relative ml-auto max-w-3xl text-right">
+                        <p class="mb-6 text-sm uppercase tracking-[0.3em] text-[#f5d5ff]">04 / L’engagement</p>
+                        <h3 class="text-6xl font-serif font-light leading-[0.9] tracking-[-0.06em] text-white sm:text-8xl">Voix<br><em class="text-[#f5d5ff]">citoyenne.</em></h3>
+                        <p class="mt-8 ml-auto max-w-xl text-lg leading-relaxed text-[#f4e6fa]">Une poésie qui questionne, rassemble et accompagne les jeunesses vers une parole plus libre.</p>
+                    </div>
+                </div>
+            </article>
+            <article class="skill-stage bg-[#681d8f]" data-skill-stage>
+                <div class="mx-auto flex min-h-[100svh] max-w-7xl items-center px-6 py-24 sm:px-10 lg:px-16">
+                    <span class="skill-index absolute left-6 top-1/2 -translate-x-8 -translate-y-1/2 text-[clamp(8rem,24vw,22rem)] font-bold leading-none text-[#812caf] opacity-0 sm:left-10 lg:left-16">05</span>
+                    <div class="skill-content relative max-w-3xl">
+                        <p class="mb-6 text-sm uppercase tracking-[0.3em] text-[#f8dcff]">05 / La rencontre</p>
+                        <h3 class="text-6xl font-serif font-light leading-[0.9] tracking-[-0.06em] text-white sm:text-8xl">Connexion<br><em class="text-[#f8dcff]">humaine.</em></h3>
+                        <p class="mt-8 max-w-xl text-lg leading-relaxed text-[#faeafa]">Sur scène, en atelier ou en conversation, Lina crée un espace où chacun peut se reconnaître.</p>
+                    </div>
+                </div>
+            </article>
+            <div class="skill-progress" aria-hidden="true"><span></span></div>
             </div>
         </div>
     </section>
 
-    <!-- 4. Agenda (Événements) -->
     <section id="events" class="bg-[#f5f5f3] py-24">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-16 reveal">
@@ -509,53 +1045,45 @@
     </section>
 
     <!-- 6. Œuvres & Médias -->
-    <section id="works" class="bg-white py-24">
-        <div class="mx-auto max-w-7xl px-6 sm:px-8">
-            <div class="reveal mb-16 text-center">
-                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#d4af37]">Œuvres</p>
-                <h2 class="text-4xl font-serif font-light tracking-[-0.04em] text-[#202124] sm:text-5xl">
-                    Podcasts, vidéos & textes
-                </h2>
+    <section id="works" class="works-section py-24 sm:py-28" aria-labelledby="works-title">
+        <div class="relative z-10 mx-auto max-w-7xl px-6 sm:px-8">
+            <div class="reveal mb-12 max-w-3xl">
+                <p class="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#7e22ce]">Œuvres · Médiathèque</p>
+                <h2 id="works-title" class="text-4xl font-serif font-light leading-tight tracking-[-0.04em] text-[#21102f] sm:text-6xl">Podcasts, vidéos & textes</h2>
+                <p class="mt-5 max-w-2xl text-base leading-relaxed text-[#624d70] sm:text-lg">Une sélection de performances, d’écoutes et de textes pour entrer dans l’univers de Lina, au rythme de sa voix.</p>
             </div>
 
-            <div class="grid gap-6 md:grid-cols-3">
-                <article class="reveal group rounded-[1.75rem] border border-[#dadce0] bg-[#f8f9fa] p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_18px_40px_rgba(60,64,67,0.08)]">
-                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d4af37]/12 text-[#d4af37]">
-                        <i class="fas fa-microphone-lines" aria-hidden="true"></i>
-                    </div>
-                    <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5f6368]">Podcast</p>
-                    <h3 class="mb-3 text-2xl font-serif font-light text-[#202124]">Voix humbles, récits profonds</h3>
-                    <p class="mb-5 text-sm leading-relaxed text-[#5f6368]">Des conversations autour de la création, de l’identité, de la mémoire et des voix qui refusent le silence.</p>
-                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                        Écouter
-                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
-                    </a>
-                </article>
+            <div class="reveal mb-10 flex flex-wrap gap-3" role="group" aria-label="Catégories des œuvres">
+                <button type="button" class="works-filter is-active rounded-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.18em]" data-work-filter="all">Toutes les œuvres</button>
+                <button type="button" class="works-filter rounded-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.18em]" data-work-filter="video"><i class="fas fa-film mr-2" aria-hidden="true"></i>Vidéos</button>
+                <button type="button" class="works-filter rounded-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.18em]" data-work-filter="audio"><i class="fas fa-headphones mr-2" aria-hidden="true"></i>Audios</button>
+                <button type="button" class="works-filter rounded-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.18em]" data-work-filter="text"><i class="fas fa-feather-pointed mr-2" aria-hidden="true"></i>Textes</button>
+            </div>
 
-                <article class="reveal group rounded-[1.75rem] border border-[#dadce0] bg-[#f8f9fa] p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_18px_40px_rgba(60,64,67,0.08)]" style="transition-delay: 120ms;">
-                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d4af37]/12 text-[#d4af37]">
-                        <i class="fas fa-play-circle" aria-hidden="true"></i>
-                    </div>
-                    <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5f6368]">Vidéos</p>
-                    <h3 class="mb-3 text-2xl font-serif font-light text-[#202124]">Performances et moments de scène</h3>
-                    <p class="mb-5 text-sm leading-relaxed text-[#5f6368]">Des captations de performances, atelier, intervention publique et émotions partagées sur scène.</p>
-                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                        Regarder
-                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
-                    </a>
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-works-grid>
+                <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="video">
+                    <div class="work-media"><img src="./images/lina/scene.png" alt="Performance de Lina sur scène" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-play" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> Premium</span></div>
+                    <div class="p-6"><p class="work-type">Vidéo · Performance</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Slam vivant</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Une captation immersive où le silence devient rythme et la parole rencontre le public.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Slam vivant">Déverrouiller l’œuvre <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
-
-                <article class="reveal group rounded-[1.75rem] border border-[#dadce0] bg-[#f8f9fa] p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_18px_40px_rgba(60,64,67,0.08)]" style="transition-delay: 240ms;">
-                    <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d4af37]/12 text-[#d4af37]">
-                        <i class="fas fa-pen-fancy" aria-hidden="true"></i>
-                    </div>
-                    <p class="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#5f6368]">Textes</p>
-                    <h3 class="mb-3 text-2xl font-serif font-light text-[#202124]">Poèmes et écrits engagés</h3>
-                    <p class="mb-5 text-sm leading-relaxed text-[#5f6368]">Une sélection de réflexions, poèmes et textes inspirés de la douleur, de l’espoir et de la renaissance.</p>
-                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                        Lire
-                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
-                    </a>
+                <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="video">
+                    <div class="work-media"><img src="./images/lina/temoignage.png" alt="Témoignage artistique de Lina" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-play" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> Premium</span></div>
+                    <div class="p-6"><p class="work-type">Vidéo · Témoignage</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">La parole en mouvement</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Un moment intime autour de la création, de la mémoire et de la puissance du slam.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="La parole en mouvement">Déverrouiller l’œuvre <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+                </article>
+                <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="audio">
+                    <div class="work-media"><img src="./images/lina/capture.png" alt="Micro de studio pour une écoute audio" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-headphones" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> À l’écoute</span></div>
+                    <div class="p-6"><p class="work-type">Audio · Slam</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Grâce à la Rue</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Un morceau enregistré, disponible à l’écoute après confirmation de votre achat.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Grâce à la Rue">Acheter l’écoute <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+                </article>
+                <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="audio">
+                    <div class="work-media"><img src="./images/lina/lina-bg.jpg" alt="Lina au micro pour une œuvre audio" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-headphones" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> À l’écoute</span></div>
+                    <div class="p-6"><p class="work-type">Audio · Poésie</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Alkebulan</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Une écoute poétique consacrée à l’identité africaine et à la mémoire collective.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Alkebulan">Acheter l’écoute <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+                </article>
+                <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="text">
+                    <div class="work-media"><img src="./images/lina/scene.png" alt="Carnet de création poétique" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-feather-pointed" aria-hidden="true"></i></span></div>
+                    <div class="p-6"><p class="work-type">Texte · Poésie</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Pourquoi moi</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Un texte sensible sur les blessures, les questions et la renaissance.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Pourquoi moi">Demander le texte <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+                </article>
+                <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="text">
+                    <div class="work-media"><img src="./images/lina/temoignage.png" alt="Lina en atelier d’écriture" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-feather-pointed" aria-hidden="true"></i></span></div>
+                    <div class="p-6"><p class="work-type">Texte · Engagement</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Voix citoyenne</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Une poésie qui questionne, rassemble et accompagne les jeunesses.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Voix citoyenne">Demander le texte <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
             </div>
         </div>
@@ -770,9 +1298,17 @@
             const navbar = document.getElementById('navbar');
             const menuToggle = document.getElementById('menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
+            const skillSection = document.querySelector('[data-skills-section]');
+            const skillStages = document.querySelectorAll('[data-skill-stage]');
+            const skillProgress = document.querySelector('.skill-progress span');
+            const workFilters = document.querySelectorAll('[data-work-filter]');
+            const workCards = document.querySelectorAll('[data-work-card]');
+            let skillFrame = null;
+            let activeSkillIndex = 0;
 
             if (prefersReducedMotion) {
                 revealElements.forEach((element) => element.classList.add('active'));
+                skillStages.forEach((stage, index) => stage.classList.toggle('is-visible', index === 0));
             } else {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach((entry) => {
@@ -788,6 +1324,28 @@
 
                 revealElements.forEach((element) => observer.observe(element));
             }
+
+            const updateSkills = () => {
+                skillFrame = null;
+                if (!skillSection || !skillStages.length) return;
+
+                const scrollableDistance = skillSection.offsetHeight - window.innerHeight;
+                const progress = Math.min(1, Math.max(0, (window.scrollY - skillSection.offsetTop) / scrollableDistance));
+                const nextSkillIndex = Math.min(skillStages.length - 1, Math.floor(progress * skillStages.length));
+
+                if (nextSkillIndex !== activeSkillIndex) {
+                    activeSkillIndex = nextSkillIndex;
+                    skillStages.forEach((stage, index) => stage.classList.toggle('is-visible', index === activeSkillIndex));
+                }
+
+                if (skillProgress) skillProgress.style.transform = `scaleY(${Math.max(0.2, (activeSkillIndex + 1) / skillStages.length)})`;
+            };
+
+            const requestSkillUpdate = () => {
+                if (skillFrame === null) skillFrame = window.requestAnimationFrame(updateSkills);
+            };
+
+            requestSkillUpdate();
 
             const handleNavbarState = () => {
                 if (!navbar) return;
@@ -807,6 +1365,19 @@
 
             handleNavbarState();
             window.addEventListener('scroll', handleNavbarState, { passive: true });
+            window.addEventListener('scroll', requestSkillUpdate, { passive: true });
+            window.addEventListener('resize', requestSkillUpdate);
+
+            workFilters.forEach((filter) => {
+                filter.addEventListener('click', function() {
+                    const selectedCategory = filter.dataset.workFilter;
+                    workFilters.forEach((item) => item.classList.toggle('is-active', item === filter));
+                    workCards.forEach((card) => {
+                        const isVisible = selectedCategory === 'all' || card.dataset.workCard === selectedCategory;
+                        card.classList.toggle('is-hidden', !isVisible);
+                    });
+                });
+            });
 
             if (menuToggle && mobileMenu) {
                 menuToggle.addEventListener('click', function() {
