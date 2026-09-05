@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectacles | Lina Mg</title>
+    <meta name="description" content="Retrouvez les prochains spectacles, scènes et rencontres de Lina Mg.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --ink: #08060d; --violet: #a855f7; --soft: #d8b4ff; --muted: #c9b5d7; }
+        * { box-sizing: border-box; }
+        body { margin: 0; background: #08060d; color: #f7f2ff; font-family: Inter, sans-serif; }
+        .page { min-height: 100vh; position: relative; overflow: hidden; }
+        .page::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(rgba(168,85,247,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,.07) 1px, transparent 1px); background-size: 4rem 4rem; mask-image: linear-gradient(to bottom, black, transparent 86%); }
+        .site-header { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 2rem; max-width: 80rem; margin: 0 auto; padding: 1.5rem; }
+        .brand { color: #fff; font: 700 1.15rem Merriweather, serif; letter-spacing: .22em; text-decoration: none; }
+        .brand span { color: var(--violet); }
+        .back-link { color: var(--soft); font-size: .7rem; letter-spacing: .16em; text-decoration: none; text-transform: uppercase; }
+        .back-link:hover { color: #fff; }
+        .hero { position: relative; z-index: 1; max-width: 80rem; margin: 0 auto; padding: clamp(5rem, 12vw, 9rem) 1.5rem 5rem; animation: rise-in .9s cubic-bezier(.2,.7,.2,1) both; }
+        .eyebrow { color: var(--soft); font-size: .7rem; letter-spacing: .28em; text-transform: uppercase; }
+        h1 { max-width: 55rem; margin: 1.25rem 0 1.5rem; font: 300 clamp(3.2rem, 9vw, 8rem)/.95 Merriweather, serif; letter-spacing: -.05em; }
+        h1 em { color: var(--soft); }
+        .intro { max-width: 34rem; color: var(--muted); line-height: 1.7; }
+        .events { position: relative; z-index: 1; max-width: 80rem; margin: 0 auto; padding: 0 1.5rem 6rem; }
+        .event-grid { display: grid; gap: 1px; background: rgba(192,132,252,.3); border: 1px solid rgba(192,132,252,.3); }
+        .event { display: grid; grid-template-columns: 7rem 1fr auto; align-items: center; gap: 2rem; min-height: 12rem; padding: 1.5rem; background: rgba(20,13,29,.92); transition: background .3s ease, transform .3s ease; }
+        .event:hover { background: #1b1028; transform: translateX(.35rem); }
+        .date { color: var(--soft); border-right: 1px solid rgba(192,132,252,.35); font: 300 2.6rem/1 Merriweather, serif; }
+        .date span { display: block; margin-top: .5rem; color: #bda9d1; font: 600 .65rem Inter, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
+        .event-type { color: var(--violet); font-size: .65rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; }
+        h2 { margin: .55rem 0; font: 300 clamp(1.45rem, 3vw, 2.5rem)/1.1 Merriweather, serif; }
+        .location { margin: 0; color: var(--muted); font-size: .85rem; }
+        .location i { margin-right: .45rem; color: var(--soft); }
+        .event-action { border: 1px solid var(--violet); border-radius: 999px; padding: .75rem 1rem; color: #fff; font-size: .65rem; font-weight: 600; letter-spacing: .14em; text-decoration: none; text-transform: uppercase; white-space: nowrap; }
+        .event-action:hover { background: var(--violet); }
+        .event-poster { width: 7rem; height: 9rem; flex-shrink: 0; overflow: hidden; border: 1px solid rgba(192,132,252,.35); border-radius: .75rem; }
+        .event-poster img { width: 100%; height: 100%; object-fit: cover; }
+        .feature-meta { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid rgba(192,132,252,.25); color: #bda9d1; font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; }
+        .closing { position: relative; z-index: 1; max-width: 80rem; margin: 0 auto; padding: 0 1.5rem 6rem; }
+        .closing-inner { display: flex; align-items: end; justify-content: space-between; gap: 2rem; border-top: 1px solid rgba(192,132,252,.3); padding-top: 2rem; }
+        .closing h2 { max-width: 35rem; margin: 0; font-size: clamp(1.8rem, 4vw, 3.5rem); }
+        .closing p { max-width: 22rem; margin: 0; color: var(--muted); font-size: .85rem; line-height: 1.7; }
+        .closing-action { display: inline-flex; margin-top: 1.2rem; border-bottom: 1px solid var(--violet); padding-bottom: .5rem; color: var(--soft); font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-decoration: none; text-transform: uppercase; }
+        .closing-action:hover { color: #fff; border-color: #fff; }
+        @media (max-width: 700px) { .closing-inner { display: block; } .closing p { margin-top: 1.5rem; } }
+        .feature { position: relative; z-index: 1; max-width: 80rem; margin: 0 auto 6rem; padding: 0 1.5rem; }
+        .feature-card { display: grid; grid-template-columns: .85fr 1.15fr; gap: 0; border: 1px solid rgba(192,132,252,.35); background: #140d1d; box-shadow: 0 2rem 5rem rgba(0,0,0,.25); }
+        .feature-image { min-height: 30rem; background: linear-gradient(145deg, rgba(168,85,247,.25), rgba(8,6,13,.2)), url("./lina/scene.png") center/cover; }
+        .feature-copy { padding: clamp(2rem, 5vw, 4.5rem); }
+        .feature-copy h2 { max-width: 35rem; margin: .8rem 0 1.3rem; font: 300 clamp(2.2rem, 5vw, 5rem)/.98 Merriweather, serif; letter-spacing: -.05em; }
+        .feature-copy h2 em { color: var(--soft); }
+        .feature-copy p { max-width: 40rem; color: var(--muted); line-height: 1.75; }
+        .feature-label { color: var(--violet); font-size: .65rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
+        .story-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; margin-top: 1px; background: rgba(192,132,252,.25); }
+        .story { padding: 2rem; background: rgba(20,13,29,.92); }
+        .story h3 { margin: 0 0 1rem; color: #fff; font: 300 clamp(1.35rem, 2.2vw, 2rem)/1.1 Merriweather, serif; }
+        .story p { margin: 0; color: var(--muted); font-size: .9rem; line-height: 1.75; }
+        .credit-list { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1.5rem; }
+        .credit-list span { border: 1px solid rgba(192,132,252,.3); padding: .5rem .7rem; color: var(--soft); font-size: .65rem; letter-spacing: .1em; text-transform: uppercase; }
+        @media (max-width: 700px) { .feature, .events { padding-left: 1.25rem; padding-right: 1.25rem; } .feature-card, .story-grid { grid-template-columns: 1fr; } .feature-image { min-height: 18rem; } .story { padding: 1.5rem; } }
+        @keyframes rise-in { from { opacity: 0; transform: translateY(1.5rem); } to { opacity: 1; transform: translateY(0); } }
+        @media (prefers-reduced-motion: reduce) { .hero { animation: none; } }
+        @media (max-width: 640px) { .site-header { padding: 1.25rem; } .hero, .events { padding-left: 1.25rem; padding-right: 1.25rem; } .event { grid-template-columns: 4.5rem 1fr; gap: 1rem; } .date { font-size: 1.8rem; } .event-action { grid-column: 2; justify-self: start; } }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="site-header">
+            <a class="brand" href="lina.html#top" aria-label="Retour à l'accueil Lina Mg">LINA<span>.</span>MG</a>
+            <a class="back-link" href="lina.html">Retour au portfolio <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+        </header>
+        <main>
+            <section class="hero" aria-labelledby="page-title">
+                <p class="eyebrow">Spectacles · Slam · Mémoire</p>
+                <h1 id="page-title">La parole<br><em>porte l’histoire.</em></h1>
+                <p class="intro">Découvrez l’univers scénique de Lina Mg, une parole engagée entre mémoire africaine, identité culturelle et paix.</p>
+            </section>
+            <section class="feature" aria-labelledby="udongo-title">
+                <div class="feature-card">
+                    <div class="feature-image" role="img" aria-label="Lina Mg en performance sur scène"></div>
+                    <div class="feature-copy">
+                        <p class="feature-label">Spectacle phare · Udongo wa ma Babu</p>
+                        <h2 id="udongo-title">Terre des <em>ancêtres.</em></h2>
+                        <p>UDONGO WA MA BABU est un spectacle de slam qui célèbre l’héritage ancestral et la richesse des identités culturelles africaines.</p>
+                        <p>Dans un contexte marqué par les tensions identitaires et la fragilisation du lien social, Lina place la culture au cœur des chemins de paix. La scène devient un espace de mémoire, de dialogue et de responsabilité partagée.</p>
+                        <div class="feature-meta"><span>Performance slam</span><span>Tout public</span><span>Sur réservation</span></div>
+                        <div class="credit-list"><span>Paix</span><span>Culture</span><span>Citoyenneté</span><span>Mémoire</span></div>
+                    </div>
+                </div>
+                <div class="story-grid">
+                    <article class="story"><h3>Un spectacle, un mouvement</h3><p>Udongo wa ma Babu ne se limite pas à une performance : c’est une proposition d’éducation culturelle et civique qui invite à transformer les différences en moteurs de paix durable et de développement collectif.</p></article>
+                    <article class="story"><h3>Une voix pour les possibles</h3><p>Par la poésie et l’art du jeune Africain, Lina valorise les cultures, réveille les consciences et porte les aspirations d’une jeunesse engagée pour une société plus juste.</p></article>
+                </div>
+            </section>
+            <section class="events" aria-labelledby="events-title">
+                <h2 id="events-title" class="sr-only">Prochains spectacles</h2>
+                <div class="event-grid">
+                    <article class="event">
+                        <div class="date">15<span>Septembre</span></div>
+                        <div><p class="event-type">Spectacle · Éloquence</p><h2>Nuit de l'Éloquence</h2><p class="location"><i class="fas fa-location-dot" aria-hidden="true"></i>Espace Culturel, Kisangani</p></div>
+                        <a class="event-action" href="lina.html#contact">Réserver</a>
+                    </article>
+                    <article class="event">
+                        <div class="event-poster"><img src="./lina/master-class-art-oratoire.jpg" alt="Affiche de la master-class en art oratoire et slam" loading="lazy" decoding="async"></div>
+                        <div class="date">28<span>Sept. - 01 Oct.</span></div>
+                        <div><p class="event-type">Masterclass · Art oratoire & Slam</p><h2>La puissance des mots</h2><p class="location"><i class="fas fa-location-dot" aria-hidden="true"></i>Kisangani · Alliance Française</p><p class="location"><i class="fas fa-ticket" aria-hidden="true"></i>Inscription : 5 $</p></div>
+                        <a class="event-action" href="https://wa.me/243973203257?text=Bonjour%20Lina%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20la%20Masterclass%20Art%20oratoire%20%26%20Slam%20du%2028%20septembre%20au%201er%20octobre." target="_blank" rel="noopener noreferrer">S'inscrire</a>
+                    </article>
+                </div>
+            </section>
+            <section class="feature" aria-labelledby="artist-work-title">
+                <div class="story-grid">
+                    <article class="story"><h3 id="artist-work-title">Une artiste prolifique</h3><p>Lina a signé plusieurs morceaux enregistrés, parmi lesquels « Grâce à la Rue », « Alkebulan » et « Pourquoi moi », des œuvres qui prolongent son univers poétique engagé.</p></article>
+                    <article class="story"><h3>De la scène à l’engagement</h3><p>Coordinatrice du projet Slam Électoral, participante à She Leads (IFES), Carré Flow et à diverses performances, Lina s’impose comme une voix montante du slam congolais.</p></article>
+                </div>
+            </section>
+            <section class="closing" aria-labelledby="closing-title">
+                <div class="closing-inner">
+                    <div><h2 id="closing-title">Une scène à habiter ensemble.</h2><a class="closing-action" href="lina.html#contact">Programmer Lina Mg <span aria-hidden="true">↗</span></a></div>
+                    <p>Pour une invitation, une programmation ou une collaboration culturelle, écrivez à Lina et construisons la prochaine rencontre.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

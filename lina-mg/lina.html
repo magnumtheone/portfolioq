@@ -484,6 +484,49 @@
             padding-left: clamp(1.5rem, 4vw, 4rem);
         }
 
+        .about-lead {
+            max-width: 38rem;
+            border-left: 2px solid #a855f7;
+            padding-left: 1rem;
+            color: #f1e8fa;
+            font-family: Merriweather, serif;
+            font-size: clamp(1.15rem, 2vw, 1.45rem);
+            font-style: italic;
+            line-height: 1.55;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1px;
+            margin-top: 2.5rem;
+            border: 1px solid rgba(192,132,252,0.2);
+            background: rgba(192,132,252,0.2);
+        }
+
+        .about-stat {
+            min-height: 7rem;
+            padding: 1rem;
+            background: rgba(20,13,29,0.72);
+        }
+
+        .about-stat strong {
+            display: block;
+            color: #d8b4ff;
+            font-family: Merriweather, serif;
+            font-size: 1.8rem;
+            font-weight: 300;
+        }
+
+        .about-stat span {
+            display: block;
+            margin-top: 0.55rem;
+            color: #bda9d1;
+            font-size: 0.62rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
         .about-section .about-kicker,
         .about-section .about-action {
             color: #d8b4ff !important;
@@ -516,6 +559,11 @@
             .about-visual { padding-right: 1rem; }
             .about-copy-panel { border-left: 0; padding-left: 0; }
             .about-visual::after { right: -0.1rem; }
+        }
+
+        @media (max-width: 520px) {
+            .about-stats { grid-template-columns: 1fr; }
+            .about-stat { min-height: auto; }
         }
 
         .hero-section {
@@ -750,9 +798,271 @@
         @media (max-width: 640px) {
             .works-filter { flex: 1 1 calc(50% - 0.5rem); }
         }
+
+        .gallery-section {
+            position: relative;
+            overflow: hidden;
+            background: #ffffff !important;
+            color: #21102f;
+        }
+
+        .gallery-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(168,85,247,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.055) 1px, transparent 1px);
+            background-size: 4rem 4rem;
+            mask-image: linear-gradient(to bottom, black, transparent 88%);
+            pointer-events: none;
+        }
+
+        .gallery-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .gallery-heading-note {
+            max-width: 16rem;
+            color: #bda9d1;
+            font-size: 0.72rem;
+            line-height: 1.6;
+            text-align: right;
+        }
+
+        .masterclass-event {
+            align-items: stretch;
+        }
+
+        .masterclass-poster {
+            width: 9rem;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 1px solid rgba(168,85,247,0.3);
+            border-radius: 1rem;
+            background: #140d1d;
+        }
+
+        .masterclass-poster img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .masterclass-info {
+            flex: 1;
+        }
+
+        .masterclass-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .55rem 1rem;
+            margin-top: .8rem;
+            color: #624d70;
+            font-size: .75rem;
+        }
+
+        .masterclass-details span {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+        }
+
+        .masterclass-details i {
+            color: #7e22ce;
+        }
+
+        @media (max-width: 640px) {
+            .masterclass-event { display: grid; grid-template-columns: 4.5rem 1fr; }
+            .masterclass-poster { grid-column: 1 / -1; width: 100%; height: 18rem; }
+            .masterclass-info { grid-column: 1 / -1; }
+        }
+
+        .gallery-item {
+            border: 1px solid rgba(192,132,252,0.22);
+            background: #140d1d;
+            box-shadow: 0 1rem 2.5rem rgba(0,0,0,0.18);
+        }
+
+        .gallery-item::after {
+            content: "";
+            position: absolute;
+            inset: 0.55rem;
+            border: 1px solid rgba(255,255,255,0.14);
+            pointer-events: none;
+        }
+
+        .gallery-item figcaption {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .gallery-item figcaption span {
+            display: block;
+            color: #d8b4ff;
+            font-size: 0.62rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 767px) {
+            .gallery-heading { display: block; }
+            .gallery-heading-note { margin-top: 1.25rem; text-align: left; }
+        }
+
+        .testimonials-section {
+            position: relative;
+            overflow: hidden;
+            background: #0c0811;
+            color: #f7f2ff;
+        }
+
+        .testimonials-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(168,85,247,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(168,85,247,0.055) 1px, transparent 1px);
+            background-size: 4rem 4rem;
+            pointer-events: none;
+        }
+
+        .testimonials-track {
+            display: flex;
+            width: max-content;
+            animation: testimonials-scroll 34s linear infinite;
+        }
+
+        .testimonials-section:hover .testimonials-track,
+        .testimonials-section:focus-within .testimonials-track {
+            animation-play-state: paused;
+        }
+
+        .testimonial-card {
+            display: flex;
+            min-height: 13rem;
+            width: min(28rem, 78vw);
+            margin-right: 1rem;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid rgba(192,132,252,0.28);
+            background: rgba(20,13,29,0.92);
+            padding: 1.5rem;
+        }
+
+        .testimonial-mark {
+            color: #c084fc;
+            font-family: Merriweather, serif;
+            font-size: 2.5rem;
+            line-height: .7;
+        }
+
+        .testimonial-card blockquote {
+            margin: 1rem 0;
+            color: #f1e8fa;
+            font-family: Merriweather, serif;
+            font-size: clamp(1rem, 1.7vw, 1.25rem);
+            line-height: 1.45;
+        }
+
+        .testimonial-card cite {
+            color: #bda9d1;
+            font-size: .65rem;
+            font-style: normal;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+        }
+
+        @keyframes testimonials-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .testimonials-track { animation: none; }
+        }
+
+        .preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: grid;
+            place-items: center;
+            background: #08060d;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.8s ease, visibility 0s linear 0.8s;
+        }
+
+        .preloader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-content {
+            max-width: min(52rem, 86vw);
+            color: #f7f2ff;
+            font-family: Merriweather, serif;
+            font-size: clamp(2rem, 6vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            text-align: center;
+            letter-spacing: -0.04em;
+            animation: preloader-rise 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .preloader-content em {
+            color: #d8b4ff;
+        }
+
+        .testimonials-controls {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin: -2rem auto 2rem;
+            max-width: 80rem;
+            padding: 0 1.5rem;
+        }
+
+        .testimonials-control {
+            display: grid;
+            width: 2.75rem;
+            height: 2.75rem;
+            place-items: center;
+            border: 1px solid rgba(192,132,252,0.45);
+            border-radius: 999px;
+            background: rgba(168,85,247,0.08);
+            color: #f7f2ff;
+            cursor: pointer;
+            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .testimonials-control:hover,
+        .testimonials-control:focus-visible {
+            border-color: #c084fc;
+            background: #7e22ce;
+            transform: translateY(-2px);
+        }
+
+        .testimonials-track.is-manual {
+            animation: none;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes preloader-rise {
+            from { opacity: 0; transform: translateY(1rem); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .preloader-content { animation: none; }
+        }
     </style>
 </head>
 <body class="overflow-x-hidden bg-[#f5f5f3] text-[#202124] antialiased selection:bg-[#d4af37] selection:text-[#202124]">
+    <div class="preloader" id="preloader" aria-label="Chargement de Lina Mg">
+        <p class="preloader-content">Le Slam est une voix.<br><em>Que le Slam vous accompagne.</em></p>
+    </div>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:left-6 focus:top-6 focus:z-[100] focus:rounded-full focus:bg-brand-gold focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-brand-black">
         Aller au contenu principal
     </a>
@@ -768,11 +1078,11 @@
                     <nav class="hidden items-center gap-7 lg:flex" aria-label="Menu principal">
                         <a href="#about" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">À propos</a>
                         <a href="#services" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Prestations</a>
-                        <a href="#events" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Agenda</a>
+                        <a href="spectacles.html" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Spectacles</a>
                         <a href="#gallery" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Galerie</a>
+                        <a href="#testimonials" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Témoignages</a>
                         <a href="#works" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Œuvres</a>
                         <a href="#support" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Soutien</a>
-                        <a href="#blog" class="nav-link text-[11px] font-medium uppercase tracking-[0.22em] text-[#5f6368] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Actualités</a>
                     </nav>
 
                     <div class="hidden items-center gap-3 lg:flex">
@@ -790,11 +1100,11 @@
                     <ul class="flex flex-col gap-2">
                         <li><a href="#about" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">À propos</a></li>
                         <li><a href="#services" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Prestations</a></li>
-                        <li><a href="#events" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Agenda</a></li>
+                        <li><a href="spectacles.html" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Spectacles</a></li>
                         <li><a href="#gallery" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Galerie</a></li>
+                        <li><a href="#testimonials" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Témoignages</a></li>
                         <li><a href="#works" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Œuvres</a></li>
                         <li><a href="#support" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Soutien</a></li>
-                        <li><a href="#blog" class="block rounded-xl px-3 py-2 text-sm font-medium uppercase tracking-[0.2em] text-[#5f6368] transition-colors hover:bg-[#f1f3f4] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Actualités</a></li>
                         <li class="pt-2"><a href="#contact" class="inline-flex w-full items-center justify-center rounded-full border border-[#d4af37]/70 bg-[#d4af37]/10 px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:bg-[#d4af37] hover:text-[#202124] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">Contact</a></li>
                     </ul>
                 </nav>
@@ -809,7 +1119,7 @@
     <main id="main-content">
         <section class="hero-section relative flex min-h-screen items-center justify-center overflow-hidden" aria-labelledby="hero-title">
             <div class="absolute inset-0 z-0">
-                <img src="./images/lina/lina-bg.jpg" alt="Scène sombre avec un micro" class="hero-image h-full w-full object-cover object-center opacity-40" loading="lazy" decoding="async" />
+                <img src="./lina/lina-bg.jpg" alt="Scène sombre avec un micro" class="hero-image h-full w-full object-cover object-center opacity-40" loading="lazy" decoding="async" />
                 <div class="hero-overlay absolute inset-0"></div>
                 <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(212,175,55,0.18),transparent_35%)]"></div>
             </div>
@@ -832,7 +1142,7 @@
                             Découvrir l’univers
                             <span class="ml-2 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span>
                         </a>
-                        <a href="#events" class="inline-flex items-center justify-center rounded-full border border-[#dfe1e5] bg-white/80 px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:-translate-y-1 hover:border-[#d4af37] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Voir les prochains spectacles">
+                        <a href="spectacles.html" class="inline-flex items-center justify-center rounded-full border border-[#dfe1e5] bg-white/80 px-7 py-3.5 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-all duration-300 hover:-translate-y-1 hover:border-[#d4af37] hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white" aria-label="Voir les prochains spectacles">
                             Voir les spectacles
                         </a>
                     </div>
@@ -851,7 +1161,7 @@
                     <div class="absolute -bottom-6 -right-6 h-full w-full rounded-[2rem] border border-[#d4af37]/60 bg-transparent"></div>
                     <div class="absolute -left-6 top-6 h-[84%] w-[22%] rounded-[1.5rem] border border-[#d4af37]/30 bg-[#d4af37]/5"></div>
                     <figure class="about-portrait relative overflow-hidden rounded-[2rem] border border-[#dadce0] bg-white shadow-[0_12px_30px_rgba(60,64,67,0.08)]">
-                        <img src="./images/lina/lina-bg.jpg" alt="Portrait de Lina Mg" class="h-[530px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0" loading="lazy" decoding="async" />
+                        <img src="./lina/lina-bg.jpg" alt="Portrait de Lina Mg" class="h-[530px] w-full object-cover grayscale transition-all duration-700 hover:grayscale-0" loading="lazy" decoding="async" />
                     </figure>
                     <div class="about-caption"><span>Bintu Mugobe Pascaline</span><span>Bukavu · RDC</span></div>
                 </div>
@@ -862,6 +1172,8 @@
                         Lina Mg.<br>
                         <span class="text-[#5f6368]">Une voix qui traverse les douleurs et les espoirs.</span>
                     </h2>
+
+                    <p class="about-lead mb-8">« La parole devient un espace de liberté, d’identité et de résistance. »</p>
 
                     <div class="about-body space-y-6 text-base leading-relaxed text-[#5f6368] sm:text-lg">
                         <p>
@@ -878,6 +1190,12 @@
                                 Elle a performé dans plusieurs festivals majeurs tels que IDHURU Fest, Festival de Vuga, Musika na Kipaji 2023, Festiras 2025, ainsi que Semaines Vibrantes, sans oublier des scènes à Bukavu, Goma et Kinshasa. Elle est aussi la coordinatrice du projet Slam Électoral, une initiative citoyenne visant à sensibiliser la jeunesse par l’art.
                             </p>
                         </div>
+                    </div>
+
+                    <div class="about-stats" aria-label="Repères de la carrière de Lina Mg">
+                        <div class="about-stat"><strong>2017</strong><span>Début de l’art oratoire</span></div>
+                        <div class="about-stat"><strong>2021</strong><span>Lauréate Speech to Binti</span></div>
+                        <div class="about-stat"><strong>RDC</strong><span>Bukavu · Goma · Kinshasa</span></div>
                     </div>
 
                     <div class="mt-8 flex flex-wrap items-center gap-4">
@@ -963,11 +1281,12 @@
         </div>
     </section>
 
-    <section id="events" class="bg-[#f5f5f3] py-24">
+    <!-- 4. Spectacles -->
+    <section id="spectacles" class="bg-[#f5f5f3] py-24" aria-labelledby="spectacles-title">
         <div class="max-w-4xl mx-auto px-6">
             <div class="text-center mb-16 reveal">
-                <h2 class="text-[#d4af37] font-sans tracking-[0.2em] uppercase text-sm mb-2">Sur Scène</h2>
-                <h3 class="text-4xl font-serif font-light text-[#202124]">Prochains Événements</h3>
+                <h2 class="text-[#d4af37] font-sans tracking-[0.2em] uppercase text-sm mb-2">Spectacles · Sur scène</h2>
+                <h3 id="spectacles-title" class="text-4xl font-serif font-light text-[#202124]">Retrouvez Lina en scène</h3>
             </div>
 
             <div class="space-y-6">
@@ -987,19 +1306,27 @@
                     </a>
                 </div>
 
-                <div class="event-row reveal flex flex-col items-center justify-between gap-5 rounded-[1.5rem] border border-[#dadce0] bg-white p-6 md:flex-row md:gap-6" style="transition-delay: 100ms;">
+                <div class="event-row masterclass-event reveal flex flex-col items-center justify-between gap-5 rounded-[1.5rem] border border-[#dadce0] bg-white p-6 md:flex-row md:gap-6" style="transition-delay: 100ms;">
+                    <div class="masterclass-poster">
+                        <img src="./lina/master-class-art-oratoire.jpg" alt="Affiche de la master-class en art oratoire et slam de Lina Mg" loading="lazy" decoding="async" />
+                    </div>
                     <div class="flex items-center gap-5 text-center md:text-left">
                         <div class="w-20 rounded-2xl border border-[#800020]/40 bg-[#800020]/10 px-3 py-4 text-[#800020]">
-                            <span class="block text-3xl font-bold leading-none">02</span>
-                            <span class="mt-1 block text-[10px] uppercase tracking-[0.2em]">Oct</span>
+                            <span class="block text-2xl font-bold leading-none">28</span>
+                            <span class="mt-1 block text-[10px] uppercase tracking-[0.2em]">Sept · 01 Oct</span>
                         </div>
-                        <div>
-                            <h4 class="text-xl font-bold text-[#202124]">Masterclass : Voix & Impact</h4>
-                            <p class="mt-1 text-sm text-[#5f6368]"><i class="fas fa-map-marker-alt mr-2"></i>Alliance Française</p>
+                        <div class="masterclass-info">
+                            <h4 class="text-xl font-bold text-[#202124]">Masterclass : Art oratoire & Slam</h4>
+                            <p class="mt-1 text-sm text-[#5f6368]"><i class="fas fa-map-marker-alt mr-2"></i>Kisangani · Alliance Française</p>
+                            <div class="masterclass-details">
+                                <span><i class="fas fa-calendar-days" aria-hidden="true"></i>Du lundi 28 septembre au jeudi 1er octobre</span>
+                                <span><i class="fas fa-ticket" aria-hidden="true"></i>Inscription : 5 $</span>
+                                <span><i class="fas fa-microphone-lines" aria-hidden="true"></i>La puissance des mots</span>
+                            </div>
                         </div>
                     </div>
-                    <a href="#contact" class="cta-secondary inline-flex w-full items-center justify-center rounded-full border border-[#dfe1e5] bg-[#f1f3f4] px-6 py-2.5 text-sm font-semibold uppercase tracking-[0.16em] text-[#202124] transition-all duration-300 hover:bg-[#202124] hover:text-white md:w-auto">
-                        S'inscrire
+                    <a href="https://wa.me/243973203257?text=Bonjour%20Lina%2C%20je%20souhaite%20m%27inscrire%20%C3%A0%20la%20Masterclass%20Art%20oratoire%20%26%20Slam%20du%2028%20septembre%20au%201er%20octobre." target="_blank" rel="noopener noreferrer" class="cta-secondary inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#25D366] bg-[#25D366] px-6 py-2.5 text-sm font-semibold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-[#128C7E] hover:text-white md:w-auto">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i> S'inscrire
                     </a>
                 </div>
             </div>
@@ -1007,31 +1334,34 @@
     </section>
 
     <!-- 5. Galerie -->
-    <section id="gallery" class="bg-brand-darkgray py-24 sm:py-28" aria-labelledby="gallery-title">
+    <section id="gallery" class="gallery-section bg-brand-darkgray py-24 sm:py-28" aria-labelledby="gallery-title">
         <div class="mx-auto max-w-7xl px-6 sm:px-8">
-            <div class="reveal mb-16 text-center">
-                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-brand-gold">Visuel</p>
-                <h2 id="gallery-title" class="text-4xl font-serif font-light tracking-[-0.04em] text-brand-offwhite sm:text-5xl">
-                    Moments Forts
+            <div class="gallery-heading reveal mb-16">
+                <div>
+                <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-brand-gold">Moments · Scènes · Rencontres</p>
+                <h2 id="gallery-title" class="text-4xl font-serif font-light tracking-[-0.04em] text-[#21102f] sm:text-5xl">
+                    Moments forts
                 </h2>
+                </div>
+                <p class="gallery-heading-note">Des fragments de scène, de voix et de présence, capturés au fil des rencontres.</p>
             </div>
 
             <div class="grid auto-rows-[220px] grid-cols-2 gap-4 md:grid-cols-4 md:gap-5 lg:auto-rows-[260px]">
                 <figure class="gallery-item reveal group col-span-1 row-span-1 md:row-span-2">
-                    <img src="./images/lina/temoignage.png" alt="Scène de slam en mouvement" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
-                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/80 via-brand-black/30 to-transparent p-4 text-sm text-brand-offwhite opacity-0 transition-opacity duration-300 group-hover:opacity-100">Scène</figcaption>
+                    <img src="./lina/temoignage.png" alt="Scène de slam en mouvement" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/90 via-brand-black/45 to-transparent p-4 text-sm text-brand-offwhite transition-opacity duration-300"><span>01 · Présence</span>Scène</figcaption>
                 </figure>
                 <figure class="gallery-item reveal group col-span-1 row-span-1 md:col-span-1 md:row-span-1">
-                    <img src="./images/lina/capture.png" alt="Micro de scène" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
-                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/80 via-brand-black/30 to-transparent p-4 text-sm text-brand-offwhite opacity-0 transition-opacity duration-300 group-hover:opacity-100">Micro</figcaption>
+                    <img src="./lina/capture.png" alt="Micro de scène" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/90 via-brand-black/45 to-transparent p-4 text-sm text-brand-offwhite transition-opacity duration-300"><span>02 · Voix</span>Micro</figcaption>
                 </figure>
                 <figure class="gallery-item reveal group col-span-1 row-span-1 md:col-span-1 md:row-span-2">
-                    <img src="./images/lina/temoignage.png" alt="Spectacle artistique capturé sur scène" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
-                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/80 via-brand-black/30 to-transparent p-4 text-sm text-brand-offwhite opacity-0 transition-opacity duration-300 group-hover:opacity-100">Spectacle</figcaption>
+                    <img src="./lina/temoignage.png" alt="Spectacle artistique capturé sur scène" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/90 via-brand-black/45 to-transparent p-4 text-sm text-brand-offwhite transition-opacity duration-300"><span>03 · Énergie</span>Spectacle</figcaption>
                 </figure>
                 <figure class="gallery-item reveal group col-span-1 row-span-1 md:col-span-2 md:row-span-1">
-                    <img src="./images/lina/public.png" alt="Public inspiré lors d’un moment fort" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
-                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/80 via-brand-black/30 to-transparent p-4 text-sm text-brand-offwhite opacity-0 transition-opacity duration-300 group-hover:opacity-100">Public</figcaption>
+                    <img src="./lina/scene.png" alt="Public inspiré lors d’un moment fort" class="h-full w-full object-cover grayscale transition-all duration-500" loading="lazy" decoding="async" />
+                    <figcaption class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-black/90 via-brand-black/45 to-transparent p-4 text-sm text-brand-offwhite transition-opacity duration-300"><span>04 · Rencontre</span>Public</figcaption>
                 </figure>
             </div>
 
@@ -1040,6 +1370,29 @@
                     Voir plus sur Instagram
                     <i class="fab fa-instagram" aria-hidden="true"></i>
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Témoignages -->
+    <section id="testimonials" class="testimonials-section py-24 sm:py-28" aria-labelledby="testimonials-title">
+        <div class="relative z-10 mx-auto mb-12 max-w-7xl px-6 sm:px-8">
+            <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.28em] text-[#c084fc]">Témoignages · Voix reçues</p>
+            <h2 id="testimonials-title" class="max-w-3xl text-4xl font-serif font-light leading-tight tracking-[-0.04em] text-white sm:text-5xl">Des mots qui restent après la scène.</h2>
+        </div>
+        <div class="testimonials-controls" aria-label="Contrôles des témoignages">
+            <button class="testimonials-control" type="button" data-testimonial-prev aria-label="Témoignage précédent" title="Témoignage précédent"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+            <button class="testimonials-control" type="button" data-testimonial-toggle aria-label="Mettre en pause" title="Mettre en pause"><i class="fas fa-pause" aria-hidden="true"></i></button>
+            <button class="testimonials-control" type="button" data-testimonial-next aria-label="Témoignage suivant" title="Témoignage suivant"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="relative z-10 overflow-hidden" aria-label="Témoignages de spectateurs et collaborateurs">
+            <div class="testimonials-track" tabindex="0">
+                <article class="testimonial-card"><span class="testimonial-mark">“</span><blockquote>Toi avec ton talent c'est du Woououah, plus les jours passent, plus tu montes.</blockquote><cite>Patricia Huon</cite></article>
+                <article class="testimonial-card"><span class="testimonial-mark">“</span><blockquote>Une présence qui transforme le silence en émotion et rassemble toute la salle.</blockquote><cite>Retour de spectatrice</cite></article>
+                <article class="testimonial-card"><span class="testimonial-mark">“</span><blockquote>Une voix sincère, engagée et profondément ancrée dans son époque.</blockquote><cite>Retour de partenaire culturel</cite></article>
+                <article class="testimonial-card"><span class="testimonial-mark">“</span><blockquote>Toi avec ton talent c'est du Woououah, plus les jours passent, plus tu montes.</blockquote><cite>Patricia Huon</cite></article>
+                <article class="testimonial-card"><span class="testimonial-mark">“</span><blockquote>Une présence qui transforme le silence en émotion et rassemble toute la salle.</blockquote><cite>Retour de spectatrice</cite></article>
+                <article class="testimonial-card"><span class="testimonial-mark">“</span><blockquote>Une voix sincère, engagée et profondément ancrée dans son époque.</blockquote><cite>Retour de partenaire culturel</cite></article>
             </div>
         </div>
     </section>
@@ -1062,27 +1415,27 @@
 
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-works-grid>
                 <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="video">
-                    <div class="work-media"><img src="./images/lina/scene.png" alt="Performance de Lina sur scène" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-play" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> Premium</span></div>
+                    <div class="work-media"><img src="./lina/scene.png" alt="Performance de Lina sur scène" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-play" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> Premium</span></div>
                     <div class="p-6"><p class="work-type">Vidéo · Performance</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Slam vivant</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Une captation immersive où le silence devient rythme et la parole rencontre le public.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Slam vivant">Déverrouiller l’œuvre <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
                 <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="video">
-                    <div class="work-media"><img src="./images/lina/temoignage.png" alt="Témoignage artistique de Lina" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-play" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> Premium</span></div>
+                    <div class="work-media"><img src="./lina/temoignage.png" alt="Témoignage artistique de Lina" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-play" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> Premium</span></div>
                     <div class="p-6"><p class="work-type">Vidéo · Témoignage</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">La parole en mouvement</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Un moment intime autour de la création, de la mémoire et de la puissance du slam.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="La parole en mouvement">Déverrouiller l’œuvre <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
                 <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="audio">
-                    <div class="work-media"><img src="./images/lina/capture.png" alt="Micro de studio pour une écoute audio" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-headphones" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> À l’écoute</span></div>
+                    <div class="work-media"><img src="./lina/capture.png" alt="Micro de studio pour une écoute audio" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-headphones" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> À l’écoute</span></div>
                     <div class="p-6"><p class="work-type">Audio · Slam</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Grâce à la Rue</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Un morceau enregistré, disponible à l’écoute après confirmation de votre achat.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Grâce à la Rue">Acheter l’écoute <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
                 <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="audio">
-                    <div class="work-media"><img src="./images/lina/lina-bg.jpg" alt="Lina au micro pour une œuvre audio" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-headphones" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> À l’écoute</span></div>
+                    <div class="work-media"><img src="./lina/lina-bg.jpg" alt="Lina au micro pour une œuvre audio" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-headphones" aria-hidden="true"></i></span><span class="work-lock"><i class="fas fa-lock" aria-hidden="true"></i> À l’écoute</span></div>
                     <div class="p-6"><p class="work-type">Audio · Poésie</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Alkebulan</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Une écoute poétique consacrée à l’identité africaine et à la mémoire collective.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Alkebulan">Acheter l’écoute <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
                 <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="text">
-                    <div class="work-media"><img src="./images/lina/scene.png" alt="Carnet de création poétique" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-feather-pointed" aria-hidden="true"></i></span></div>
+                    <div class="work-media"><img src="./lina/scene.png" alt="Carnet de création poétique" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-feather-pointed" aria-hidden="true"></i></span></div>
                     <div class="p-6"><p class="work-type">Texte · Poésie</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Pourquoi moi</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Un texte sensible sur les blessures, les questions et la renaissance.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Pourquoi moi">Demander le texte <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
                 <article class="work-card reveal overflow-hidden rounded-[1.5rem]" data-work-card="text">
-                    <div class="work-media"><img src="./images/lina/temoignage.png" alt="Lina en atelier d’écriture" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-feather-pointed" aria-hidden="true"></i></span></div>
+                    <div class="work-media"><img src="./lina/temoignage.png" alt="Lina en atelier d’écriture" loading="lazy" decoding="async"><span class="work-play"><i class="fas fa-feather-pointed" aria-hidden="true"></i></span></div>
                     <div class="p-6"><p class="work-type">Texte · Engagement</p><h3 class="mt-3 text-2xl font-serif font-light text-[#21102f]">Voix citoyenne</h3><p class="mt-3 text-sm leading-relaxed text-[#624d70]">Une poésie qui questionne, rassemble et accompagne les jeunesses.</p><a class="work-buy mt-5 w-full px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em]" href="#contact" data-work-request="Voix citoyenne">Demander le texte <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
             </div>
@@ -1175,46 +1528,6 @@
         </div>
     </section>
 
-    <!-- 9. Blog / Actualités -->
-    <section id="blog" class="bg-[#f5f5f3] py-24">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16 reveal">
-                <h2 class="text-[#d4af37] font-sans tracking-[0.2em] uppercase text-sm mb-2">Chroniques</h2>
-                <h3 class="text-4xl font-serif font-light text-[#202124]">Dernières Actualités</h3>
-            </div>
-
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-                <article class="news-card reveal group relative overflow-hidden rounded-[1.7rem] border border-[#dadce0] bg-white p-4 sm:p-5">
-                    <div class="relative mb-4 overflow-hidden rounded-[1.2rem]">
-                        <img src="https://images.unsplash.com/photo-1455390582262-044cdead2708?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Carnet et stylo" class="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
-                        <span class="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#d4af37] backdrop-blur-sm">Poésie</span>
-                    </div>
-                    <p class="mb-2 text-sm text-[#5f6368]">24 Août 2026</p>
-                    <h4 class="mb-3 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124] transition-colors duration-300 group-hover:text-[#800020]">L’art de l’écriture : comment trouver sa voix intérieure</h4>
-                    <p class="mb-4 text-sm leading-relaxed text-[#5f6368]">Une réflexion personnelle sur le processus créatif derrière mes textes de slam et l’importance de la vulnérabilité dans la création artistique.</p>
-                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-colors duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                        Lire l’article
-                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
-                    </a>
-                </article>
-
-                <article class="news-card reveal group relative overflow-hidden rounded-[1.7rem] border border-[#dadce0] bg-white p-4 sm:p-5" style="transition-delay: 150ms;">
-                    <div class="relative mb-4 overflow-hidden rounded-[1.2rem]">
-                        <img src="https://images.unsplash.com/photo-1551818255-e6e10975bc17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Formation artistique" class="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" decoding="async" />
-                        <span class="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#d4af37] backdrop-blur-sm">Média</span>
-                    </div>
-                    <p class="mb-2 text-sm text-[#5f6368]">12 Juillet 2026</p>
-                    <h4 class="mb-3 text-2xl font-serif font-light tracking-[-0.03em] text-[#202124] transition-colors duration-300 group-hover:text-[#800020]">Interview : l’impact du slam sur la jeunesse de Kisangani</h4>
-                    <p class="mb-4 text-sm leading-relaxed text-[#5f6368]">Retour sur mon passage à la radio locale pour discuter du rôle de l’art oratoire dans le développement personnel des jeunes et la culture de paix.</p>
-                    <a href="#contact" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-[#202124] transition-colors duration-300 hover:text-[#800020] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#d4af37] focus-visible:ring-offset-2 focus-visible:ring-offset-white">
-                        Lire l’article
-                        <i class="fas fa-arrow-right text-[10px]" aria-hidden="true"></i>
-                    </a>
-                </article>
-            </div>
-        </div>
-    </section>
-
     <!-- 7. Contact -->
     <section id="contact" class="relative overflow-hidden bg-[#f5f5f3] py-24">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_10%_20%,rgba(212,175,55,0.08),transparent_30%)]"></div>
@@ -1292,19 +1605,39 @@
     </footer>
 
     <script>
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                window.setTimeout(() => preloader.classList.add('is-hidden'), 450);
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const revealElements = document.querySelectorAll('.reveal');
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             const navbar = document.getElementById('navbar');
             const menuToggle = document.getElementById('menu-toggle');
             const mobileMenu = document.getElementById('mobile-menu');
+            const aboutSection = document.getElementById('about');
+            const gallerySection = document.getElementById('gallery');
             const skillSection = document.querySelector('[data-skills-section]');
             const skillStages = document.querySelectorAll('[data-skill-stage]');
             const skillProgress = document.querySelector('.skill-progress span');
             const workFilters = document.querySelectorAll('[data-work-filter]');
             const workCards = document.querySelectorAll('[data-work-card]');
+            const testimonialTrack = document.querySelector('.testimonials-track');
+            const testimonialCards = testimonialTrack ? testimonialTrack.querySelectorAll('.testimonial-card') : [];
+            const testimonialPrevious = document.querySelector('[data-testimonial-prev]');
+            const testimonialToggle = document.querySelector('[data-testimonial-toggle]');
+            const testimonialNext = document.querySelector('[data-testimonial-next]');
+            let testimonialIndex = 0;
+            let testimonialsPaused = false;
             let skillFrame = null;
             let activeSkillIndex = 0;
+
+            if (aboutSection && gallerySection) {
+                gallerySection.after(aboutSection);
+            }
 
             if (prefersReducedMotion) {
                 revealElements.forEach((element) => element.classList.add('active'));
@@ -1378,6 +1711,28 @@
                     });
                 });
             });
+
+            const moveTestimonials = (direction) => {
+                if (!testimonialTrack || testimonialCards.length < 2) return;
+                const originalCount = Math.floor(testimonialCards.length / 2);
+                testimonialIndex = (testimonialIndex + direction + originalCount) % originalCount;
+                const cardWidth = testimonialCards[0].getBoundingClientRect().width;
+                const marginRight = parseFloat(getComputedStyle(testimonialCards[0]).marginRight) || 0;
+                testimonialTrack.classList.add('is-manual');
+                testimonialTrack.style.transform = `translateX(-${testimonialIndex * (cardWidth + marginRight)}px)`;
+            };
+
+            if (testimonialPrevious && testimonialNext && testimonialToggle) {
+                testimonialPrevious.addEventListener('click', () => moveTestimonials(-1));
+                testimonialNext.addEventListener('click', () => moveTestimonials(1));
+                testimonialToggle.addEventListener('click', () => {
+                    testimonialsPaused = !testimonialsPaused;
+                    testimonialTrack.classList.toggle('is-manual', testimonialsPaused);
+                    testimonialToggle.innerHTML = testimonialsPaused ? '<i class="fas fa-play" aria-hidden="true"></i>' : '<i class="fas fa-pause" aria-hidden="true"></i>';
+                    testimonialToggle.setAttribute('aria-label', testimonialsPaused ? 'Reprendre le défilement' : 'Mettre en pause');
+                    testimonialToggle.setAttribute('title', testimonialsPaused ? 'Reprendre le défilement' : 'Mettre en pause');
+                });
+            }
 
             if (menuToggle && mobileMenu) {
                 menuToggle.addEventListener('click', function() {
