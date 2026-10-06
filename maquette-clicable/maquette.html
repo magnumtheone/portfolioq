@@ -89,6 +89,25 @@
             animation: thankYouCountdown 5s linear forwards;
         }
 
+        .brand-logo-window {
+            position: relative;
+            display: block;
+            overflow: hidden;
+        }
+
+        .brand-logo-window img {
+            position: absolute;
+            left: 0;
+            top: -100%;
+            width: 100%;
+            max-width: none;
+            height: auto;
+        }
+
+        .brand-logo-window--splash img {
+            top: -85%;
+        }
+
         #preloader {
             transition: opacity 0.45s ease, visibility 0.45s ease;
         }
@@ -130,9 +149,11 @@
 
             <!-- Écran de préchargement -->
             <div id="preloader" class="absolute inset-0 z-[100] bg-[#F4F8F8] flex flex-col items-center justify-center">
-                <img src="Logo_bomaTalk.png" alt="BomaTalk" class="w-56 h-56 object-contain">
-                <p class="-mt-5 text-xs font-semibold tracking-wide text-navy">La scène locale, à portée de voix</p>
-                <div class="mt-7 h-1 w-28 overflow-hidden rounded-full bg-slate-200">
+                <div class="brand-logo-window brand-logo-window--splash w-72 h-24" role="img" aria-label="BomaTalk">
+                    <img src="Logo_bomaTalk.png.png" alt="">
+                </div>
+                <p class="mt-3 text-xs font-semibold tracking-wide text-navy">La scène locale, à portée de voix</p>
+                <div class="mt-6 h-1 w-28 overflow-hidden rounded-full bg-slate-200">
                     <div class="loading-progress h-full w-full rounded-full bg-emerald"></div>
                 </div>
             </div>
@@ -140,8 +161,10 @@
             <!-- HEADER PERSISTANT (fixé en haut de l'app) -->
             <header id="app-header" class="bg-white/90 backdrop-blur-md border-b border-slate-100 px-5 pt-10 pb-3 flex items-center justify-between z-40 transition-all duration-300">
                 <div class="flex flex-col items-start -ml-2">
-                    <img src="Logo_bomaTalk.png" alt="BomaTalk" class="w-32 h-11 object-contain">
-                    <span class="-mt-1 ml-2 text-[10px] font-medium text-emerald flex items-center gap-1">
+                    <div class="brand-logo-window w-32 h-10" role="img" aria-label="BomaTalk">
+                        <img src="Logo_bomaTalk.png.png" alt="">
+                    </div>
+                    <span class="ml-2 text-[10px] font-medium text-emerald flex items-center gap-1">
                         <i class="fa-solid fa-location-dot text-[9px]"></i> Kisangani, RDC
                     </span>
                 </div>
@@ -237,6 +260,34 @@
         };
 
         let bookingStep = 'form';
+        let bookingFlowActive = false;
+
+        function loadBookingRequests() {
+            try {
+                const savedRequests = JSON.parse(localStorage.getItem('bomatalk-booking-requests') || '[]');
+                return Array.isArray(savedRequests) ? savedRequests : [];
+            } catch {
+                return [];
+            }
+        }
+
+        let bookingRequests = loadBookingRequests();
+
+        function saveBookingRequests() {
+            try {
+                localStorage.setItem('bomatalk-booking-requests', JSON.stringify(bookingRequests));
+            } catch {
+                showToast('La demande est conservée uniquement pour cette session.');
+            }
+            updateReservationsBadge();
+        }
+
+        function updateReservationsBadge() {
+            const badge = document.querySelector('#nav-reservations span.absolute');
+            if (!badge) return;
+            badge.textContent = bookingRequests.length;
+            badge.classList.toggle('hidden', bookingRequests.length === 0);
+        }
 
         let isPlayingAudio = false;
         let audioInterval = null;
@@ -615,6 +666,101 @@
             document.getElementById('main-content').innerHTML = bookingStep === 'summary' ? renderBookingSummary() : renderBookingForm();
         }
 
+        function renderReservationsList() {
+            if (bookingRequests.length === 0) {
+                return `
+                    <div class="p-5 animate-fadeIn space-y-5">
+                        <div class="flex items-center justify-between">
+                            <h1 class="text-xl font-extrabold text-navy">Réservations</h1>
+                            <span class="text-[9px] font-bold uppercase tracking-wide text-amber-700 bg-amber-100 px-2 py-1 rounded-full">Démo</span>
+                        </div>
+                        <div class="py-12 text-center">
+                            <div class="w-14 h-14 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-slate-400"><i class="fa-regular fa-calendar text-xl"></i></div>
+                            <h2 class="mt-4 text-sm font-bold text-navy">Aucune demande pour le moment</h2>
+                            <p class="mt-1 text-xs text-slate-500">Choisissez une prestation sur le profil de Lina pour créer une réservation de démonstration.</p>
+                            <button onclick="switchTab('profile')" class="mt-5 px-5 py-2.5 bg-emerald text-white text-xs font-bold rounded-xl">Voir le profil</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const cards = [...bookingRequests].reverse().map(request => {
+                const fee = Number(request.priceUSD) * 0.05;
+                const statusDetails = {
+                    pending: { label: 'En attente', style: 'bg-amber-100 text-amber-700' },
+                    confirmed: { label: 'Confirmée par Lina', style: 'bg-emerald-subtle text-emerald-dark' },
+                    declined: { label: 'Déclinée', style: 'bg-rose-100 text-rose-700' }
+                }[request.status] || { label: 'En attente', style: 'bg-amber-100 text-amber-700' };
+                const artistActions = request.status === 'pending' ? `
+                    <div class="grid grid-cols-2 gap-2 mt-3">
+                        <button onclick="respondToBooking('${request.id}', 'confirmed')" class="py-2 bg-emerald text-white text-[10px] font-bold rounded-lg"><i class="fa-solid fa-check mr-1"></i> Confirmer (Lina)</button>
+                        <button onclick="respondToBooking('${request.id}', 'declined')" class="py-2 bg-slate-100 text-slate-600 text-[10px] font-bold rounded-lg"><i class="fa-solid fa-xmark mr-1"></i> Décliner</button>
+                    </div>
+                ` : '';
+
+                return `
+                    <article class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                        <div class="flex justify-between items-center gap-2 border-b border-slate-100 pb-3 mb-3">
+                            <span class="${statusDetails.style} px-2 py-1 rounded-md text-[9px] font-bold">${statusDetails.label}</span>
+                            <span class="text-xs font-extrabold text-navy">$${(Number(request.priceUSD) + fee).toFixed(2)}</span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <img src="lina-mg.jpg" alt="Lina Mg" class="w-11 h-11 rounded-xl object-cover object-[center_25%]">
+                            <div class="min-w-0">
+                                <h2 class="font-bold text-sm text-navy">${escapeHtml(request.artist)}</h2>
+                                <p class="text-[10px] text-slate-500">${escapeHtml(request.service)}</p>
+                            </div>
+                        </div>
+                        <div class="mt-3 space-y-1 text-[10px] text-slate-500">
+                            <p><i class="fa-regular fa-calendar w-4 text-emerald"></i>${escapeHtml(formatBookingDate(request.date))}, ${escapeHtml(request.startTime)} - ${escapeHtml(request.endTime)}</p>
+                            <p><i class="fa-solid fa-location-dot w-4 text-emerald"></i>${escapeHtml(request.address)}, ${escapeHtml(request.commune)}</p>
+                            <p><i class="fa-solid fa-music w-4 text-emerald"></i>${escapeHtml(request.eventType)}</p>
+                            <p><i class="fa-solid fa-wallet w-4 text-emerald"></i>${escapeHtml(request.payment)} · total estimé avec frais inclus</p>
+                            ${request.requirements ? `<p><i class="fa-regular fa-note-sticky w-4 text-emerald"></i>${escapeHtml(request.requirements)}</p>` : ''}
+                        </div>
+                        ${artistActions}
+                    </article>
+                `;
+            }).join('');
+
+            return `
+                <div class="p-5 animate-fadeIn space-y-4 pb-7">
+                    <div class="flex items-center justify-between">
+                        <h1 class="text-xl font-extrabold text-navy">Réservations</h1>
+                        <span class="text-[9px] font-bold uppercase tracking-wide text-amber-700 bg-amber-100 px-2 py-1 rounded-full">Simulation locale</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500">Les actions « Confirmer » et « Décliner » simulent la réponse de l’artiste.</p>
+                    <div class="flex justify-end">
+                        <button onclick="clearDemoBookings()" class="text-[10px] font-semibold text-slate-500 hover:text-rose-600"><i class="fa-solid fa-rotate-left mr-1"></i>Réinitialiser la démo</button>
+                    </div>
+                    <div class="space-y-3">${cards}</div>
+                </div>
+            `;
+        }
+
+        function clearDemoBookings() {
+            if (!window.confirm('Effacer toutes les réservations de démonstration sur cet appareil ?')) return;
+            bookingRequests = [];
+            try {
+                localStorage.removeItem('bomatalk-booking-requests');
+            } catch {
+                showToast('Impossible de réinitialiser le stockage local.');
+            }
+            updateReservationsBadge();
+            document.getElementById('main-content').innerHTML = renderReservationsList();
+            showToast('Données de démonstration réinitialisées.');
+        }
+
+        function respondToBooking(requestId, status) {
+            const request = bookingRequests.find(item => item.id === requestId);
+            if (!request || request.status !== 'pending') return;
+            request.status = status;
+            request.respondedAt = new Date().toISOString();
+            saveBookingRequests();
+            document.getElementById('main-content').innerHTML = renderReservationsList();
+            showToast(status === 'confirmed' ? 'Lina a confirmé la réservation (simulation).' : 'Lina a décliné la réservation (simulation).');
+        }
+
 
         // Changement de page dans le simulateur
         function switchTab(tabName) {
@@ -632,7 +778,7 @@
                 header.classList.remove('-translate-y-full', 'opacity-0', 'absolute');
                 header.classList.add('relative');
                 mainContent.innerHTML = tabName === 'reservations'
-                    ? (bookingStep === 'summary' ? renderBookingSummary() : renderBookingForm())
+                    ? (bookingFlowActive ? (bookingStep === 'summary' ? renderBookingSummary() : renderBookingForm()) : renderReservationsList())
                     : (views[tabName] || views.home);
             }
 
@@ -727,6 +873,7 @@
             bookingData.requirements = '';
             bookingData.submitted = false;
             bookingStep = 'form';
+            bookingFlowActive = true;
             switchTab('reservations');
         }
 
@@ -774,6 +921,14 @@
         function submitBookingRequest() {
             if (bookingData.submitted) return;
             bookingData.submitted = true;
+            bookingRequests.push({
+                ...bookingData,
+                id: `${Date.now()}`,
+                status: 'pending',
+                createdAt: new Date().toISOString()
+            });
+            saveBookingRequests();
+            bookingFlowActive = false;
             const thankYou = document.getElementById('artist-thank-you');
             const countdown = document.getElementById('thank-you-countdown');
             countdown.classList.remove('thank-you-countdown');
@@ -795,6 +950,7 @@
         window.addEventListener('DOMContentLoaded', function() {
             // Force l'affichage du profil par défaut (demande de l'utilisateur)
             switchTab('profile');
+            updateReservationsBadge();
             window.setTimeout(() => {
                 document.getElementById('preloader').classList.add('is-hidden');
             }, 1200);
