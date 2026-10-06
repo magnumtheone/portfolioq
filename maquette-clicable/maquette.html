@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BomaTalk - Simulateur Mobile First</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            DEFAULT: '#0F172A',
+                            dark: '#0B0F19',
+                            light: '#1E293B'
+                        },
+                        emerald: {
+                            DEFAULT: '#10B981',
+                            dark: '#059669',
+                            light: '#34D399',
+                            subtle: '#ECFDF5'
+                        },
+                        amber: {
+                            DEFAULT: '#F59E0B',
+                            light: '#FEF3C7'
+                        },
+                        slateBg: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* Fond sombre pour la présentation */
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 70%);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Masquer la scrollbar pour un aspect natif mobile */
+        .app-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        .app-scroll {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes loadingProgress {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        .loading-progress {
+            transform-origin: left;
+            animation: loadingProgress 1.2s ease-in-out forwards;
+        }
+
+        @keyframes thankYouCountdown {
+            from { transform: scaleX(1); }
+            to { transform: scaleX(0); }
+        }
+
+        .thank-you-countdown {
+            transform-origin: left;
+            animation: thankYouCountdown 5s linear forwards;
+        }
+
+        #preloader {
+            transition: opacity 0.45s ease, visibility 0.45s ease;
+        }
+
+        #preloader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        
+        @keyframes pulseAudio {
+            0%, 100% { height: 10px; }
+            50% { height: 25px; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 antialiased">
+
+    <!-- Conteneur global du téléphone (Mockup) -->
+    <div class="relative w-[375px] h-[812px] bg-black border-[12px] border-black rounded-[3.5rem] shadow-2xl flex flex-col overflow-hidden ring-4 ring-slate-800/50">
+        
+        <!-- Encoche (Notch) / Haut-parleur -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[120px] h-[24px] bg-black rounded-b-2xl z-[60] flex items-center justify-center">
+            <div class="w-12 h-1.5 bg-gray-800 rounded-full mt-1"></div>
+        </div>
+
+        <!-- Indicateur de l'heure et batterie (Simulé, z-index élevé) -->
+        <div class="absolute top-1 w-full px-6 flex justify-between items-center text-white text-[11px] font-bold z-[60] pointer-events-none mix-blend-difference">
+            <span>14:00</span>
+            <div class="flex items-center space-x-1.5">
+                <i class="fa-solid fa-signal text-[9px]"></i>
+                <i class="fa-solid fa-wifi text-[9px]"></i>
+                <i class="fa-solid fa-battery-full text-[11px]"></i>
+            </div>
+        </div>
+
+        <!-- Conteneur interne de l'application -->
+        <div class="flex-1 w-full h-full bg-slateBg relative flex flex-col overflow-hidden rounded-[2.8rem] mt-0.5">
+
+            <!-- Écran de préchargement -->
+            <div id="preloader" class="absolute inset-0 z-[100] bg-[#F4F8F8] flex flex-col items-center justify-center">
+                <img src="Logo_bomaTalk.png" alt="BomaTalk" class="w-56 h-56 object-contain">
+                <p class="-mt-5 text-xs font-semibold tracking-wide text-navy">La scène locale, à portée de voix</p>
+                <div class="mt-7 h-1 w-28 overflow-hidden rounded-full bg-slate-200">
+                    <div class="loading-progress h-full w-full rounded-full bg-emerald"></div>
+                </div>
+            </div>
+            
+            <!-- HEADER PERSISTANT (fixé en haut de l'app) -->
+            <header id="app-header" class="bg-white/90 backdrop-blur-md border-b border-slate-100 px-5 pt-10 pb-3 flex items-center justify-between z-40 transition-all duration-300">
+                <div class="flex flex-col items-start -ml-2">
+                    <img src="Logo_bomaTalk.png" alt="BomaTalk" class="w-32 h-11 object-contain">
+                    <span class="-mt-1 ml-2 text-[10px] font-medium text-emerald flex items-center gap-1">
+                        <i class="fa-solid fa-location-dot text-[9px]"></i> Kisangani, RDC
+                    </span>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button onclick="showToast('Aucune nouvelle notification')" class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition relative">
+                        <i class="fa-regular fa-bell text-sm"></i>
+                        <span class="absolute top-2 right-2 w-2 h-2 bg-emerald rounded-full border border-white"></span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- ZONE DE CONTENU DYNAMIQUE -->
+            <main id="main-content" class="flex-1 overflow-y-auto app-scroll pb-24 relative z-10">
+                <!-- Le contenu (Accueil, Profil, etc.) sera injecté ici par JS -->
+            </main>
+
+            <!-- BARRE DE NAVIGATION INFÉRIEURE (fixée en bas du téléphone) -->
+            <nav class="absolute bottom-0 w-full bg-white border-t border-slate-100 px-6 pt-3 pb-6 flex justify-between items-center z-40 shadow-[0_-10px_20px_rgba(0,0,0,0.03)] rounded-b-[2.8rem]">
+                <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-slate-400 transition transform active:scale-95 w-16">
+                    <i class="fa-solid fa-house text-xl mb-1"></i>
+                    <span class="text-[10px] font-semibold">Accueil</span>
+                </button>
+                <button onclick="switchTab('discover')" id="nav-discover" class="flex flex-col items-center text-slate-400 transition transform active:scale-95 w-16">
+                    <i class="fa-solid fa-compass text-xl mb-1"></i>
+                    <span class="text-[10px] font-semibold">Découvrir</span>
+                </button>
+                <button onclick="switchTab('reservations')" id="nav-reservations" class="flex flex-col items-center text-slate-400 transition transform active:scale-95 relative w-16">
+                    <i class="fa-solid fa-calendar-days text-xl mb-1"></i>
+                    <span class="text-[10px] font-semibold">Résas</span>
+                    <span class="absolute -top-1 right-2 bg-emerald text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white shadow-sm">1</span>
+                </button>
+                <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center text-emerald transition transform active:scale-95 w-16">
+                    <i class="fa-solid fa-user text-xl mb-1"></i>
+                    <span class="text-[10px] font-semibold">Profil</span>
+                </button>
+            </nav>
+
+            <!-- Barre de "Home" iOS native en bas -->
+            <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-1/3 h-1 bg-slate-300 rounded-full z-50 pointer-events-none"></div>
+
+            <!-- TOAST NOTIFICATION CONTAINER (centré sur l'écran du tel) -->
+            <div id="toast-container" class="absolute top-24 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300 opacity-0 pointer-events-none w-[90%]">
+                <div class="bg-navy/95 backdrop-blur-sm text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 text-xs font-medium border border-slate-700/50">
+                    <i class="fa-solid fa-circle-check text-emerald text-sm"></i>
+                    <span id="toast-message" class="flex-1">Action effectuée avec succès</span>
+                </div>
+            </div>
+
+            <div id="artist-thank-you" class="absolute inset-0 z-[80] flex items-center justify-center bg-navy/70 backdrop-blur-sm p-6 opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="thank-you-title" aria-hidden="true">
+                <div class="w-full max-w-xs bg-white rounded-3xl p-6 text-center shadow-2xl animate-fadeIn">
+                    <img src="lina-mg.jpg" alt="Lina Mg" class="w-16 h-16 mx-auto rounded-full object-cover object-[center_25%] border-4 border-emerald-subtle">
+                    <div class="w-8 h-8 mx-auto -mt-3 relative rounded-full bg-emerald text-white flex items-center justify-center border-2 border-white"><i class="fa-solid fa-check text-xs"></i></div>
+                    <p class="mt-3 text-[10px] uppercase tracking-wide font-bold text-emerald">Lina Mg</p>
+                    <h2 id="thank-you-title" class="mt-1 text-lg font-extrabold text-navy">Merci pour votre demande !</h2>
+                    <p class="mt-2 text-xs leading-relaxed text-slate-500">J’ai bien reçu votre demande de réservation. Je vous répondrai très bientôt pour confirmer les détails.</p>
+                    <div class="mt-5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100"><div id="thank-you-countdown" class="h-full w-full rounded-full bg-emerald"></div></div>
+                    <p class="mt-2 text-[9px] text-slate-400">Retour au profil dans quelques secondes…</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Instructions flottantes pour l'utilisateur sur ordinateur -->
+    <div class="fixed top-8 right-8 bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl text-white text-sm max-w-xs shadow-2xl hidden lg:block">
+        <div class="font-bold flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-mobile-screen"></i> Concept Mobile First
+        </div>
+        <p class="text-slate-300 text-xs leading-relaxed">
+            Interagissez directement avec l'écran du téléphone simulé. La page <strong>Profil</strong> est mise en avant pour démontrer l'ergonomie, les fonctionnalités de lecture audio et de réservation de l'artiste.
+        </p>
+    </div>
+
+    <script>
+        // État de l'application
+        let currentTab = 'profile'; // On démarre sur le profil comme demandé
+        
+        // Données simulées pour la réservation
+        let bookingData = {
+            artist: 'Lina Mg',
+            service: 'Récital Poésie & Slam (45 min)',
+            priceUSD: 50,
+            date: '',
+            startTime: '18:30',
+            endTime: '20:00',
+            eventType: '',
+            commune: 'Makiso',
+            address: '',
+            requirements: '',
+            payment: 'M-Pesa Vodacom',
+            customTime: false,
+            submitted: false
+        };
+
+        let bookingStep = 'form';
+
+        let isPlayingAudio = false;
+        let audioInterval = null;
+
+        // VUES DE L'APPLICATION (Templates HTML)
+        const views = {
+            // Vue Profil (Focus de la demande)
+            profile: `
+                <div class="animate-fadeIn pb-6">
+                    <!-- En-tête de profil immersif -->
+                    <div class="relative h-[280px]">
+                        <img src="lina-mg.jpg" alt="Lina Mg" class="w-full h-full object-cover object-[center_25%]">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slateBg via-navy/30 to-transparent"></div>
+                        
+                        <!-- Actions flottantes sur la cover -->
+                        <div class="absolute top-4 right-4 flex space-x-3 mt-8">
+                            <button onclick="showToast('Profil partagé avec succès')" class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/30 shadow-lg active:scale-90 transition">
+                                <i class="fa-solid fa-arrow-up-from-bracket text-sm"></i>
+                            </button>
+                            <button onclick="toggleFavorite(this)" class="w-10 h-10 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center text-rose-500 shadow-lg active:scale-90 transition">
+                                <i class="fa-solid fa-heart text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Corps du profil remonté sur la photo -->
+                    <div class="px-5 -mt-16 relative z-10 space-y-5">
+                        
+                        <!-- Avatar & Badges -->
+                        <div class="flex justify-between items-end">
+                            <div class="relative">
+                                <img src="lina-mg.jpg" alt="Lina Mg" class="w-[100px] h-[100px] rounded-full object-cover object-[center_25%] border-4 border-slateBg shadow-xl">
+                                <div class="absolute bottom-1 right-0 bg-emerald text-white w-7 h-7 rounded-full flex items-center justify-center border-2 border-slateBg shadow-md">
+                                    <i class="fa-solid fa-check text-[11px]"></i>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-2">
+                                <button onclick="showToast('Messagerie ouverte')" class="bg-navy text-white px-5 py-2.5 rounded-full text-xs font-bold shadow-md hover:bg-slate-800 transition flex items-center gap-2">
+                                    <i class="fa-regular fa-comment-dots"></i> Message
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Infos Identité -->
+                        <div>
+                            <h1 class="text-2xl font-extrabold text-navy tracking-tight">Lina Mg</h1>
+                            <p class="text-[13px] text-slate-600 font-medium mt-1">Slameuse, Poétesse & Animatrice d'Ateliers</p>
+                            <div class="flex items-center gap-1.5 mt-2">
+                                <span class="bg-emerald-subtle text-emerald px-2.5 py-1 rounded-md text-[10px] font-bold border border-emerald/20 flex items-center gap-1">
+                                    <i class="fa-solid fa-certificate"></i> Artiste Certifiée
+                                </span>
+                                <span class="text-xs text-slate-400 font-medium flex items-center gap-1">
+                                    <i class="fa-solid fa-location-dot"></i> Makiso, Kisangani
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Statistiques -->
+                        <div class="flex justify-between bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
+                            <div class="text-center flex-1">
+                                <span class="block text-base font-extrabold text-navy"><i class="fa-solid fa-star text-amber text-sm mr-1"></i>4.9</span>
+                                <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wide">128 avis</span>
+                            </div>
+                            <div class="w-px bg-slate-100 mx-2"></div>
+                            <div class="text-center flex-1">
+                                <span class="block text-base font-extrabold text-navy">84</span>
+                                <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Prestations</span>
+                            </div>
+                            <div class="w-px bg-slate-100 mx-2"></div>
+                            <div class="text-center flex-1">
+                                <span class="block text-base font-extrabold text-emerald">100%</span>
+                                <span class="text-[10px] text-slate-400 font-medium uppercase tracking-wide">Réponse</span>
+                            </div>
+                        </div>
+
+                        <!-- Biographie / À propos -->
+                        <div>
+                            <h3 class="text-sm font-bold text-navy mb-2 flex items-center gap-2">
+                                À propos de l'artiste
+                            </h3>
+                            <p class="text-[13px] text-slate-600 leading-relaxed">
+                                Voix montante du slam et de la poésie contemporaine à Boyoma. Lina capture l'âme du fleuve Congo et les réalités urbaines de Kisangani avec force et sensibilité. 
+                            </p>
+                            <div class="flex flex-wrap gap-2 mt-3">
+                                <span class="px-3 py-1 bg-slate-200/50 text-slate-700 rounded-lg text-[11px] font-medium">#Slam</span>
+                                <span class="px-3 py-1 bg-slate-200/50 text-slate-700 rounded-lg text-[11px] font-medium">#Poésie</span>
+                                <span class="px-3 py-1 bg-slate-200/50 text-slate-700 rounded-lg text-[11px] font-medium">#Ateliers</span>
+                            </div>
+                        </div>
+
+                        <!-- Lecteur Audio Interactif -->
+                        <div class="bg-gradient-to-br from-navy to-slate-800 rounded-3xl p-5 text-white shadow-lg relative overflow-hidden">
+                            <div class="absolute -right-4 -top-4 w-24 h-24 bg-emerald/20 rounded-full blur-xl"></div>
+                            
+                            <div class="flex justify-between items-start mb-4 relative z-10">
+                                <div>
+                                    <span class="text-[9px] uppercase tracking-wider font-bold text-emerald">Extrait Audio</span>
+                                    <h4 class="text-sm font-bold mt-0.5">Échos de la Tshopo</h4>
+                                    <p class="text-[11px] text-slate-400">Live @ Festival Fleuve Congo</p>
+                                </div>
+                                <button onclick="toggleAudioPlay()" id="audio-play-btn" class="w-12 h-12 bg-emerald rounded-full flex items-center justify-center text-white shadow-lg transform active:scale-95 transition">
+                                    <i class="fa-solid fa-play ml-1 text-lg" id="audio-icon"></i>
+                                </button>
+                            </div>
+
+                            <!-- Onde sonore animée -->
+                            <div class="flex items-end justify-between h-8 gap-1 opacity-80" id="waveform-bars">
+                                <div class="w-full bg-emerald h-[30%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[60%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[40%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[100%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[50%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[80%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[30%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[60%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[70%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[40%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[90%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[50%] rounded-full transition-all duration-300"></div>
+                                <div class="w-full bg-emerald h-[20%] rounded-full transition-all duration-300"></div>
+                            </div>
+                            <div class="flex justify-between text-[9px] text-slate-400 mt-2 font-mono">
+                                <span id="audio-time">0:00</span>
+                                <span>3:45</span>
+                            </div>
+                        </div>
+
+                        <!-- Services & Réservation -->
+                        <div class="pb-4">
+                            <h3 class="text-sm font-bold text-navy mb-3">Prestations & Tarifs</h3>
+                            
+                            <!-- Carte de service -->
+                            <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex flex-col mb-3">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div class="bg-emerald-subtle text-emerald px-2 py-1 rounded-[6px] text-[10px] font-bold">Scène</div>
+                                    <span class="text-lg font-extrabold text-navy">$50</span>
+                                </div>
+                                <h4 class="text-[13px] font-bold text-navy mb-1">Récital Slam & Poésie (45 min)</h4>
+                                <p class="text-[11px] text-slate-500 mb-3">Performance live pour festivals, soirées d'entreprise ou événements privés.</p>
+                                
+                                <button onclick="selectServiceAndBook('Récital Slam', 50)" class="w-full py-3 bg-emerald text-white text-xs font-bold rounded-xl active:scale-95 transition shadow-md">
+                                    Réserver ce service
+                                </button>
+                            </div>
+                            
+                            <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-100 flex flex-col">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div class="bg-amber-light text-amber-700 px-2 py-1 rounded-[6px] text-[10px] font-bold">Atelier</div>
+                                    <span class="text-lg font-extrabold text-navy">$120</span>
+                                </div>
+                                <h4 class="text-[13px] font-bold text-navy mb-1">Animation & Écriture (2h)</h4>
+                                <p class="text-[11px] text-slate-500 mb-3">Session interactive pour groupes scolaires ou teambuilding d'entreprise.</p>
+                                
+                                <button onclick="selectServiceAndBook('Atelier d\\'écriture', 120)" class="w-full py-3 bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-bold rounded-xl active:scale-95 transition">
+                                    Réserver ce service
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            `,
+            // Vue Accueil rapide
+            home: `
+                <div class="p-5 animate-fadeIn space-y-6">
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-navy">Bonjour ! 👋</h1>
+                        <p class="text-xs text-slate-500 mt-1">Découvrez la scène de Kisangani aujourd'hui.</p>
+                    </div>
+
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" placeholder="Rechercher un talent..." class="w-full pl-11 pr-4 py-3 bg-white border-none rounded-2xl shadow-sm text-sm focus:ring-2 focus:ring-emerald">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-end mb-3">
+                            <div>
+                                <h2 class="text-sm font-bold text-navy">Talents à découvrir</h2>
+                                <p class="text-[10px] text-slate-500 mt-0.5">Des créateurs de Kisangani</p>
+                            </div>
+                            <button onclick="showToast('Tous les talents sont affichés')" class="text-[11px] text-emerald font-semibold">Voir tout</button>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div onclick="switchTab('profile')" class="bg-white rounded-2xl p-3 flex items-center gap-3 shadow-sm border border-slate-100 active:scale-[0.98] transition cursor-pointer">
+                                <img src="lina-mg.jpg" alt="Lina Mg, slameuse" class="w-16 h-16 rounded-xl object-cover object-[center_25%]">
+                                <div class="flex-1 min-w-0">
+                                    <h3 class="font-bold text-navy text-sm truncate">Lina Mg <i class="fa-solid fa-circle-check text-emerald text-[10px]"></i></h3>
+                                    <p class="text-[11px] text-slate-500 truncate">Slameuse & poétesse</p>
+                                    <div class="flex items-center gap-1 mt-1 text-[10px] font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.9 <span class="text-slate-400 font-medium">(128 avis)</span></div>
+                                </div>
+                                <span class="text-[10px] font-bold text-emerald whitespace-nowrap">Dès $50</span>
+                            </div>
+
+                            <button onclick="showToast('Le profil de Djojo arrive bientôt')" class="w-full text-left bg-white rounded-2xl p-3 flex items-center gap-3 shadow-sm border border-slate-100 active:scale-[0.98] transition">
+                                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=240&q=80" alt="Concert en plein air" class="w-16 h-16 rounded-xl object-cover">
+                                <span class="flex-1 min-w-0"><span class="block font-bold text-navy text-sm truncate">Djojo Kaizadi <i class="fa-solid fa-music text-emerald text-[10px]"></i></span><span class="block text-[11px] text-slate-500 truncate">Chanteur & percussionniste</span><span class="block mt-1 text-[10px] font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.8 <span class="text-slate-400 font-medium">(34 avis)</span></span></span>
+                                <span class="text-[10px] font-bold text-emerald whitespace-nowrap">Dès $80</span>
+                            </button>
+
+                            <button onclick="showToast('Le profil de Maman Amina arrive bientôt')" class="w-full text-left bg-white rounded-2xl p-3 flex items-center gap-3 shadow-sm border border-slate-100 active:scale-[0.98] transition">
+                                <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?auto=format&fit=crop&w=240&q=80" alt="Création artisanale" class="w-16 h-16 rounded-xl object-cover">
+                                <span class="flex-1 min-w-0"><span class="block font-bold text-navy text-sm truncate">Maman Amina <i class="fa-solid fa-hand-sparkles text-emerald text-[10px]"></i></span><span class="block text-[11px] text-slate-500 truncate">Artisane, tissage & vannerie</span><span class="block mt-1 text-[10px] font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.9 <span class="text-slate-400 font-medium">(21 avis)</span></span></span>
+                                <span class="text-[10px] font-bold text-emerald whitespace-nowrap">Dès $15</span>
+                            </button>
+
+                            <button onclick="showToast('Le profil de Kanku arrive bientôt')" class="w-full text-left bg-white rounded-2xl p-3 flex items-center gap-3 shadow-sm border border-slate-100 active:scale-[0.98] transition">
+                                <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=240&q=80" alt="Photographe en séance" class="w-16 h-16 rounded-xl object-cover">
+                                <span class="flex-1 min-w-0"><span class="block font-bold text-navy text-sm truncate">Kanku Moke <i class="fa-solid fa-camera text-emerald text-[10px]"></i></span><span class="block text-[11px] text-slate-500 truncate">Photographe événementiel</span><span class="block mt-1 text-[10px] font-bold text-amber-500"><i class="fa-solid fa-star"></i> 4.7 <span class="text-slate-400 font-medium">(18 avis)</span></span></span>
+                                <span class="text-[10px] font-bold text-emerald whitespace-nowrap">Dès $40</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `,
+            discover: `
+                <div class="p-5 animate-fadeIn space-y-5">
+                    <section class="bg-navy rounded-2xl p-5 text-white shadow-lg">
+                        <div class="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald bg-emerald/10 px-2.5 py-1.5 rounded-full">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            Organisateurs & Hôtels
+                        </div>
+                        <h1 class="text-lg leading-snug font-extrabold mt-3">Vous organisez un événement à Kisangani ?</h1>
+                        <p class="text-[11px] text-slate-300 leading-relaxed mt-2">Trouvez, réservez et contractualisez vos talents locaux en quelques clics, avec un suivi sécurisé de votre prestation.</p>
+                        <button onclick="showToast('Espace Pro bientôt disponible')" class="mt-4 w-full py-3 bg-emerald text-white text-xs font-bold rounded-xl active:scale-[0.98] transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-briefcase"></i>
+                            Espace Pro & Entreprises
+                        </button>
+                    </section>
+                    <div class="text-center pt-1">
+                        <p class="text-xs text-slate-500">Découvrez aussi les talents de la scène locale.</p>
+                        <button onclick="switchTab('home')" class="mt-4 px-6 py-2 bg-emerald text-white text-xs font-bold rounded-full active:scale-95 transition">Retour</button>
+                    </div>
+                </div>
+            `,
+            reservations: `
+                <div></div>
+            `
+        };
+
+        const eventTypes = ['Mariage / Privé', 'Événement d’entreprise'];
+        const communes = ['Makiso', 'Tshopo', 'Mangobo', 'Kabondo'];
+        const paymentMethods = [
+            { name: 'M-Pesa Vodacom', icon: 'fa-mobile-screen-button' },
+            { name: 'Orange Money', icon: 'fa-wallet' },
+            { name: 'Airtel Money', icon: 'fa-wallet' },
+            { name: 'Cash garanti à la prestation', icon: 'fa-money-bill-wave' }
+        ];
+
+        function escapeHtml(value) {
+            return String(value).replace(/[&<>"']/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[character]);
+        }
+
+        function formatBookingDate(dateValue) {
+            if (!dateValue) return 'À choisir';
+            return new Date(`${dateValue}T12:00:00`).toLocaleDateString('fr-FR', {
+                weekday: 'short', day: '2-digit', month: 'long', year: 'numeric'
+            });
+        }
+
+        function getLocalDateValue(date = new Date()) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function renderBookingForm() {
+            const eventTypeOptions = eventTypes.map(type => `
+                <button type="button" onclick="setBookingOption('eventType', '${type}')" class="px-3 py-2 rounded-lg text-[10px] font-semibold transition ${bookingData.eventType === type ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">${type}</button>
+            `).join('');
+            const communeOptions = communes.map(commune => `
+                <button type="button" onclick="setBookingOption('commune', '${commune}')" class="px-3 py-1.5 rounded-lg text-[10px] font-semibold transition ${bookingData.commune === commune ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">${commune}</button>
+            `).join('');
+
+            return `
+                <div class="p-4 animate-fadeIn space-y-4 pb-7">
+                    <div class="flex items-center justify-between">
+                        <button onclick="switchTab('profile')" class="w-8 h-8 rounded-full bg-white border border-slate-100 text-slate-600" aria-label="Retour au profil"><i class="fa-solid fa-arrow-left text-xs"></i></button>
+                        <span class="text-[10px] font-semibold text-slate-400">Étape 1 sur 2</span>
+                    </div>
+                    <div class="bg-white rounded-2xl p-3 flex items-center gap-3 border border-slate-100">
+                        <img src="lina-mg.jpg" alt="Lina Mg" class="w-11 h-11 rounded-xl object-cover object-[center_25%]">
+                        <div class="min-w-0 flex-1">
+                            <p class="text-sm font-bold text-navy">${escapeHtml(bookingData.artist)} <span class="text-[9px] text-emerald bg-emerald-subtle px-1.5 py-0.5 rounded">Certifiée</span></p>
+                            <p class="text-[10px] text-slate-500 truncate">Slameuse, Artiste & Poétesse | Kisangani</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between text-[10px]">
+                        <span class="text-slate-500">Tarif</span><strong class="text-emerald">À partir de $${Number(bookingData.priceUSD).toFixed(0)}</strong>
+                    </div>
+
+                    <section class="space-y-3">
+                        <h2 class="text-sm font-extrabold text-navy"><span class="text-emerald mr-1">1.</span> Date & horaire souhaités</h2>
+                        <p class="text-[10px] text-slate-500 -mt-2">Disponible pour vos événements à Kisangani</p>
+                        <label class="block text-[10px] font-semibold text-slate-600">Date de la prestation</label>
+                        <input type="date" min="${getLocalDateValue()}" value="${escapeHtml(bookingData.date)}" onchange="updateBookingField('date', this.value)" class="w-full bg-slate-100 rounded-lg px-3 py-2.5 text-xs text-navy border-0 focus:ring-2 focus:ring-emerald">
+                        <label class="block text-[10px] font-semibold text-slate-600">Créneau de passage</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button type="button" onclick="setCustomTime(false)" class="py-2.5 rounded-lg text-[10px] font-bold ${!bookingData.customTime ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">${escapeHtml(bookingData.startTime)} - ${escapeHtml(bookingData.endTime)} <i class="fa-regular fa-clock ml-1"></i></button>
+                            <button type="button" onclick="setCustomTime(true)" class="py-2.5 rounded-lg text-[10px] font-semibold ${bookingData.customTime ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">Autre créneau <i class="fa-regular fa-clock ml-1"></i></button>
+                        </div>
+                        ${bookingData.customTime ? `<div class="grid grid-cols-2 gap-2"><label class="text-[10px] text-slate-500">Début<input type="time" value="${escapeHtml(bookingData.startTime)}" onchange="updateBookingField('startTime', this.value)" class="mt-1 w-full bg-slate-100 rounded-lg px-3 py-2 text-xs text-navy"></label><label class="text-[10px] text-slate-500">Fin<input type="time" value="${escapeHtml(bookingData.endTime)}" onchange="updateBookingField('endTime', this.value)" class="mt-1 w-full bg-slate-100 rounded-lg px-3 py-2 text-xs text-navy"></label></div>` : ''}
+                    </section>
+
+                    <section class="space-y-3">
+                        <h2 class="text-sm font-extrabold text-navy"><span class="text-emerald mr-1">2.</span> Type d’événement</h2>
+                        <div class="flex flex-wrap gap-2">${eventTypeOptions}</div>
+                    </section>
+
+                    <section class="space-y-3">
+                        <label class="block text-sm font-extrabold text-navy"><span class="text-emerald mr-1">3.</span> Commune</label>
+                        <div class="flex flex-wrap gap-2">${communeOptions}</div>
+                        <label class="block text-[10px] font-semibold text-slate-600" for="booking-address">Adresse ou nom de la salle</label>
+                        <input id="booking-address" type="text" value="${escapeHtml(bookingData.address)}" oninput="updateBookingField('address', this.value)" placeholder="Ex. Hôtel Palm Beach, Salon Congo" class="w-full bg-slate-100 rounded-lg px-3 py-2.5 text-xs text-navy border-0 focus:ring-2 focus:ring-emerald">
+                    </section>
+
+                    <section class="space-y-2">
+                        <label for="booking-requirements" class="block text-[10px] font-semibold text-slate-600">Besoins techniques ou consignes (facultatif)</label>
+                        <textarea id="booking-requirements" rows="2" oninput="updateBookingField('requirements', this.value)" placeholder="Sonorisation, scène, accès…" class="w-full resize-none bg-slate-100 rounded-lg px-3 py-2.5 text-xs text-navy border-0 focus:ring-2 focus:ring-emerald">${escapeHtml(bookingData.requirements)}</textarea>
+                    </section>
+                    <button onclick="continueToBookingSummary()" class="w-full py-3 bg-emerald text-white text-xs font-bold rounded-xl shadow-md active:scale-[0.98] transition">Suivant <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                </div>
+            `;
+        }
+
+        function renderBookingSummary() {
+            const fee = bookingData.priceUSD * 0.05;
+            const total = bookingData.priceUSD + fee;
+            const totalCDF = Math.round(total * 2300).toLocaleString('fr-FR');
+            const methods = paymentMethods.map(method => `
+                <button type="button" onclick="setPaymentMethod('${method.name}')" class="flex items-center gap-2 text-left p-2 rounded-lg border ${bookingData.payment === method.name ? 'border-emerald bg-emerald-subtle' : 'border-slate-100 bg-white'}">
+                    <span class="w-7 h-7 rounded-full ${bookingData.payment === method.name ? 'bg-emerald text-white' : 'bg-slate-100 text-slate-500'} flex items-center justify-center"><i class="fa-solid ${method.icon} text-[10px]"></i></span>
+                    <span class="text-[9px] font-semibold text-navy leading-tight">${method.name}</span>
+                </button>
+            `).join('');
+
+            return `
+                <div class="p-4 animate-fadeIn space-y-4 pb-7">
+                    <div class="flex items-center justify-between">
+                        <button onclick="bookingStep = 'form'; switchTab('reservations')" class="w-8 h-8 rounded-full bg-white border border-slate-100 text-slate-600" aria-label="Modifier la réservation"><i class="fa-solid fa-arrow-left text-xs"></i></button>
+                        <span class="text-[10px] font-semibold text-slate-400">Étape 2 sur 2</span>
+                    </div>
+                    ${bookingData.submitted ? '<div class="p-3 rounded-xl bg-emerald-subtle text-emerald text-xs font-bold"><i class="fa-solid fa-circle-check mr-1"></i> Demande envoyée en mode démonstration.</div>' : ''}
+                    <h1 class="text-sm font-extrabold text-navy"><i class="fa-solid fa-clipboard-check text-emerald mr-1"></i> Récapitulatif transparent</h1>
+                    <section class="bg-white rounded-xl p-3 border border-slate-100 space-y-2 text-[10px]">
+                        <div class="flex justify-between gap-3"><span class="text-slate-600">${escapeHtml(bookingData.service)}</span><strong class="text-navy">$${Number(bookingData.priceUSD).toFixed(2)}</strong></div>
+                        <div class="text-slate-500">${escapeHtml(bookingData.artist)} · ${escapeHtml(bookingData.eventType)}</div>
+                        <div class="text-slate-500">${escapeHtml(formatBookingDate(bookingData.date))} · ${escapeHtml(bookingData.startTime)} - ${escapeHtml(bookingData.endTime)}</div>
+                        <div class="text-slate-500">${escapeHtml(bookingData.address)}, ${escapeHtml(bookingData.commune)}</div>
+                        <div class="flex justify-between border-t border-slate-100 pt-2"><span class="text-slate-600">Frais BomaTalk & protection (5%)</span><strong class="text-navy">$${fee.toFixed(2)}</strong></div>
+                        <div class="flex justify-between text-emerald"><span>Assurance médiation & annulation</span><strong>Offert</strong></div>
+                    </section>
+                    <section class="bg-slate-100 rounded-xl p-3">
+                        <div class="flex justify-between text-[9px] text-slate-500"><span>Total estimé (tout inclus)</span><span>≈ ${totalCDF} CDF</span></div>
+                        <div class="flex justify-between items-center mt-1"><strong class="text-lg text-navy">$${total.toFixed(2)}</strong><span class="bg-emerald text-navy px-2 py-1 rounded text-xs font-extrabold">${totalCDF} CDF</span></div>
+                        <p class="text-[9px] text-slate-500 mt-1">Taux indicatif : 1 USD ≈ 2 300 CDF</p>
+                    </section>
+                    <section class="space-y-2">
+                        <h2 class="text-xs font-extrabold text-navy"><i class="fa-solid fa-wallet text-emerald mr-1"></i> Moyens de paiement acceptés</h2>
+                        <p class="text-[9px] text-slate-500">Le règlement sera confirmé après validation de la demande.</p>
+                        <div class="grid grid-cols-2 gap-2">${methods}</div>
+                    </section>
+                    <p class="text-[9px] text-slate-500 bg-slate-100 rounded-lg p-2"><i class="fa-solid fa-lock text-emerald mr-1"></i> Les fonds sont sécurisés et libérés après la prestation.</p>
+                    <button onclick="submitBookingRequest()" ${bookingData.submitted ? 'disabled' : ''} class="w-full py-3 bg-emerald text-white text-xs font-bold rounded-xl shadow-md active:scale-[0.98] transition disabled:opacity-60">${bookingData.submitted ? 'Demande envoyée' : 'Envoyer la demande de réservation'} <i class="fa-solid fa-paper-plane ml-1"></i></button>
+                    <p class="text-center text-[9px] text-slate-400">Aucun débit immédiat — la demande doit être confirmée par l’artiste.</p>
+                </div>
+            `;
+        }
+
+        function refreshBookingView() {
+            document.getElementById('main-content').innerHTML = bookingStep === 'summary' ? renderBookingSummary() : renderBookingForm();
+        }
+
+
+        // Changement de page dans le simulateur
+        function switchTab(tabName) {
+            currentTab = tabName;
+            const mainContent = document.getElementById('main-content');
+            
+            // Masquer ou afficher le header personnalisé pour le profil
+            const header = document.getElementById('app-header');
+            if(tabName === 'profile') {
+                // Sur le profil, on cache le header standard pour un look immersif
+                header.classList.add('-translate-y-full', 'opacity-0', 'absolute');
+                header.classList.remove('relative');
+                mainContent.innerHTML = views[tabName];
+            } else {
+                header.classList.remove('-translate-y-full', 'opacity-0', 'absolute');
+                header.classList.add('relative');
+                mainContent.innerHTML = tabName === 'reservations'
+                    ? (bookingStep === 'summary' ? renderBookingSummary() : renderBookingForm())
+                    : (views[tabName] || views.home);
+            }
+
+            // Mise à jour de la barre de navigation active
+            ['home', 'discover', 'reservations', 'profile'].forEach(t => {
+                const btn = document.getElementById(`nav-${t}`);
+                if (btn) {
+                    if (t === tabName) {
+                        btn.classList.remove('text-slate-400');
+                        btn.classList.add('text-emerald');
+                    } else {
+                        btn.classList.remove('text-emerald');
+                        btn.classList.add('text-slate-400');
+                    }
+                }
+            });
+
+            // Remettre le scroll en haut de l'écran du tel
+            mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Système de notification "Toast" adapté au mobile
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const msgEl = document.getElementById('toast-message');
+            msgEl.textContent = message;
+            
+            // Animation d'apparition
+            container.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            container.classList.add('opacity-100', 'translate-y-0');
+
+            setTimeout(() => {
+                container.classList.remove('opacity-100', 'translate-y-0');
+                container.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+            }, 2500);
+        }
+
+        // Simulation de lecteur audio
+        function toggleAudioPlay() {
+            isPlayingAudio = !isPlayingAudio;
+            const icon = document.getElementById('audio-icon');
+            const bars = document.getElementById('waveform-bars');
+            const timeStr = document.getElementById('audio-time');
+
+            if (isPlayingAudio) {
+                icon.className = 'fa-solid fa-pause ml-0 text-lg';
+                showToast('Lecture en cours...');
+                
+                // Animation des barres
+                audioInterval = setInterval(() => {
+                    if (bars) {
+                        Array.from(bars.children).forEach(bar => {
+                            const randomHeight = Math.floor(Math.random() * 80) + 20;
+                            bar.style.height = `${randomHeight}%`;
+                        });
+                        
+                        // Faux timer
+                        timeStr.textContent = "0:12";
+                    }
+                }, 150);
+            } else {
+                icon.className = 'fa-solid fa-play ml-1 text-lg';
+                clearInterval(audioInterval);
+                if(bars) {
+                    Array.from(bars.children).forEach(bar => bar.style.height = '30%');
+                }
+                showToast('Lecture en pause');
+            }
+        }
+
+        // Favoris animés
+        function toggleFavorite(btn) {
+            const icon = btn.querySelector('i');
+            if(icon.classList.contains('fa-solid')) {
+                icon.classList.remove('fa-solid');
+                icon.classList.add('fa-regular');
+                showToast('Retiré de vos favoris');
+            } else {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid');
+                showToast('Ajouté à vos favoris ❤️');
+            }
+        }
+
+        // Action métier: Réserver
+        function selectServiceAndBook(serviceName, price) {
+            bookingData.service = serviceName;
+            bookingData.priceUSD = Number(price);
+            bookingData.date = '';
+            bookingData.eventType = '';
+            bookingData.address = '';
+            bookingData.requirements = '';
+            bookingData.submitted = false;
+            bookingStep = 'form';
+            switchTab('reservations');
+        }
+
+        function updateBookingField(field, value) {
+            bookingData[field] = value;
+        }
+
+        function setBookingOption(field, value) {
+            bookingData[field] = value;
+            refreshBookingView();
+        }
+
+        function setCustomTime(enabled) {
+            bookingData.customTime = enabled;
+            refreshBookingView();
+        }
+
+        function continueToBookingSummary() {
+            if (!bookingData.date || bookingData.date < getLocalDateValue()) {
+                showToast('Choisissez une date à partir d’aujourd’hui.');
+                return;
+            }
+            if (!bookingData.eventType) {
+                showToast('Choisissez le type de votre événement.');
+                return;
+            }
+            if (!bookingData.commune || !bookingData.address.trim()) {
+                showToast('Indiquez la commune et le lieu de la prestation.');
+                return;
+            }
+            if (bookingData.endTime <= bookingData.startTime) {
+                showToast('L’heure de fin doit suivre l’heure de début.');
+                return;
+            }
+            bookingStep = 'summary';
+            refreshBookingView();
+            document.getElementById('main-content').scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setPaymentMethod(method) {
+            bookingData.payment = method;
+            refreshBookingView();
+        }
+
+        function submitBookingRequest() {
+            if (bookingData.submitted) return;
+            bookingData.submitted = true;
+            const thankYou = document.getElementById('artist-thank-you');
+            const countdown = document.getElementById('thank-you-countdown');
+            countdown.classList.remove('thank-you-countdown');
+            void countdown.offsetWidth;
+            countdown.classList.add('thank-you-countdown');
+            thankYou.setAttribute('aria-hidden', 'false');
+            thankYou.classList.remove('opacity-0', 'pointer-events-none');
+            thankYou.classList.add('opacity-100');
+            window.setTimeout(() => {
+                countdown.classList.remove('thank-you-countdown');
+                thankYou.classList.remove('opacity-100');
+                thankYou.classList.add('opacity-0', 'pointer-events-none');
+                thankYou.setAttribute('aria-hidden', 'true');
+                switchTab('profile');
+            }, 5000);
+        }
+
+        // Initialisation de l'application au chargement
+        window.addEventListener('DOMContentLoaded', function() {
+            // Force l'affichage du profil par défaut (demande de l'utilisateur)
+            switchTab('profile');
+            window.setTimeout(() => {
+                document.getElementById('preloader').classList.add('is-hidden');
+            }, 1200);
+        });
+    </script>
+</body>
+</html>
