@@ -205,8 +205,35 @@ carouselNext?.addEventListener('click', () => moveProjectCarousel(1));
 projectCarousel?.addEventListener('scroll', () => requestAnimationFrame(updateCarouselCount), { passive: true });
 updateCarouselCount();
 
+// Messages d'erreur affichés sous chaque champ obligatoire.
+const fieldMessages = {
+  nom: { valueMissing: 'Indiquez votre nom.' },
+  email: { valueMissing: 'Indiquez votre email.', typeMismatch: 'Cet email ne semble pas valide (exemple : nom@domaine.com).' },
+  message: { valueMissing: 'Décrivez votre projet en quelques mots.', tooShort: 'Ajoutez quelques mots de plus (10 caractères minimum).' },
+};
+
+function validateField(field) {
+  const messages = fieldMessages[field.name];
+  if (!messages) return true;
+  const error = document.getElementById(field.getAttribute('aria-describedby'));
+  const failure = Object.keys(messages).find((key) => field.validity[key]);
+  field.setAttribute('aria-invalid', String(Boolean(failure)));
+  if (error) error.textContent = failure ? messages[failure] : '';
+  return !failure;
+}
+
+contactForm?.querySelectorAll('[aria-describedby]').forEach((field) => {
+  field.addEventListener('blur', () => { if (field.value) validateField(field); });
+  field.addEventListener('input', () => { if (field.getAttribute('aria-invalid') === 'true') validateField(field); });
+});
+
 contactForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
+  const invalidFields = [...contactForm.querySelectorAll('[aria-describedby]')].filter((field) => !validateField(field));
+  if (invalidFields.length) {
+    invalidFields[0].focus();
+    return;
+  }
   const submit = contactForm.querySelector('button[type="submit"]');
   const status = contactForm.querySelector('.form-status');
   const originalLabel = submit.innerHTML;

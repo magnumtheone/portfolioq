@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Votre témoignage — David Mbula Wawina</title>
+  <meta name="description" content="Questionnaire pour les clients de David Mbula Wawina : partagez votre expérience en quelques minutes.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#050505">
+  <link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+  <header class="page-header dark">
+    <a class="brand" href="index.html">DAVID <span>MBULA</span></a>
+  </header>
+
+  <main id="contenu" class="form-page">
+    <div class="form-intro">
+      <p class="case-kicker"><strong>Témoignage client</strong><span>3 minutes</span></p>
+      <h1>Merci d'avoir travaillé avec moi.<br><em>Votre avis compte.</em></h1>
+      <p>Vos réponses m'aident à m'améliorer et à montrer à de futurs clients ce que nous avons construit ensemble. Rien ne sera publié sans votre accord.</p>
+    </div>
+
+    <form class="survey" id="testimonialForm" novalidate>
+      <input type="hidden" name="subject" value="Nouveau témoignage client (davidwawina.site)">
+      <input type="hidden" name="from_name" value="Questionnaire témoignage">
+      <input type="checkbox" name="botcheck" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <fieldset>
+        <legend>01 · Vous</legend>
+        <div class="survey-row">
+          <div class="field">
+            <label for="t-name">Prénom et nom *</label>
+            <input id="t-name" type="text" name="nom" required autocomplete="name" aria-describedby="t-name-error">
+            <p class="field-error" id="t-name-error"></p>
+          </div>
+          <div class="field">
+            <label for="t-role">Fonction</label>
+            <input id="t-role" type="text" name="fonction" autocomplete="organization-title" placeholder="Ex. : Directeur, gérante, fondateur…">
+          </div>
+        </div>
+        <div class="survey-row">
+          <div class="field">
+            <label for="t-company">Entreprise ou organisation *</label>
+            <input id="t-company" type="text" name="entreprise" required autocomplete="organization" aria-describedby="t-company-error">
+            <p class="field-error" id="t-company-error"></p>
+          </div>
+          <div class="field">
+            <label for="t-contact">Email ou numéro WhatsApp *</label>
+            <input id="t-contact" type="text" name="contact" required autocomplete="email" aria-describedby="t-contact-hint t-contact-error">
+            <p class="field-hint" id="t-contact-hint">Uniquement pour vous recontacter, jamais publié.</p>
+            <p class="field-error" id="t-contact-error"></p>
+          </div>
+        </div>
+        <div class="field">
+          <label for="t-link">Site web ou page de votre activité <span class="field-optional">(facultatif)</span></label>
+          <input id="t-link" type="url" name="lien" autocomplete="url" placeholder="https://…">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>02 · Le projet</legend>
+        <div class="field">
+          <label for="t-project">Quel projet avons-nous réalisé ensemble ? *</label>
+          <input id="t-project" type="text" name="projet" required placeholder="Ex. : site de l'hôtel, application de réservation…" aria-describedby="t-project-error">
+          <p class="field-error" id="t-project-error"></p>
+        </div>
+        <div class="field">
+          <label for="t-before">Quelle était la situation avant le projet ?</label>
+          <textarea id="t-before" name="avant" rows="4" placeholder="Ce qui vous manquait, ce qui ne fonctionnait pas…"></textarea>
+        </div>
+        <div class="field">
+          <label for="t-after">Qu'est-ce qui a changé depuis ?</label>
+          <p class="field-hint" id="t-after-hint">Si vous avez un chiffre (plus de réservations, de demandes, de visites…), il est très précieux.</p>
+          <textarea id="t-after" name="apres" rows="4" aria-describedby="t-after-hint"></textarea>
+        </div>
+        <div class="field" role="radiogroup" aria-labelledby="t-rating-label" aria-describedby="t-rating-error">
+          <span class="field-label" id="t-rating-label">Votre note globale *</span>
+          <div class="rating">
+            <input type="radio" id="t-r1" name="note" value="1 / 5" required><label for="t-r1">1</label>
+            <input type="radio" id="t-r2" name="note" value="2 / 5"><label for="t-r2">2</label>
+            <input type="radio" id="t-r3" name="note" value="3 / 5"><label for="t-r3">3</label>
+            <input type="radio" id="t-r4" name="note" value="4 / 5"><label for="t-r4">4</label>
+            <input type="radio" id="t-r5" name="note" value="5 / 5"><label for="t-r5">5</label>
+          </div>
+          <p class="field-error" id="t-rating-error"></p>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>03 · Votre témoignage</legend>
+        <div class="field">
+          <label for="t-quote">En 2 à 4 phrases, que diriez-vous à quelqu'un qui hésite à travailler avec moi ? *</label>
+          <textarea id="t-quote" name="temoignage" rows="5" required minlength="20" aria-describedby="t-quote-error"></textarea>
+          <p class="field-error" id="t-quote-error"></p>
+        </div>
+        <div class="field">
+          <label for="t-improve">Qu'est-ce que j'aurais pu mieux faire ?</label>
+          <p class="field-hint" id="t-improve-hint">Cette réponse reste entre nous et ne sera jamais publiée.</p>
+          <textarea id="t-improve" name="ameliorer" rows="3" aria-describedby="t-improve-hint"></textarea>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>04 · Votre photo</legend>
+        <div class="photo-box">
+          <p>Un témoignage avec photo est beaucoup plus crédible. Envoyez-moi un portrait de vous (de face, avec une bonne lumière) ou le logo de votre entreprise directement sur WhatsApp.</p>
+          <a class="button button-whatsapp" id="t-whatsapp" href="https://wa.me/243816684426?text=Bonjour%20David%2C%20voici%20ma%20photo%20pour%20mon%20t%C3%A9moignage." target="_blank" rel="noopener noreferrer">Envoyer ma photo sur WhatsApp <span aria-hidden="true">↗</span><span class="visually-hidden"> (nouvel onglet)</span></a>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>05 · Votre accord</legend>
+        <label class="check">
+          <input type="checkbox" name="autorisation_publication" value="Oui" required aria-describedby="t-consent-error">
+          <span>J'autorise David Mbula Wawina à publier mon témoignage, avec mon nom, ma fonction et ma photo, sur son site et ses réseaux. *</span>
+        </label>
+        <p class="field-error" id="t-consent-error"></p>
+        <label class="check">
+          <input type="checkbox" name="autorisation_logo" value="Oui">
+          <span>J'accepte que le nom et le logo de mon entreprise soient cités parmi ses clients.</span>
+        </label>
+      </fieldset>
+
+      <button class="button" type="submit">Envoyer mon témoignage <span aria-hidden="true">↗</span></button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="form-success" id="testimonialSuccess" hidden tabindex="-1">
+      <h2>Merci, c'est bien reçu !</h2>
+      <p>Je vous recontacte avant toute publication. Si ce n'est pas encore fait, envoyez-moi votre photo :</p>
+      <div class="button-row">
+        <a class="button button-whatsapp" data-whatsapp-copy href="https://wa.me/243816684426" target="_blank" rel="noopener noreferrer">Envoyer ma photo sur WhatsApp <span aria-hidden="true">↗</span></a>
+        <a class="button button-ghost" href="index.html">Voir le site</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="page-footer">
+    <span>© 2026 David Mbula · Développeur web et consultant digital</span>
+    <nav aria-label="Liens du pied de page"><a href="index.html">Accueil</a><a href="mailto:contact@davidwawina.site">contact@davidwawina.site</a></nav>
+  </footer>
+  <script src="scripts/temoignage.js" defer></script>
+</body>
+</html>
