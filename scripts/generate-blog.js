@@ -7,6 +7,7 @@ const blogDir = path.join(__dirname, '..', 'blog');
 const postsDir = path.join(blogDir, 'posts');
 const outputDir = blogDir;
 const siteUrl = 'https://davidwawina.site';
+const defaultImage = `${siteUrl}/images/og-image.jpg`;
 
 // Lit tous les fichiers Markdown du dossier blog/posts/ et extrait leurs métadonnées et contenu.
 // Les fichiers sont nommés AAAA-MM-JJ-slug.md : ce préfixe sert au tri (le plus récent d'abord).
@@ -41,6 +42,8 @@ function readMarkdownFiles() {
         description: meta.description || '',
         readingTime: getReadingTime(content, meta.readingTime),
         slug,
+        // Image d'aperçu (Facebook, WhatsApp…) : chemin depuis la racine du site, au format 1200 × 630.
+        image: meta.image ? `${siteUrl}/${meta.image.replace(/^\//, '')}` : defaultImage,
         fullUrl: `${siteUrl}/blog/${slug}.html`,
         content,
       };
@@ -102,7 +105,7 @@ function escapeHtml(text) {
 }
 
 // En-tête HTML commun aux pages du blog, aligné sur le design du portfolio.
-function pageHead({ title, description, canonical }) {
+function pageHead({ title, description, canonical, image = defaultImage }) {
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -115,8 +118,16 @@ function pageHead({ title, description, canonical }) {
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${siteUrl}/images/webmaster.jpg">
+  <meta property="og:site_name" content="David Mbula Wawina">
+  <meta property="og:image" content="${image}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="${escapeHtml(title)}">
   <meta property="og:locale" content="fr_FR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escapeHtml(title)}">
+  <meta name="twitter:description" content="${escapeHtml(description)}">
+  <meta name="twitter:image" content="${image}">
   <link rel="canonical" href="${canonical}">
   <link rel="icon" type="image/png" sizes="48x48" href="../images/favicon-48.png">
   <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
@@ -150,10 +161,11 @@ function buildPostPage(post) {
     description: post.description,
     datePublished: post.isoDate || undefined,
     url: post.fullUrl,
+    image: post.image,
     author: { '@type': 'Person', name: 'David Mbula Wawina', url: `${siteUrl}/` },
   });
 
-  const html = `${pageHead({ title: `${post.title} — Journal de David Mbula`, description: post.description, canonical: post.fullUrl })}
+  const html = `${pageHead({ title: `${post.title} — Journal de David Mbula`, description: post.description, canonical: post.fullUrl, image: post.image })}
   <main class="blog-main">
     <article class="post">
       <a class="post-back" href="./">← Tous les articles</a>

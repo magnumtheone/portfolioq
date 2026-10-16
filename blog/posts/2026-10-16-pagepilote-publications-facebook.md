@@ -3,6 +3,7 @@ title: "PagePilote : votre page Facebook ne s'arrête plus jamais"
 date: "16 octobre 2026"
 description: "Un système de publication qui associe l'analyse par IA et un vrai suivi humain, pour les entreprises qui n'ont pas le temps de publier."
 slug: "pagepilote-publications-facebook"
+image: "images/blog/pagepilote.jpg"
 ---
 
 Votre page Facebook est silencieuse depuis combien de temps ?
@@ -29,16 +30,16 @@ PagePilote est un système de publication qui associe **l'analyse par intelligen
 
 Ce que vous gagnez : une page vivante toute l'année, sans y passer vos soirées, pour une fraction du prix d'un community manager.
 
-## Les formules
+## Les formules (prix de lancement)
 
-**Essentiel — 50 $ / mois**
+**Essentiel — 15 $ / mois**
 
 - 3 publications par semaine
 - Analyse IA de la page au départ
 - Rédaction avec votre ton et programmation automatique
 - Rapport mensuel
 
-**Croissance — 100 $ / mois (recommandée)**
+**Croissance — 30 $ / mois (recommandée)**
 
 - 5 publications par semaine
 - Analyse IA de la page chaque mois
@@ -46,7 +47,7 @@ Ce que vous gagnez : une page vivante toute l'année, sans y passer vos soirées
 - 1 script de Reel par semaine
 - Rapport hebdomadaire et veille des concurrents
 
-**Premium — 180 $ / mois**
+**Premium — 100 $ / mois**
 
 - 1 publication par jour
 - Analyse IA de la page chaque mois
@@ -54,7 +55,7 @@ Ce que vous gagnez : une page vivante toute l'année, sans y passer vos soirées
 - 2 scripts de Reels par semaine
 - Rapport hebdomadaire, appel mensuel et veille des concurrents
 
-Frais de mise en place : 30 $, une seule fois, pour l'analyse complète et la stratégie de départ. **Offerts aux 10 premiers clients.** Abonnement mensuel sans engagement long. Paiement par M-Pesa, Orange Money ou Airtel Money.
+Ces prix sont des **prix de lancement**, réservés aux premiers clients. Frais de mise en place : 30 $, une seule fois, pour l'analyse complète et la stratégie de départ. **Offerts aux 10 premiers clients.** Abonnement mensuel sans engagement long. Paiement par M-Pesa, Orange Money ou Airtel Money.
 
 ## Offre de lancement
 
