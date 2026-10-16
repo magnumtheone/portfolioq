@@ -4,6 +4,7 @@ date: "16 octobre 2026"
 description: "Un système de publication qui associe l'analyse par IA et un vrai suivi humain, pour les entreprises qui n'ont pas le temps de publier."
 slug: "pagepilote-publications-facebook"
 image: "images/blog/pagepilote.jpg"
+imageAlt: "PagePilote : votre page Facebook ne s'arrête plus jamais"
 ---
 
 Votre page Facebook est silencieuse depuis combien de temps ?

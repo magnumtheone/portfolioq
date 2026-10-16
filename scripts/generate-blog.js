@@ -6,8 +6,62 @@ const path = require('path');
 const blogDir = path.join(__dirname, '..', 'blog');
 const postsDir = path.join(blogDir, 'posts');
 const outputDir = blogDir;
+const rootDir = path.join(__dirname, '..');
 const siteUrl = 'https://davidwawina.site';
-const defaultImage = `${siteUrl}/images/og-image.jpg`;
+const defaultImage = { url: `${siteUrl}/images/og-image.jpg`, width: 1200, height: 630, alt: '' };
+
+// Lit la largeur et la hauteur d'une image JPEG, PNG ou WebP sans dépendance externe.
+function readImageSize(file) {
+  try {
+    const buf = fs.readFileSync(file);
+    if (buf.toString('ascii', 1, 4) === 'PNG') {
+      return [buf.readUInt32BE(16), buf.readUInt32BE(20)];
+    }
+    if (buf.toString('ascii', 0, 4) === 'RIFF' && buf.toString('ascii', 8, 12) === 'WEBP') {
+      const chunk = buf.toString('ascii', 12, 16);
+      if (chunk === 'VP8X') return [1 + buf.readUIntLE(24, 3), 1 + buf.readUIntLE(27, 3)];
+      if (chunk === 'VP8 ') return [buf.readUInt16LE(26) & 0x3fff, buf.readUInt16LE(28) & 0x3fff];
+      if (chunk === 'VP8L') {
+        const bits = buf.readUInt32LE(21);
+        return [(bits & 0x3fff) + 1, ((bits >> 14) & 0x3fff) + 1];
+      }
+    }
+    if (buf[0] === 0xff && buf[1] === 0xd8) {
+      let i = 2;
+      while (i < buf.length) {
+        const marker = buf[i + 1];
+        const length = buf.readUInt16BE(i + 2);
+        if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+          return [buf.readUInt16BE(i + 7), buf.readUInt16BE(i + 5)];
+        }
+        i += 2 + length;
+      }
+    }
+  } catch (error) {
+    console.warn(`Image introuvable ou illisible : ${file}`);
+  }
+  return null;
+}
+
+// Photo de l'article : la couverture déclarée dans les métadonnées (champ image),
+// sinon la première image du texte. C'est elle qui sert d'aperçu quand on partage le lien.
+function findArticleImage(meta, content, title) {
+  let src = meta.image;
+  let alt = meta.imageAlt || title;
+  if (!src) {
+    const inline = content.match(/!\[([^\]]*)\]\(([^\)\s]+)/);
+    if (!inline) return null;
+    [, alt, src] = inline;
+    alt = alt || title;
+  }
+  if (/^https?:\/\//.test(src)) {
+    return { url: src, pageSrc: src, alt, width: null, height: null };
+  }
+  // Les chemins sont relatifs à la racine du site (images/…) ou à la page du blog (../images/…).
+  const sitePath = path.posix.normalize(src.startsWith('../') ? src.slice(3) : src.replace(/^\//, ''));
+  const size = readImageSize(path.join(rootDir, sitePath)) || [null, null];
+  return { url: `${siteUrl}/${sitePath}`, pageSrc: `../${sitePath}`, alt, width: size[0], height: size[1] };
+}
 
 // Lit tous les fichiers Markdown du dossier blog/posts/ et extrait leurs métadonnées et contenu.
 // Les fichiers sont nommés AAAA-MM-JJ-slug.md : ce préfixe sert au tri (le plus récent d'abord).
@@ -42,8 +96,8 @@ function readMarkdownFiles() {
         description: meta.description || '',
         readingTime: getReadingTime(content, meta.readingTime),
         slug,
-        // Image d'aperçu (Facebook, WhatsApp…) : chemin depuis la racine du site, au format 1200 × 630.
-        image: meta.image ? `${siteUrl}/${meta.image.replace(/^\//, '')}` : defaultImage,
+        hasCover: Boolean(meta.image),
+        image: findArticleImage(meta, content, meta.title || 'Sans titre'),
         fullUrl: `${siteUrl}/blog/${slug}.html`,
         content,
       };
@@ -105,7 +159,12 @@ function escapeHtml(text) {
 }
 
 // En-tête HTML commun aux pages du blog, aligné sur le design du portfolio.
-function pageHead({ title, description, canonical, image = defaultImage }) {
+function pageHead({ title, description, canonical, image }) {
+  const preview = image || defaultImage;
+  const size = preview.width && preview.height
+    ? `\n  <meta property="og:image:width" content="${preview.width}">\n  <meta property="og:image:height" content="${preview.height}">`
+    : '';
+  const alt = escapeHtml(preview.alt || title);
   return `<!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -119,15 +178,14 @@ function pageHead({ title, description, canonical, image = defaultImage }) {
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${canonical}">
   <meta property="og:site_name" content="David Mbula Wawina">
-  <meta property="og:image" content="${image}">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="${escapeHtml(title)}">
+  <meta property="og:image" content="${preview.url}">${size}
+  <meta property="og:image:alt" content="${alt}">
   <meta property="og:locale" content="fr_FR">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
-  <meta name="twitter:image" content="${image}">
+  <meta name="twitter:image" content="${preview.url}">
+  <meta name="twitter:image:alt" content="${alt}">
   <link rel="canonical" href="${canonical}">
   <link rel="icon" type="image/png" sizes="48x48" href="../images/favicon-48.png">
   <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
@@ -161,7 +219,7 @@ function buildPostPage(post) {
     description: post.description,
     datePublished: post.isoDate || undefined,
     url: post.fullUrl,
-    image: post.image,
+    image: post.image ? post.image.url : undefined,
     author: { '@type': 'Person', name: 'David Mbula Wawina', url: `${siteUrl}/` },
   });
 
@@ -171,7 +229,8 @@ function buildPostPage(post) {
       <a class="post-back" href="./">← Tous les articles</a>
       <div class="post-meta"><time datetime="${post.isoDate}">${post.date}</time><span>${post.readingTime}</span></div>
       <h1>${post.title}</h1>
-      <p class="post-lead">${post.description}</p>
+      <p class="post-lead">${post.description}</p>${post.hasCover ? `
+      <figure class="post-cover"><img src="${post.image.pageSrc}" alt="${escapeHtml(post.image.alt)}"${post.image.width ? ` width="${post.image.width}" height="${post.image.height}"` : ''}></figure>` : ''}
       <div class="post-body">
 ${renderMarkdown(post.content)}
       </div>
