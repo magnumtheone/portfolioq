@@ -3,6 +3,8 @@ title: "Pourquoi un blog statique ?"
 date: "4 juin 2026"
 description: "Les avantages d’un blog sans back-end pour un portfolio personnel."
 slug: "pourquoi-blog-statique"
+image: "images/blog/pourquoi-blog-statique.jpg"
+imageAlt: "Pourquoi un blog statique ?"
 readingTime: "2 min de lecture"
 ---
 

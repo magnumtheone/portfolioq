@@ -3,6 +3,8 @@ title: "Comment gérer un blog statique"
 date: "10 juin 2026"
 description: "Gestion simple des articles et génération automatique de pages à partir de Markdown."
 slug: "gerer-un-blog-sans-backend"
+image: "images/blog/gerer-un-blog-sans-backend.jpg"
+imageAlt: "Gérer un blog statique, simplement"
 readingTime: "2 min de lecture"
 ---
 
