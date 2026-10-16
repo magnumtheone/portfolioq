@@ -1,0 +1,45 @@
+/* Couche cinématique : intro, masques de texte, parallaxe, progression. Activée par scripts/cinematic.js. */
+
+/* Écran noir de sécurité pendant le chargement de l'intro (retiré par le script ou après 3,5 s). */
+.is-intro body::after{content:"";position:fixed;inset:0;z-index:99;background:#050505}
+
+/* Lenis */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+
+/* Intro : rideau, nom, compteur */
+.curtain{position:fixed;inset:0;z-index:100;display:grid;pointer-events:none;color:var(--paper)}
+.curtain-panel{position:absolute;left:0;right:0;height:50.5%;background:#050505}
+.curtain-panel:first-child{top:0}
+.curtain-panel:nth-child(2){bottom:0}
+.curtain-content{position:relative;z-index:1;align-self:center;justify-self:stretch;display:flex;align-items:end;justify-content:space-between;padding:0 8vw}
+.curtain-name{display:block;overflow:hidden;font:600 clamp(2.4rem,7vw,6.5rem)/1 var(--display);letter-spacing:-.06em}
+.curtain-name span{display:inline-block}
+.curtain-name em{font-style:normal;color:var(--red-soft)}
+.curtain-count{font:500 .75rem var(--display);letter-spacing:.2em;color:var(--muted);font-variant-numeric:tabular-nums}
+.curtain-line{position:absolute;left:8vw;right:8vw;top:calc(50% + clamp(2rem,5vw,4.5rem));height:1px;background:rgba(245,245,242,.25);transform-origin:left center;transform:scaleX(0)}
+
+/* Barre de progression de lecture */
+.scroll-progress{position:fixed;top:0;left:0;right:0;z-index:25;height:2px;background:var(--red-soft);transform-origin:left center;transform:scaleX(0);pointer-events:none}
+
+/* Masques de lignes pour les titres */
+.cine-line{display:block;overflow:hidden;padding:.14em 0 .06em;margin:-.14em 0 -.06em}
+.cine-line>span{display:block;will-change:transform}
+.hero-title .line.cine-line{overflow:hidden}
+
+/* Vignettage du hero */
+.hero .hero-vignette{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 45%,rgba(0,0,0,.65) 100%)}
+
+/* Images révélées : le conteneur coupe, l'image bouge à l'intérieur */
+.project-image img,.about-photo img{will-change:transform}
+.about-photo{position:relative}
+
+/* Couverture d'ebook en 3D */
+.ebooks-offer{perspective:1200px}
+.ebook-cover{transform-style:preserve-3d;transition:box-shadow .4s}
+
+/* Boutons magnétiques : le mouvement est géré en JS, on évite les transitions concurrentes */
+.is-magnetic{will-change:transform;transition-property:background,color,border-color!important}
+
+@media(prefers-reduced-motion:reduce){.is-intro body::after,.curtain,.scroll-progress{display:none}}
