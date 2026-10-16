@@ -1,16 +1,20 @@
 // Générateur de pages de blog à partir des fichiers Markdown du dossier blog/posts/.
+// Usage : node scripts/generate-blog.js
 const fs = require('fs');
 const path = require('path');
 
 const blogDir = path.join(__dirname, '..', 'blog');
 const postsDir = path.join(blogDir, 'posts');
 const outputDir = blogDir;
-const siteRoot = '/';
+const siteUrl = 'https://davidwawina.site';
 
 // Lit tous les fichiers Markdown du dossier blog/posts/ et extrait leurs métadonnées et contenu.
+// Les fichiers sont nommés AAAA-MM-JJ-slug.md : ce préfixe sert au tri (le plus récent d'abord).
 function readMarkdownFiles() {
   return fs.readdirSync(postsDir)
     .filter((file) => file.endsWith('.md'))
+    .sort()
+    .reverse()
     .map((file) => {
       const text = fs.readFileSync(path.join(postsDir, file), 'utf8');
       const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/);
@@ -27,18 +31,20 @@ function readMarkdownFiles() {
           return [key.trim(), rest.join(':').trim().replace(/^"|"$/g, '')];
         })
       );
+      const slug = meta.slug || path.basename(file, '.md');
+      const isoDate = (file.match(/^(\d{4}-\d{2}-\d{2})/) || [])[1] || '';
 
       return {
         title: meta.title || 'Sans titre',
         date: meta.date || '',
+        isoDate,
         description: meta.description || '',
         readingTime: getReadingTime(content, meta.readingTime),
-        slug: meta.slug || path.basename(file, '.md'),
-        fullUrl: `https://davidwawina.site/blog/${meta.slug || path.basename(file, '.md')}.html`,
+        slug,
+        fullUrl: `${siteUrl}/blog/${slug}.html`,
         content,
       };
-    })
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
+    });
 }
 
 // Calcule un temps de lecture estimé si aucune valeur n'est fournie dans les métadonnées.
@@ -60,125 +66,110 @@ function getReadingTime(text, override) {
 // Transforme un Markdown simple en HTML pour l'insertion dans les pages du blog.
 function renderMarkdown(text) {
   let html = text
-    .replace(/!\[([^\]]*)\]\(([^\)\s]+)(?:\s+"([^"]*)")?\)/g, '<img src="$2" alt="$1" class="my-8 rounded-3xl border border-google-border max-w-full h-auto" />')
-    .replace(/```\r?\n([\s\S]*?)```/g, (_, code) => `<pre class="rounded-xl bg-slate-950 text-slate-100 p-4 overflow-x-auto"><code>${escapeHtml(code)}</code></pre>`)
+    .replace(/!\[([^\]]*)\]\(([^\)\s]+)(?:\s+"([^"]*)")?\)/g, '<img src="$2" alt="$1" loading="lazy" />')
+    .replace(/```\r?\n([\s\S]*?)```/g, (_, code) => `<pre><code>${escapeHtml(code)}</code></pre>`)
     .replace(/^######\s+(.*)$/gm, '<h6>$1</h6>')
     .replace(/^#####\s+(.*)$/gm, '<h5>$1</h5>')
     .replace(/^####\s+(.*)$/gm, '<h4>$1</h4>')
     .replace(/^###\s+(.*)$/gm, '<h3>$1</h3>')
     .replace(/^##\s+(.*)$/gm, '<h2>$1</h2>')
-    .replace(/^#\s+(.*)$/gm, '<h1>$1</h1>')
+    .replace(/^#\s+(.*)$/gm, '<h2>$1</h2>')
     .replace(/^\-\s+(.*)$/gm, '<li>$1</li>')
+    .replace(/^\d+\.\s+(.*)$/gm, '<li data-ordered>$1</li>')
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2" class="text-google-blue hover:text-google-blueDark">$1</a>');
+    .replace(/\[([^\]]+)\]\(([^\)]+)\)/g, '<a href="$2">$1</a>');
 
-  html = html.replace(/(?:^<li>.*<\/li>\r?\n?)+/gm, (match) => `<ul>${match.trim()}</ul>\n`);
+  // Les listes à puces sont regroupées avant les listes numérotées pour ne pas les mélanger.
+  html = html
+    .replace(/(?:^<li>.*<\/li>\r?\n?)+/gm, (match) => `<ul>${match.trim()}</ul>\n`)
+    .replace(/(?:^<li data-ordered>.*<\/li>\r?\n?)+/gm, (match) => `<ol>${match.replace(/ data-ordered/g, '').trim()}</ol>\n`);
 
   return html
     .split(/\r?\n\r?\n+/)
-    .map((block) => {
-      if (block.startsWith('<h1') || block.startsWith('<h2') || block.startsWith('<h3') || block.startsWith('<h4') || block.startsWith('<h5') || block.startsWith('<h6') || block.startsWith('<pre')) {
-        return block;
-      }
-      if (block.startsWith('<img')) {
-        return block;
-      }
-      if (block.startsWith('<ul>')) {
-        return block;
-      }
-      return `<p>${block.replace(/\n/g, '<br>')}</p>`;
-    })
+    .map((block) => (/^<(h[1-6]|pre|img|ul|ol)/.test(block) ? block : `<p>${block.replace(/\n/g, '<br>')}</p>`))
     .join('\n');
-
-  return html;
 }
 
 function escapeHtml(text) {
-  return text.replace(/[&<>"']/g, (char) => {
-    return {
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      '"': '&quot;',
-      "'": '&#39;',
-    }[char];
-  });
+  return text.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  }[char]));
 }
 
-function buildPostPage(post) {
-  const html = `<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+// En-tête HTML commun aux pages du blog, aligné sur le design du portfolio.
+function pageHead({ title, description, canonical }) {
+  return `<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>${post.title} — Blog de David Wawina</title>
-  <meta name="description" content="${post.description}" />
-  <link rel="canonical" href="https://davidwawina.site/blog/${post.slug}.html" />
-  <link rel="icon" href="../images/logof.jpg" type="image/svg+xml">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="../css/h-styles.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Roboto', 'sans-serif'],
-            display: ['Outfit', 'sans-serif'],
-          },
-          colors: {
-            google: {
-              blue: '#1a73e8',
-              blueDark: '#174ea6',
-              green: '#3ddc84',
-              gray: '#f8f9fa',
-              text: '#202124',
-              textSec: '#5f6368',
-              border: '#dadce0',
-            }
-          },
-          boxShadow: {
-            'google': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
-          }
-        }
-      }
-    }
-  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="theme-color" content="#f5f5f2">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="${escapeHtml(title)}">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  <meta property="og:url" content="${canonical}">
+  <meta property="og:image" content="${siteUrl}/images/webmaster.jpg">
+  <meta property="og:locale" content="fr_FR">
+  <link rel="canonical" href="${canonical}">
+  <link rel="icon" type="image/png" sizes="48x48" href="../images/favicon-48.png">
+  <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/blog.css">
 </head>
-<body class="bg-white dark:bg-slate-950 text-google-text dark:text-white">
-  <!-- Page générée automatiquement par scripts/generate-blog.js -->
-  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-b border-google-border dark:border-slate-800 h-16 flex items-center">
-    <div class="container mx-auto px-4 max-w-7xl flex justify-between items-center">
-      <a href="../" class="flex items-center gap-2">
-        <img src="../images/logof.jpg" alt="Logo David Wawina" class="h-8 w-8 rounded-full" loading="lazy" />
-        <span class="font-display font-medium text-xl tracking-tight">David<span class="text-google-textSec dark:text-slate-400 font-normal">Wawina</span></span>
-      </a>
-      <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Navigation principale">
-        <a href="../#about" class="nav-link">À propos</a>
-        <a href="../#skills" class="nav-link">Compétences</a>
-        <a href="../#projets" class="nav-link">Projets</a>
-        <a href="./" class="nav-link font-semibold text-google-blue">Blog</a>
-        <a href="../#contact" class="nav-link">Contact</a>
-      </nav>
-      <a href="../#contact" class="btn btn-primary h-9 px-4 text-sm hidden sm:inline-flex">Me contacter</a>
-    </div>
-  </header>
-  <main class="container mx-auto px-4 max-w-4xl py-16">
-    <article class="prose prose-lg dark:prose-invert">
-      <p class="text-sm uppercase tracking-[0.3em] text-google-blue font-semibold mb-4">Blog statique</p>
-      <h1 class="text-4xl font-bold mb-6">${post.title}</h1>
-      <p class="text-google-textSec mb-1">${post.date} • ${post.readingTime}</p>
-      <p class="text-sm text-google-textSec mb-8"><a href="${post.fullUrl}" class="text-google-blue hover:text-google-blueDark">${post.fullUrl}</a></p>
-      ${renderMarkdown(post.content)}
-      <div class="mt-12 pt-8 border-t border-google-border">
-        <a href="./" class="text-google-blue font-semibold">← Retour au blog</a>
+<body>
+  <!-- Page générée automatiquement par scripts/generate-blog.js — ne pas modifier à la main. -->
+  <header class="blog-header">
+    <a class="brand" href="../">DAVID <span>MBULA</span></a>
+    <nav aria-label="Navigation du blog"><a href="./">Journal</a><a href="../#work">Projets</a><a class="blog-header-cta" href="../#contact">Parlons-en <span>↗</span></a></nav>
+  </header>`;
+}
+
+const pageFooter = `
+  <footer class="blog-footer">
+    <a class="brand" href="../">DAVID <span>MBULA</span></a>
+    <small>© ${new Date().getFullYear()} David Mbula. Tous droits réservés.</small>
+  </footer>
+</body>
+</html>
+`;
+
+function buildPostPage(post) {
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.isoDate || undefined,
+    url: post.fullUrl,
+    author: { '@type': 'Person', name: 'David Mbula Wawina', url: `${siteUrl}/` },
+  });
+
+  const html = `${pageHead({ title: `${post.title} — Journal de David Mbula`, description: post.description, canonical: post.fullUrl })}
+  <main class="blog-main">
+    <article class="post">
+      <a class="post-back" href="./">← Tous les articles</a>
+      <div class="post-meta"><time datetime="${post.isoDate}">${post.date}</time><span>${post.readingTime}</span></div>
+      <h1>${post.title}</h1>
+      <p class="post-lead">${post.description}</p>
+      <div class="post-body">
+${renderMarkdown(post.content)}
       </div>
+      <aside class="post-cta">
+        <p>Vous avez un projet en tête ?</p>
+        <a href="../#contact">Construisons-le ensemble <span>↗</span></a>
+      </aside>
     </article>
   </main>
-</body>
-</html>`;
+  <script type="application/ld+json">${jsonLd}</script>${pageFooter}`;
 
   const filePath = path.join(outputDir, `${post.slug}.html`);
   fs.writeFileSync(filePath, html, 'utf8');
@@ -186,108 +177,24 @@ function buildPostPage(post) {
 }
 
 function buildIndexPage(posts) {
-  const recentItems = posts.slice(0, 3).map((post) => `      <article class="rounded-3xl border border-google-border bg-white p-6 shadow-google transition hover:-translate-y-1">
-        <p class="text-sm text-google-textSec uppercase tracking-[0.25em] mb-2">${post.date} • ${post.readingTime}</p>
-        <h2 class="text-2xl font-semibold mb-3">${post.title}</h2>
-        <p class="text-google-textSec mb-4">${post.description}</p>
-        <a href="./${post.slug}.html" class="text-google-blue font-semibold hover:text-google-blueDark">Lire l’article →</a>
+  const items = posts.map((post) => `      <article class="blog-card">
+        <div class="blog-card-meta"><time datetime="${post.isoDate}">${post.date}</time><span>${post.readingTime}</span></div>
+        <h2><a href="./${post.slug}.html">${post.title}</a></h2>
+        <p>${post.description}</p>
+        <span class="blog-card-link" aria-hidden="true">Lire l’article ↗</span>
       </article>`).join('\n');
 
-  const listItems = posts.map((post) => `      <article class="rounded-3xl border border-google-border bg-white p-8 shadow-google transition hover:-translate-y-1">
-        <p class="text-sm text-google-textSec uppercase tracking-[0.25em] mb-3">${post.date}</p>
-        <h2 class="text-2xl font-semibold mb-3">${post.title}</h2>
-        <p class="text-google-textSec mb-6">${post.description}</p>
-        <a href="./${post.slug}.html" class="text-google-blue font-semibold hover:text-google-blueDark">Lire l’article →</a>
-      </article>`).join('\n');
-
-  return `<!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Blog — David Wawina MBULA</title>
-  <meta name="description" content="Blog de David Wawina : articles sur le développement web, les sites statiques et les bonnes pratiques sans back-end." />
-  <link rel="canonical" href="https://davidwawina.site/blog/" />
-  <link rel="icon" href="../images/logof.jpg" type="image/svg+xml">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="../css/h-styles.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Roboto', 'sans-serif'],
-            display: ['Outfit', 'sans-serif'],
-          },
-          colors: {
-            google: {
-              blue: '#1a73e8',
-              blueDark: '#174ea6',
-              green: '#3ddc84',
-              gray: '#f8f9fa',
-              text: '#202124',
-              textSec: '#5f6368',
-              border: '#dadce0',
-            }
-          },
-          boxShadow: {
-            'google': '0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15)',
-          }
-        }
-      }
-    }
-  </script>
-</head>
-<body class="bg-white dark:bg-slate-950 text-google-text dark:text-white">
-  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur border-b border-google-border dark:border-slate-800 h-16 flex items-center">
-    <div class="container mx-auto px-4 max-w-7xl flex justify-between items-center">
-      <a href="../" class="flex items-center gap-2">
-        <img src="../images/logof.jpg" alt="Logo David Wawina" class="h-8 w-8 rounded-full" loading="lazy" />
-        <span class="font-display font-medium text-xl tracking-tight">David<span class="text-google-textSec dark:text-slate-400 font-normal">Wawina</span></span>
-      </a>
-      <nav class="hidden md:flex items-center gap-1" role="navigation" aria-label="Navigation principale">
-        <a href="../#about" class="nav-link">À propos</a>
-        <a href="../#skills" class="nav-link">Compétences</a>
-        <a href="../#projets" class="nav-link">Projets</a>
-        <a href="./" class="nav-link font-semibold text-google-blue">Blog</a>
-        <a href="../#contact" class="nav-link">Contact</a>
-      </nav>
-      <a href="../#contact" class="btn btn-primary h-9 px-4 text-sm hidden sm:inline-flex">Me contacter</a>
-    </div>
-  </header>
-
-  <main class="container mx-auto px-4 max-w-6xl py-16">
-    <section class="mb-16 text-center">
-      <p class="text-sm uppercase tracking-[0.3em] text-google-blue font-semibold mb-4">Blog statique</p>
-      <h1 class="text-4xl sm:text-5xl font-bold mb-4">Articles sur le développement web sans back-end</h1>
-      <p class="max-w-2xl mx-auto text-google-textSec">Des guides pratiques, des conseils de structure et des bonnes pratiques pour garder votre blog léger, rapide et facile à maintenir.</p>
+  return `${pageHead({ title: 'Journal — David Mbula', description: 'Le journal de David Mbula Wawina : idées et retours d’expérience sur le développement web et le digital.', canonical: `${siteUrl}/blog/` })}
+  <main class="blog-main">
+    <section class="blog-intro">
+      <p class="kicker">Journal</p>
+      <h1>Quelques idées<br><em>pour mieux construire.</em></h1>
+      <p>Des notes courtes sur le développement web, les outils et la manière de faire des projets digitaux utiles.</p>
     </section>
-
-    <section class="mb-16">
-      <div class="flex items-center justify-between mb-8">
-        <div>
-          <p class="text-sm uppercase tracking-[0.3em] text-google-blue font-semibold">Articles récents</p>
-          <h2 class="text-3xl font-bold">Les derniers articles</h2>
-        </div>
-      </div>
-      <div class="grid gap-6 lg:grid-cols-3">
-${recentItems}
-      </div>
+    <section class="blog-list" aria-label="Articles">
+${items}
     </section>
-
-    <section class="grid gap-6 lg:grid-cols-2">
-${listItems}
-    </section>
-
-    <section class="mt-16 rounded-3xl border border-google-border bg-slate-50 dark:bg-slate-900 p-8">
-      <h3 class="text-xl font-semibold mb-3">Comment ça marche ?</h3>
-      <p class="text-google-textSec">Les articles sont écrits en Markdown dans <code class="rounded bg-slate-100 px-2 py-1">blog/posts/</code>. Lancez <code class="rounded bg-slate-100 px-2 py-1">node scripts/generate-blog.js</code> pour créer les pages HTML automatiquement.</p>
-    </section>
-  </main>
-</body>
-</html>`;
+  </main>${pageFooter}`;
 }
 
 function main() {
@@ -297,10 +204,6 @@ function main() {
   }
 
   const posts = readMarkdownFiles();
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-
   posts.forEach(buildPostPage);
   fs.writeFileSync(path.join(outputDir, 'index.html'), buildIndexPage(posts), 'utf8');
   console.log('Blog généré avec succès.');

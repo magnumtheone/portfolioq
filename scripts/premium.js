@@ -17,6 +17,14 @@ if (voicesGrid) {
     voicesGrid.append(clone);
   });
 }
+
+// Bouton pause du défilement automatique des témoignages.
+const voicesToggle = document.querySelector('[data-voices-toggle]');
+voicesToggle?.addEventListener('click', () => {
+  const paused = voicesGrid.classList.toggle('is-paused');
+  voicesToggle.setAttribute('aria-pressed', String(paused));
+  voicesToggle.textContent = paused ? 'Reprendre le défilement' : 'Mettre en pause';
+});
 document.querySelectorAll('main > section > .section-kicker').forEach((kicker, index) => {
   const number = kicker.querySelector('span');
   if (number) number.textContent = String(index + 1).padStart(2, '0');
@@ -51,9 +59,23 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
 
-window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', window.scrollY > 30);
-}, { passive: true });
+// Paiement Stripe de l'ebook : le bouton carte n'apparaît que si un lien Payment Link est renseigné.
+const stripeEbookButton = document.querySelector('[data-stripe-ebook]');
+const stripeEbookLink = stripeEbookButton?.dataset.stripeEbook.trim();
+if (stripeEbookButton && stripeEbookLink?.startsWith('https://buy.stripe.com/')) {
+  stripeEbookButton.href = stripeEbookLink;
+  stripeEbookButton.hidden = false;
+  const whatsappButton = document.querySelector('[data-ebook-whatsapp]');
+  if (whatsappButton) {
+    whatsappButton.className = 'ebook-contact';
+    whatsappButton.textContent = 'Mobile Money via WhatsApp';
+  }
+  const ebookNote = document.querySelector('[data-ebook-note]');
+  if (ebookNote) ebookNote.textContent = 'Paiement sécurisé par Stripe · Livraison par email';
+}
+
+const yearLabel = document.querySelector('[data-year]');
+if (yearLabel) yearLabel.textContent = String(new Date().getFullYear());
 
 function updateManifest() {
   if (!manifest || !manifestWords.length) return;
@@ -83,38 +105,91 @@ function updateProcess() {
   processSteps.forEach((step, index) => step.classList.toggle('is-active', index === activeIndex));
 }
 
-window.addEventListener('scroll', updateManifest, { passive: true });
-window.addEventListener('scroll', updateProcess, { passive: true });
-window.addEventListener('resize', updateManifest);
-window.addEventListener('resize', updateProcess);
-updateManifest();
-updateProcess();
+// Regroupe les calculs liés au défilement dans une seule frame d'animation.
+let scrollFrame = null;
+function onScroll() {
+  if (scrollFrame) return;
+  scrollFrame = requestAnimationFrame(() => {
+    scrollFrame = null;
+    header.classList.toggle('scrolled', window.scrollY > 30);
+    updateManifest();
+    updateProcess();
+  });
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('resize', onScroll);
+onScroll();
 
 function setMenu(open) {
   mobileMenu.classList.toggle('open', open);
   mobileMenu.setAttribute('aria-hidden', String(!open));
+  mobileMenu.inert = !open;
   menuToggle.setAttribute('aria-expanded', String(open));
+  menuToggle.querySelector('.visually-hidden').textContent = open ? 'Fermer le menu' : 'Ouvrir le menu';
   document.body.style.overflow = open ? 'hidden' : '';
+  if (open) mobileMenu.querySelector('a')?.focus();
 }
 
+mobileMenu.inert = true;
 menuToggle.addEventListener('click', () => setMenu(!mobileMenu.classList.contains('open')));
 document.querySelectorAll('.mobile-menu a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && mobileMenu.classList.contains('open')) {
+    setMenu(false);
+    menuToggle.focus();
+  }
+});
 
 document.querySelectorAll('[data-cursor]').forEach((project) => {
   project.addEventListener('mouseenter', () => cursor.classList.add('active'));
   project.addEventListener('mouseleave', () => cursor.classList.remove('active'));
 });
 
+const carouselCount = document.querySelector('[data-carousel-count]');
+const visibleProjects = () => [...projects].filter((project) => !project.classList.contains('is-hidden'));
+
+// Met à jour le compteur « 01 — 06 » selon la carte la plus proche du centre du carrousel.
+function updateCarouselCount() {
+  if (!projectCarousel || !carouselCount) return;
+  const cards = visibleProjects();
+  const center = projectCarousel.getBoundingClientRect().left + projectCarousel.clientWidth / 2;
+  let current = 0;
+  let closest = Infinity;
+  cards.forEach((card, index) => {
+    const rect = card.getBoundingClientRect();
+    const distance = Math.abs(rect.left + rect.width / 2 - center);
+    if (distance < closest) {
+      closest = distance;
+      current = index;
+    }
+  });
+  const pad = (value) => String(value).padStart(2, '0');
+  carouselCount.innerHTML = `${pad(cards.length ? current + 1 : 0)} <i></i> ${pad(cards.length)}`;
+}
+
 projectFilters.forEach((filter) => {
+  const count = filter.dataset.filter === 'all'
+    ? projects.length
+    : [...projects].filter((project) => project.dataset.category === filter.dataset.filter).length;
+  const label = filter.querySelector('span');
+  if (label) label.textContent = String(count).padStart(2, '0');
+  filter.setAttribute('aria-pressed', String(filter.classList.contains('is-active')));
+
   filter.addEventListener('click', () => {
     const selectedCategory = filter.dataset.filter;
 
-    projectFilters.forEach((item) => item.classList.toggle('is-active', item === filter));
+    projectFilters.forEach((item) => {
+      item.classList.toggle('is-active', item === filter);
+      item.setAttribute('aria-pressed', String(item === filter));
+    });
     projects.forEach((project) => {
       const matches = selectedCategory === 'all' || project.dataset.category === selectedCategory;
       project.classList.toggle('is-hidden', !matches);
       project.setAttribute('aria-hidden', String(!matches));
     });
+    projectCarousel?.scrollTo({ left: 0 });
+    updateCarouselCount();
   });
 });
 
@@ -127,6 +202,8 @@ function moveProjectCarousel(direction) {
 
 carouselPrevious?.addEventListener('click', () => moveProjectCarousel(-1));
 carouselNext?.addEventListener('click', () => moveProjectCarousel(1));
+projectCarousel?.addEventListener('scroll', () => requestAnimationFrame(updateCarouselCount), { passive: true });
+updateCarouselCount();
 
 contactForm?.addEventListener('submit', async (event) => {
   event.preventDefault();
@@ -152,6 +229,8 @@ contactForm?.addEventListener('submit', async (event) => {
   }
 });
 
-document.addEventListener('mousemove', (event) => {
-  cursor.style.transform = `translate3d(${event.clientX - cursor.offsetWidth / 2}px, ${event.clientY - cursor.offsetHeight / 2}px, 0)`;
-});
+if (window.matchMedia('(hover: hover)').matches) {
+  document.addEventListener('mousemove', (event) => {
+    cursor.style.transform = `translate3d(${event.clientX - cursor.offsetWidth / 2}px, ${event.clientY - cursor.offsetHeight / 2}px, 0)`;
+  });
+}
