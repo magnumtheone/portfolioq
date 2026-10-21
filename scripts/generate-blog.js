@@ -198,7 +198,7 @@ function pageHead({ title, description, canonical, image }) {
   <!-- Page générée automatiquement par scripts/generate-blog.js — ne pas modifier à la main. -->
   <header class="blog-header">
     <a class="brand" href="../">DAVID <span>MBULA</span></a>
-    <nav aria-label="Navigation du blog"><a href="./">Journal</a><a href="../#work">Projets</a><a class="blog-header-cta" href="../#contact">Parlons-en <span>↗</span></a></nav>
+    <nav aria-label="Navigation du blog"><a href="./">Journal</a><a href="../#work">Projets</a><a href="../ebooks/">Ebooks</a><a class="blog-header-cta" href="../#contact">Parlons-en <span>↗</span></a></nav>
   </header>`;
 }
 

@@ -515,6 +515,173 @@ img {
   letter-spacing: -0.04em;
 }
 
+/* Page ebooks */
+.ebooks-hero h1 em {
+  color: var(--red-soft);
+  font-style: normal;
+}
+.ebook-shelf {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 260px));
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  margin-top: 3.5rem;
+  transform: translateY(3rem);
+}
+.ebook-shelf img,
+.free-offer-cover img,
+.tome img {
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--white-line);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+}
+.free-offer {
+  display: grid;
+  grid-template-columns: minmax(0, 260px) 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 9rem 6vw 4rem;
+}
+.free-offer .case-kicker {
+  color: var(--muted-on-light);
+}
+.free-offer .case-kicker strong {
+  color: var(--red);
+}
+.free-offer h2 {
+  margin: 1rem 0;
+  font: 600 clamp(2.2rem, 5vw, 4rem) / 0.98 var(--display);
+  letter-spacing: -0.055em;
+}
+.free-offer h2 em {
+  color: var(--red);
+  font-style: normal;
+}
+.free-offer p {
+  color: #444;
+}
+.free-offer-size {
+  color: var(--muted-on-light);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+}
+.tome-list {
+  display: grid;
+  gap: 2.5rem;
+}
+.tome {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.tome h3 {
+  margin: 0.3rem 0 0.6rem;
+  font: 600 1.45rem / 1.1 var(--display);
+  letter-spacing: -0.03em;
+}
+.tome-num {
+  margin: 0 !important;
+  color: var(--muted-on-light) !important;
+  font: 500 0.72rem var(--display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.tome-num strong {
+  color: var(--red);
+}
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin-top: 1.5rem;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.price-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.5rem;
+  background: var(--paper);
+}
+.price-card p {
+  margin: 0;
+  font-size: 0.92rem;
+}
+.price-card .button {
+  margin-top: auto;
+  justify-content: center;
+}
+.price-card-featured {
+  background: var(--ink);
+  color: var(--paper);
+}
+.price-card-featured p {
+  color: #c9c9c3;
+}
+.price-card-featured .price-label {
+  color: var(--red-soft);
+}
+.price-label {
+  color: var(--muted-on-light) !important;
+  font: 500 0.7rem var(--display) !important;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.price strong {
+  display: block;
+  font: 600 2.6rem / 1 var(--display);
+  letter-spacing: -0.04em;
+  color: inherit;
+}
+.price-card-featured .price strong {
+  color: var(--paper);
+}
+.price span {
+  font-size: 0.8rem;
+}
+.price-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+.price-actions .button {
+  padding: 0 0.8rem;
+}
+.price-note {
+  margin-top: 1rem !important;
+  color: var(--muted-on-light) !important;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .price-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .ebook-shelf {
+    gap: 0.8rem;
+    transform: translateY(2rem);
+  }
+  .free-offer {
+    grid-template-columns: 1fr;
+    padding-top: 6rem;
+  }
+  .free-offer-cover {
+    max-width: 200px;
+  }
+  .tome {
+    grid-template-columns: 84px 1fr;
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 760px) {
   .case-hero {
     padding-top: 3.5rem;
