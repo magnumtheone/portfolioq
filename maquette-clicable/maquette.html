@@ -152,7 +152,7 @@
                 <div class="brand-logo-window brand-logo-window--splash w-72 h-24" role="img" aria-label="BomaTalk">
                     <img src="Logo_bomaTalk.png.png" alt="">
                 </div>
-                <p class="mt-3 text-xs font-semibold tracking-wide text-navy">La scène locale, à portée de voix</p>
+                <p class="mt-3 text-xs font-semibold tracking-wide text-navy">Trouvés, réservés et payés en toute confiance</p>
                 <div class="mt-6 h-1 w-28 overflow-hidden rounded-full bg-slate-200">
                     <div class="loading-progress h-full w-full rounded-full bg-emerald"></div>
                 </div>
@@ -503,6 +503,23 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- Appel à l'action : devenir talent -->
+                    <section class="bg-navy rounded-2xl p-5 text-white shadow-lg relative overflow-hidden">
+                        <div class="absolute -right-6 -top-6 w-24 h-24 bg-emerald/20 rounded-full blur-xl"></div>
+                        <div class="relative z-10">
+                            <div class="inline-flex items-center gap-1.5 text-[10px] font-bold text-emerald bg-emerald/10 px-2.5 py-1.5 rounded-full">
+                                <i class="fa-solid fa-microphone-lines"></i>
+                                Pour les artistes
+                            </div>
+                            <h2 class="text-base leading-snug font-extrabold mt-3">Vous êtes artiste ou créateur à Kisangani ?</h2>
+                            <p class="text-[11px] text-slate-300 leading-relaxed mt-1.5">Créez votre profil gratuitement et recevez des demandes de réservation.</p>
+                            <button onclick="switchTab('join')" class="mt-4 w-full py-3 bg-emerald text-white text-xs font-bold rounded-xl active:scale-[0.98] transition flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-star"></i>
+                                Devenir talent
+                            </button>
+                        </div>
+                    </section>
                 </div>
             `,
             discover: `
@@ -519,6 +536,14 @@
                             Espace Pro & Entreprises
                         </button>
                     </section>
+                    <button onclick="switchTab('join')" class="w-full bg-white rounded-2xl p-4 flex items-center gap-3 shadow-sm border border-slate-100 text-left active:scale-[0.98] transition">
+                        <span class="w-10 h-10 rounded-full bg-emerald-subtle text-emerald flex items-center justify-center flex-shrink-0"><i class="fa-solid fa-microphone-lines text-sm"></i></span>
+                        <span class="flex-1 min-w-0">
+                            <span class="block text-xs font-bold text-navy">Vous êtes artiste ?</span>
+                            <span class="block text-[11px] text-emerald font-semibold">Devenir talent</span>
+                        </span>
+                        <i class="fa-solid fa-chevron-right text-slate-300 text-xs"></i>
+                    </button>
                     <div class="text-center pt-1">
                         <p class="text-xs text-slate-500">Découvrez aussi les talents de la scène locale.</p>
                         <button onclick="switchTab('home')" class="mt-4 px-6 py-2 bg-emerald text-white text-xs font-bold rounded-full active:scale-95 transition">Retour</button>
@@ -527,16 +552,117 @@
             `,
             reservations: `
                 <div></div>
-            `
+            `,
+            // Vue « Devenir talent » : générée à l'affichage pour réutiliser le tableau communes.
+            get join() {
+                return renderJoinView();
+            }
         };
+
+        const disciplines = ['Musique', 'Slam & poésie', 'Danse', 'Photo & vidéo', 'Artisanat', 'Autre'];
+
+        function renderJoinView() {
+            const disciplineOptions = disciplines.map(discipline => `<option value="${escapeHtml(discipline)}">${escapeHtml(discipline)}</option>`).join('');
+            const communeOptions = communes.map(commune => `<option value="${escapeHtml(commune)}">${escapeHtml(commune)}</option>`).join('');
+            const steps = [
+                ['Je crée mon profil', 'Portfolio, tarifs et disponibilités.'],
+                ['BomaTalk vérifie mon identité et mon travail', 'Pour rassurer les organisateurs.'],
+                ['Je reçois des réservations', 'Et je suis payé après chaque prestation.']
+            ].map(([title, text], index) => `
+                <li class="flex gap-3">
+                    <span class="w-7 h-7 rounded-full bg-emerald text-white text-[11px] font-extrabold flex items-center justify-center flex-shrink-0">${index + 1}</span>
+                    <span class="min-w-0"><span class="block text-xs font-bold text-navy">${title}</span><span class="block text-[11px] text-slate-500">${text}</span></span>
+                </li>
+            `).join('');
+            const pricing = [
+                ['Inscription et profil', '<strong class="text-emerald">Gratuit</strong>'],
+                ['Badge certifié', '2 $ pour les 3 premiers mois, puis 5 $ / mois à partir de ma première réservation'],
+                ['Commission', '2,5 % retenus sur mon cachet (le client paie 5 % de son côté)'],
+                ['Mise en avant', 'Publicité à la carte, selon la visibilité souhaitée']
+            ].map(([label, value]) => `
+                <div class="py-2.5 border-b border-slate-100 last:border-0">
+                    <dt class="text-[10px] font-bold uppercase tracking-wide text-slate-400">${label}</dt>
+                    <dd class="text-xs text-navy mt-0.5">${value}</dd>
+                </div>
+            `).join('');
+            const fieldClass = 'w-full bg-slate-100 rounded-lg px-3 py-2.5 text-xs text-navy border-0 focus:ring-2 focus:ring-emerald';
+
+            return `
+                <div class="p-5 animate-fadeIn space-y-5 pb-7">
+                    <div class="flex items-center gap-3">
+                        <button onclick="switchTab('home')" class="w-8 h-8 rounded-full bg-white border border-slate-100 text-slate-600" aria-label="Retour à l’accueil"><i class="fa-solid fa-arrow-left text-xs"></i></button>
+                        <span class="text-[10px] font-semibold text-slate-400">Espace artistes</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-extrabold text-navy tracking-tight">Rejoindre BomaTalk</h1>
+                        <p class="text-xs text-slate-500 mt-1 leading-relaxed">Montrez votre talent aux organisateurs, hôtels et familles de Kisangani, et soyez payé en toute confiance par Mobile Money.</p>
+                    </div>
+
+                    <section class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
+                        <h2 class="text-sm font-extrabold text-navy mb-3">Comment ça marche</h2>
+                        <ol class="space-y-3">${steps}</ol>
+                    </section>
+
+                    <section class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm">
+                        <h2 class="text-sm font-extrabold text-navy mb-1">Tarifs</h2>
+                        <dl>${pricing}</dl>
+                        <p class="mt-3 text-[10px] text-slate-500 bg-slate-100 rounded-lg p-2"><i class="fa-solid fa-circle-info text-emerald mr-1"></i> Sans réservation après 3 mois, vous gardez votre profil gratuit, seul le badge est retiré.</p>
+                    </section>
+
+                    <section class="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-sm font-extrabold text-navy">Créer mon profil</h2>
+                            <span class="text-[9px] font-bold uppercase tracking-wide text-amber-700 bg-amber-100 px-2 py-1 rounded-full">Démo</span>
+                        </div>
+                        <div>
+                            <label for="join-name" class="block text-[10px] font-semibold text-slate-600 mb-1">Nom ou nom d’artiste</label>
+                            <input id="join-name" type="text" autocomplete="name" placeholder="Ex. Lina Mg" class="${fieldClass}">
+                        </div>
+                        <div>
+                            <label for="join-discipline" class="block text-[10px] font-semibold text-slate-600 mb-1">Discipline</label>
+                            <select id="join-discipline" class="${fieldClass}"><option value="">Choisir…</option>${disciplineOptions}</select>
+                        </div>
+                        <div>
+                            <label for="join-commune" class="block text-[10px] font-semibold text-slate-600 mb-1">Commune</label>
+                            <select id="join-commune" class="${fieldClass}"><option value="">Choisir…</option>${communeOptions}</select>
+                        </div>
+                        <div>
+                            <label for="join-phone" class="block text-[10px] font-semibold text-slate-600 mb-1">Numéro Mobile Money</label>
+                            <input id="join-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+243 …" class="${fieldClass}">
+                            <p class="text-[9px] text-slate-400 mt-1">M-Pesa Vodacom, Orange Money ou Airtel Money : c’est ici que vous recevrez vos cachets.</p>
+                        </div>
+                        <button onclick="submitJoinForm()" class="w-full py-3 bg-emerald text-white text-xs font-bold rounded-xl shadow-md active:scale-[0.98] transition">Créer mon profil <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                    </section>
+                </div>
+            `;
+        }
+
+        function submitJoinForm() {
+            const fields = [
+                ['join-name', 'Indiquez votre nom ou nom d’artiste.'],
+                ['join-discipline', 'Choisissez votre discipline.'],
+                ['join-commune', 'Choisissez votre commune.'],
+                ['join-phone', 'Indiquez votre numéro Mobile Money.']
+            ];
+            for (const [id, message] of fields) {
+                const field = document.getElementById(id);
+                if (!field.value.trim()) {
+                    field.focus();
+                    showToast(message);
+                    return;
+                }
+            }
+            // Démonstration : aucune donnée n'est enregistrée.
+            showToast('Profil créé en mode démonstration. Notre équipe vous contactera pour la certification.');
+            switchTab('home');
+        }
 
         const eventTypes = ['Mariage / Privé', 'Événement d’entreprise'];
         const communes = ['Makiso', 'Tshopo', 'Mangobo', 'Kabondo'];
         const paymentMethods = [
             { name: 'M-Pesa Vodacom', icon: 'fa-mobile-screen-button' },
             { name: 'Orange Money', icon: 'fa-wallet' },
-            { name: 'Airtel Money', icon: 'fa-wallet' },
-            { name: 'Cash garanti à la prestation', icon: 'fa-money-bill-wave' }
+            { name: 'Airtel Money', icon: 'fa-wallet' }
         ];
 
         function escapeHtml(value) {
@@ -571,7 +697,10 @@
                 <div class="p-4 animate-fadeIn space-y-4 pb-7">
                     <div class="flex items-center justify-between">
                         <button onclick="switchTab('profile')" class="w-8 h-8 rounded-full bg-white border border-slate-100 text-slate-600" aria-label="Retour au profil"><i class="fa-solid fa-arrow-left text-xs"></i></button>
-                        <span class="text-[10px] font-semibold text-slate-400">Étape 1 sur 2</span>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="fillBookingExample()" class="px-2.5 py-1 rounded-full border border-slate-200 bg-white text-[9px] font-semibold text-slate-500 hover:text-emerald hover:border-emerald transition"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Remplir un exemple</button>
+                            <span class="text-[10px] font-semibold text-slate-400">Étape 1 sur 2</span>
+                        </div>
                     </div>
                     <div class="bg-white rounded-2xl p-3 flex items-center gap-3 border border-slate-100">
                         <img src="lina-mg.jpg" alt="Lina Mg" class="w-11 h-11 rounded-xl object-cover object-[center_25%]">
@@ -643,7 +772,7 @@
                         <div class="text-slate-500">${escapeHtml(formatBookingDate(bookingData.date))} · ${escapeHtml(bookingData.startTime)} - ${escapeHtml(bookingData.endTime)}</div>
                         <div class="text-slate-500">${escapeHtml(bookingData.address)}, ${escapeHtml(bookingData.commune)}</div>
                         <div class="flex justify-between border-t border-slate-100 pt-2"><span class="text-slate-600">Frais BomaTalk & protection (5%)</span><strong class="text-navy">$${fee.toFixed(2)}</strong></div>
-                        <div class="flex justify-between text-emerald"><span>Assurance médiation & annulation</span><strong>Offert</strong></div>
+                        <div class="flex justify-between text-emerald"><span>Médiation en cas de litige</span><strong>Incluse</strong></div>
                     </section>
                     <section class="bg-slate-100 rounded-xl p-3">
                         <div class="flex justify-between text-[9px] text-slate-500"><span>Total estimé (tout inclus)</span><span>≈ ${totalCDF} CDF</span></div>
@@ -655,7 +784,7 @@
                         <p class="text-[9px] text-slate-500">Le règlement sera confirmé après validation de la demande.</p>
                         <div class="grid grid-cols-2 gap-2">${methods}</div>
                     </section>
-                    <p class="text-[9px] text-slate-500 bg-slate-100 rounded-lg p-2"><i class="fa-solid fa-lock text-emerald mr-1"></i> Les fonds sont sécurisés et libérés après la prestation.</p>
+                    <p class="text-[9px] text-slate-500 bg-slate-100 rounded-lg p-2"><i class="fa-solid fa-lock text-emerald mr-1"></i> Les fonds sont sécurisés et libérés après la prestation.<span class="block mt-1 pl-4 text-slate-400">Remboursement si l’artiste ne se présente pas.</span></p>
                     <button onclick="submitBookingRequest()" ${bookingData.submitted ? 'disabled' : ''} class="w-full py-3 bg-emerald text-white text-xs font-bold rounded-xl shadow-md active:scale-[0.98] transition disabled:opacity-60">${bookingData.submitted ? 'Demande envoyée' : 'Envoyer la demande de réservation'} <i class="fa-solid fa-paper-plane ml-1"></i></button>
                     <p class="text-center text-[9px] text-slate-400">Aucun débit immédiat — la demande doit être confirmée par l’artiste.</p>
                 </div>
@@ -782,11 +911,12 @@
                     : (views[tabName] || views.home);
             }
 
-            // Mise à jour de la barre de navigation active
+            // Mise à jour de la barre de navigation active (la vue « Devenir talent » dépend de l'accueil)
+            const activeNav = tabName === 'join' ? 'home' : tabName;
             ['home', 'discover', 'reservations', 'profile'].forEach(t => {
                 const btn = document.getElementById(`nav-${t}`);
                 if (btn) {
-                    if (t === tabName) {
+                    if (t === activeNav) {
                         btn.classList.remove('text-slate-400');
                         btn.classList.add('text-emerald');
                     } else {
@@ -875,6 +1005,17 @@
             bookingStep = 'form';
             bookingFlowActive = true;
             switchTab('reservations');
+        }
+
+        // Démo rapide devant un jury : pré-remplit l'étape 1 avec un exemple réaliste.
+        function fillBookingExample() {
+            const inOneWeek = new Date();
+            inOneWeek.setDate(inOneWeek.getDate() + 7);
+            bookingData.date = getLocalDateValue(inOneWeek);
+            bookingData.eventType = eventTypes.find(type => type.startsWith('Événement')) || eventTypes[0];
+            bookingData.commune = 'Makiso';
+            bookingData.address = 'Hôtel Palm Beach';
+            refreshBookingView();
         }
 
         function updateBookingField(field, value) {
