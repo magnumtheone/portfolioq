@@ -108,11 +108,11 @@
             top: -85%;
         }
 
-        #preloader {
+        #preloader, #login-screen {
             transition: opacity 0.45s ease, visibility 0.45s ease;
         }
 
-        #preloader.is-hidden {
+        #preloader.is-hidden, #login-screen.is-hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
@@ -157,7 +157,41 @@
                     <div class="loading-progress h-full w-full rounded-full bg-emerald"></div>
                 </div>
             </div>
-            
+
+            <!-- Écran de connexion : uniquement des choix à toucher, aucune saisie -->
+            <div id="login-screen" class="absolute inset-0 z-[90] bg-[#F4F8F8] flex flex-col px-6 pt-14 pb-8 overflow-y-auto app-scroll" role="dialog" aria-modal="true" aria-labelledby="login-title">
+                <div class="brand-logo-window w-40 h-12 -ml-2" role="img" aria-label="BomaTalk">
+                    <img src="Logo_bomaTalk.png.png" alt="">
+                </div>
+                <div class="relative mt-6 h-36 rounded-3xl overflow-hidden shadow-lg">
+                    <img src="lina-mg.jpg" alt="" class="w-full h-full object-cover object-[center_25%]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/30 to-transparent"></div>
+                    <p class="absolute bottom-3 left-4 right-4 text-white text-[11px] font-semibold leading-snug">Les talents de Kisangani, réservés en quelques touches.</p>
+                </div>
+                <h1 id="login-title" class="mt-6 text-xl font-extrabold text-navy tracking-tight">Connexion en une touche</h1>
+                <p class="text-[11px] text-slate-500 mt-1">Rien à taper : choisissez simplement comment continuer.</p>
+
+                <button onclick="loginWith('device', this)" class="mt-5 w-full bg-white rounded-2xl p-3 flex items-center gap-3 border-2 border-emerald shadow-sm text-left active:scale-[0.98] transition">
+                    <span class="w-11 h-11 rounded-full bg-navy text-white text-sm font-extrabold flex items-center justify-center flex-shrink-0">PB</span>
+                    <span class="flex-1 min-w-0">
+                        <span class="block text-[9px] font-bold uppercase tracking-wide text-emerald">Compte détecté sur ce téléphone</span>
+                        <span class="block text-sm font-bold text-navy">Patrick Bolamba</span>
+                        <span class="block text-[10px] text-slate-500">+243 81 ••• •• 42 · M-Pesa</span>
+                    </span>
+                    <span class="login-label text-[11px] font-bold text-emerald whitespace-nowrap">Continuer <i class="fa-solid fa-arrow-right ml-0.5"></i></span>
+                </button>
+
+                <div class="flex items-center gap-3 my-4 text-[10px] text-slate-400"><span class="flex-1 h-px bg-slate-200"></span>ou<span class="flex-1 h-px bg-slate-200"></span></div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="loginWith('google', this)" class="py-3 bg-white rounded-xl border border-slate-200 text-[11px] font-bold text-navy flex items-center justify-center gap-2 active:scale-[0.98] transition"><i class="fa-brands fa-google text-rose-500"></i><span class="login-label">Google</span></button>
+                    <button onclick="loginWith('facebook', this)" class="py-3 bg-white rounded-xl border border-slate-200 text-[11px] font-bold text-navy flex items-center justify-center gap-2 active:scale-[0.98] transition"><i class="fa-brands fa-facebook text-blue-600"></i><span class="login-label">Facebook</span></button>
+                </div>
+
+                <button id="login-guest" onclick="loginWith('guest', this)" class="mt-4 text-[11px] font-semibold text-slate-500 hover:text-navy"><span class="login-label">Explorer sans compte</span></button>
+                <p class="mt-auto pt-6 text-center text-[9px] text-slate-400"><i class="fa-solid fa-lock text-emerald mr-1"></i>Connexion simulée pour la démonstration.</p>
+            </div>
+
             <!-- HEADER PERSISTANT (fixé en haut de l'app) -->
             <header id="app-header" class="bg-white/90 backdrop-blur-md border-b border-slate-100 px-5 pt-10 pb-3 flex items-center justify-between z-40 transition-all duration-300">
                 <div class="flex flex-col items-start -ml-2">
@@ -213,6 +247,24 @@
                 </div>
             </div>
 
+            <!-- Visionneuse des réalisations -->
+            <div id="media-viewer" class="absolute inset-0 z-[85] bg-black/95 flex flex-col opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="media-title" aria-hidden="true">
+                <div class="flex items-center justify-between px-5 pt-10 pb-3 text-white">
+                    <span id="media-counter" class="text-[10px] font-semibold text-slate-400"></span>
+                    <button onclick="closeMedia()" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center" aria-label="Fermer"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="flex-1 min-h-0 relative flex items-center justify-center px-3">
+                    <img id="media-image" src="" alt="" class="max-w-full max-h-full rounded-2xl object-contain">
+                    <button onclick="stepMedia(-1)" class="absolute left-2 w-9 h-9 rounded-full bg-white/15 text-white flex items-center justify-center" aria-label="Précédente"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+                    <button onclick="stepMedia(1)" class="absolute right-2 w-9 h-9 rounded-full bg-white/15 text-white flex items-center justify-center" aria-label="Suivante"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+                </div>
+                <div class="px-6 pt-4 pb-10 text-white">
+                    <p id="media-tag" class="text-[9px] uppercase tracking-wider font-bold text-emerald"></p>
+                    <h2 id="media-title" class="text-base font-extrabold mt-1"></h2>
+                    <p id="media-caption" class="text-[11px] text-slate-300 mt-1 leading-relaxed"></p>
+                </div>
+            </div>
+
             <div id="artist-thank-you" class="absolute inset-0 z-[80] flex items-center justify-center bg-navy/70 backdrop-blur-sm p-6 opacity-0 pointer-events-none transition-opacity duration-300" role="dialog" aria-modal="true" aria-labelledby="thank-you-title" aria-hidden="true">
                 <div class="w-full max-w-xs bg-white rounded-3xl p-6 text-center shadow-2xl animate-fadeIn">
                     <img src="lina-mg.jpg" alt="Lina Mg" class="w-16 h-16 mx-auto rounded-full object-cover object-[center_25%] border-4 border-emerald-subtle">
@@ -253,11 +305,14 @@
             eventType: '',
             commune: 'Makiso',
             address: '',
-            requirements: '',
+            requirements: [],
             payment: 'M-Pesa Vodacom',
-            customTime: false,
             submitted: false
         };
+
+        // Utilisateur connecté (null = visiteur sans compte)
+        let currentUser = null;
+        let afterLogin = null;
 
         let bookingStep = 'form';
         let bookingFlowActive = false;
@@ -294,8 +349,8 @@
 
         // VUES DE L'APPLICATION (Templates HTML)
         const views = {
-            // Vue Profil (Focus de la demande)
-            profile: `
+            // Vue Profil (Focus de la demande) : calendrier et réalisations générés à l'affichage
+            get profile() { return `
                 <div class="animate-fadeIn pb-6">
                     <!-- En-tête de profil immersif -->
                     <div class="relative h-[280px]">
@@ -364,6 +419,12 @@
                             </div>
                         </div>
 
+                        <!-- Raccourcis vers le calendrier et les réalisations -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="scrollToProfileSection('artist-calendar')" class="py-2.5 bg-white rounded-xl border border-slate-100 shadow-sm text-[11px] font-bold text-navy flex items-center justify-center gap-2 active:scale-[0.98] transition"><i class="fa-regular fa-calendar-check text-emerald"></i> Calendrier</button>
+                            <button onclick="scrollToProfileSection('artist-portfolio')" class="py-2.5 bg-white rounded-xl border border-slate-100 shadow-sm text-[11px] font-bold text-navy flex items-center justify-center gap-2 active:scale-[0.98] transition"><i class="fa-regular fa-images text-emerald"></i> Réalisations</button>
+                        </div>
+
                         <!-- Biographie / À propos -->
                         <div>
                             <h3 class="text-sm font-bold text-navy mb-2 flex items-center gap-2">
@@ -416,6 +477,10 @@
                             </div>
                         </div>
 
+                        ${renderPortfolio()}
+
+                        <div id="artist-calendar">${renderArtistCalendar()}</div>
+
                         <!-- Services & Réservation -->
                         <div class="pb-4">
                             <h3 class="text-sm font-bold text-navy mb-3">Prestations & Tarifs</h3>
@@ -450,12 +515,12 @@
 
                     </div>
                 </div>
-            `,
-            // Vue Accueil rapide
-            home: `
+            `; },
+            // Vue Accueil rapide (salutation personnalisée selon l'utilisateur connecté)
+            get home() { return `
                 <div class="p-5 animate-fadeIn space-y-6">
                     <div>
-                        <h1 class="text-2xl font-extrabold text-navy">Bonjour ! 👋</h1>
+                        <h1 class="text-2xl font-extrabold text-navy">Bonjour${currentUser ? ` ${escapeHtml(currentUser.firstName)}` : ''} ! 👋</h1>
                         <p class="text-xs text-slate-500 mt-1">Découvrez la scène de Kisangani aujourd'hui.</p>
                     </div>
 
@@ -521,7 +586,7 @@
                         </div>
                     </section>
                 </div>
-            `,
+            `; },
             discover: `
                 <div class="p-5 animate-fadeIn space-y-5">
                     <section class="bg-navy rounded-2xl p-5 text-white shadow-lg">
@@ -659,6 +724,185 @@
 
         const eventTypes = ['Mariage / Privé', 'Événement d’entreprise'];
         const communes = ['Makiso', 'Tshopo', 'Mangobo', 'Kabondo'];
+        // Choix à toucher qui remplacent toute saisie dans la réservation
+        const timeSlots = [['14:00', '15:30'], ['18:30', '20:00'], ['20:30', '22:00']];
+        const venuesByCommune = {
+            Makiso: ['Hôtel Palm Beach', 'Institut français', 'Salle polyvalente Makiso'],
+            Tshopo: ['Bord du fleuve Tshopo', 'Salle paroissiale Tshopo'],
+            Mangobo: ['Espace culturel Mangobo', 'Salle des fêtes Mangobo'],
+            Kabondo: ['Terrasse Kabondo', 'Salle communale Kabondo']
+        };
+        const homeVenue = 'À domicile (position partagée)';
+        const technicalNeeds = ['Sonorisation fournie', 'Micro sans fil', 'Scène', 'Éclairage', 'Parking'];
+        // Jours de repos de l'artiste (démo) : dimanche
+        const unavailableWeekdays = [0];
+
+        // Agenda de démonstration, positionné par rapport à aujourd'hui pour rester crédible
+        const artistEvents = [
+            { offset: 3, title: 'Mariage privé', place: 'Mangobo', type: 'booked' },
+            { offset: 8, title: 'Échos de la Tshopo, concert live', place: 'Institut français, Makiso', type: 'public', image: 'realisation-scene.jpg' },
+            { offset: 16, title: 'Soirée d’entreprise', place: 'Hôtel Palm Beach', type: 'booked' }
+        ].map(event => {
+            const date = new Date();
+            date.setDate(date.getDate() + event.offset);
+            return { ...event, value: getLocalDateValue(date) };
+        });
+
+        const portfolioItems = [
+            { image: 'realisation-scene.jpg', tag: 'Concert', title: 'Live avec musiciens', caption: 'Slam accompagné basse et batterie, devant le public de Kisangani.' },
+            { image: 'realisation-masterclass.jpg', tag: 'Formation', title: 'Art oratoire & slam', caption: 'Formation organisée et animée par Lina, du 28 septembre au 1er octobre à Kisangani.' },
+            { image: 'realisation-magazine.jpg', tag: 'Presse', title: 'Couverture « Who is she ? »', caption: 'Volume 1 (2025) : les figures qui inspirent la jeunesse congolaise.' },
+            { image: 'realisation-medias.jpg', tag: 'Radio & TV', title: 'Invitée des médias', caption: 'Passages en studio radio et plateau télé pour parler de slam et de poésie.' },
+            { image: 'realisation-studio.jpg', tag: 'Studio', title: 'Séance d’enregistrement', caption: 'Enregistrement de textes au micro, en studio.' }
+        ];
+        let mediaIndex = 0;
+        let calendarMonthOffset = 0;
+
+        function getDayStatus(value, date) {
+            if (value <= getLocalDateValue()) return { kind: 'past' };
+            const event = artistEvents.find(item => item.value === value);
+            if (event) return { kind: event.type, event };
+            const request = bookingRequests.find(item => item.date === value && item.status !== 'declined');
+            if (request) return { kind: 'request', request };
+            if (unavailableWeekdays.includes(date.getDay())) return { kind: 'off' };
+            return { kind: 'free' };
+        }
+
+        function getUpcomingDates(count = 10) {
+            return Array.from({ length: count }, (_, index) => {
+                const date = new Date();
+                date.setDate(date.getDate() + index + 1);
+                const value = getLocalDateValue(date);
+                return { value, date, available: getDayStatus(value, date).kind === 'free' };
+            });
+        }
+
+        function renderPortfolio() {
+            const cards = portfolioItems.map((item, index) => `
+                <button onclick="openMedia(${index})" class="relative flex-shrink-0 w-32 h-44 rounded-2xl overflow-hidden shadow-sm active:scale-[0.97] transition text-left">
+                    <img src="${item.image}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover">
+                    <span class="absolute inset-0 bg-gradient-to-t from-navy/90 via-transparent to-transparent"></span>
+                    <span class="absolute top-2 left-2 text-[8px] font-bold uppercase tracking-wide bg-white/90 text-navy px-1.5 py-0.5 rounded">${item.tag}</span>
+                    <span class="absolute bottom-2 left-2 right-2 text-[10px] font-bold text-white leading-tight">${escapeHtml(item.title)}</span>
+                </button>
+            `).join('');
+            return `
+                <section id="artist-portfolio">
+                    <div class="flex justify-between items-end mb-3">
+                        <h3 class="text-sm font-bold text-navy">Réalisations</h3>
+                        <span class="text-[10px] text-slate-400">${portfolioItems.length} œuvres · touchez pour agrandir</span>
+                    </div>
+                    <div class="flex gap-3 overflow-x-auto app-scroll -mx-5 px-5 pb-1">${cards}</div>
+                </section>
+            `;
+        }
+
+        function renderArtistCalendar() {
+            const today = new Date();
+            const month = new Date(today.getFullYear(), today.getMonth() + calendarMonthOffset, 1);
+            const daysInMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0).getDate();
+            const leadingBlanks = (month.getDay() + 6) % 7; // semaine commençant le lundi
+            const styles = {
+                past: 'text-slate-300',
+                off: 'text-slate-300 bg-slate-50',
+                booked: 'bg-slate-200 text-slate-400 line-through',
+                public: 'bg-amber-light text-amber-700 font-extrabold',
+                request: 'bg-emerald-subtle text-emerald-dark ring-1 ring-emerald font-extrabold',
+                free: 'bg-white text-navy font-bold border border-slate-100 hover:border-emerald'
+            };
+            let freeDays = 0;
+            const cells = Array.from({ length: leadingBlanks }, () => '<span></span>');
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(month.getFullYear(), month.getMonth(), day);
+                const value = getLocalDateValue(date);
+                const status = getDayStatus(value, date);
+                if (status.kind === 'free') freeDays++;
+                const action = {
+                    free: `selectServiceAndBook('Récital Slam', 50, '${value}')`,
+                    public: `showToast('${escapeHtml(status.event?.title || '').replace(/'/g, "\\'")} · événement public')`,
+                    booked: `showToast('Lina est déjà réservée ce jour-là.')`,
+                    request: `switchTab('reservations')`,
+                    off: `showToast('Jour de repos de l’artiste.')`
+                }[status.kind];
+                cells.push(`<button type="button" ${action ? `onclick="${action}"` : 'disabled'} class="relative h-9 rounded-lg text-[11px] transition ${styles[status.kind]}">${day}${status.kind === 'free' ? '<span class="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-emerald"></span>' : ''}</button>`);
+            }
+            const upcoming = artistEvents.filter(event => event.value > getLocalDateValue()).slice(0, 3).map(event => {
+                const date = new Date(`${event.value}T12:00:00`);
+                return `
+                    <div class="flex items-center gap-3 py-2 border-b border-slate-100 last:border-0">
+                        ${event.image
+                            ? `<img src="${event.image}" alt="" class="w-11 h-11 rounded-xl object-cover">`
+                            : `<span class="w-11 h-11 rounded-xl bg-slate-100 text-slate-500 flex flex-col items-center justify-center leading-none"><span class="text-[8px] uppercase">${date.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '')}</span><span class="text-sm font-extrabold">${date.getDate()}</span></span>`}
+                        <span class="flex-1 min-w-0">
+                            <span class="block text-[11px] font-bold text-navy truncate">${escapeHtml(event.title)}</span>
+                            <span class="block text-[10px] text-slate-500">${escapeHtml(formatBookingDate(event.value))} · ${escapeHtml(event.place)}</span>
+                        </span>
+                        <span class="text-[9px] font-bold px-1.5 py-0.5 rounded ${event.type === 'public' ? 'bg-amber-light text-amber-700' : 'bg-slate-100 text-slate-500'}">${event.type === 'public' ? 'Public' : 'Réservé'}</span>
+                    </div>
+                `;
+            }).join('');
+            const legend = [['bg-emerald', 'Libre'], ['bg-slate-300', 'Réservé'], ['bg-amber', 'Spectacle public'], ['bg-emerald-light ring-1 ring-emerald', 'Votre demande']]
+                .map(([dot, label]) => `<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full ${dot}"></span>${label}</span>`).join('');
+
+            return `
+                <section class="bg-white rounded-3xl p-4 shadow-sm border border-slate-100">
+                    <div class="flex items-center justify-between mb-1">
+                        <h3 class="text-sm font-bold text-navy">Calendrier de Lina</h3>
+                        <span class="text-[10px] font-bold text-emerald">${freeDays} jours libres</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mb-3">Touchez une date libre pour réserver directement.</p>
+                    <div class="flex items-center justify-between mb-2">
+                        <button onclick="changeCalendarMonth(-1)" ${calendarMonthOffset === 0 ? 'disabled' : ''} class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 disabled:opacity-30" aria-label="Mois précédent"><i class="fa-solid fa-chevron-left text-[10px]"></i></button>
+                        <span class="text-xs font-extrabold text-navy capitalize">${month.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}</span>
+                        <button onclick="changeCalendarMonth(1)" ${calendarMonthOffset === 2 ? 'disabled' : ''} class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 disabled:opacity-30" aria-label="Mois suivant"><i class="fa-solid fa-chevron-right text-[10px]"></i></button>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center text-[9px] font-semibold text-slate-400 mb-1">${['L', 'M', 'M', 'J', 'V', 'S', 'D'].map(day => `<span>${day}</span>`).join('')}</div>
+                    <div class="grid grid-cols-7 gap-1">${cells.join('')}</div>
+                    <div class="flex flex-wrap gap-x-3 gap-y-1 mt-3 text-[9px] text-slate-500">${legend}</div>
+                    ${upcoming ? `<div class="mt-4 pt-3 border-t border-slate-100"><h4 class="text-[11px] font-extrabold text-navy mb-1">Prochaines dates</h4>${upcoming}</div>` : ''}
+                </section>
+            `;
+        }
+
+        function changeCalendarMonth(step) {
+            calendarMonthOffset = Math.min(2, Math.max(0, calendarMonthOffset + step));
+            document.getElementById('artist-calendar').innerHTML = renderArtistCalendar();
+        }
+
+        function scrollToProfileSection(id) {
+            const mainContent = document.getElementById('main-content');
+            const section = document.getElementById(id);
+            if (section) mainContent.scrollTo({ top: section.offsetTop - 50, behavior: 'smooth' });
+        }
+
+        function openMedia(index) {
+            mediaIndex = (index + portfolioItems.length) % portfolioItems.length;
+            const item = portfolioItems[mediaIndex];
+            const image = document.getElementById('media-image');
+            image.src = item.image;
+            image.alt = item.title;
+            document.getElementById('media-tag').textContent = item.tag;
+            document.getElementById('media-title').textContent = item.title;
+            document.getElementById('media-caption').textContent = item.caption;
+            document.getElementById('media-counter').textContent = `${mediaIndex + 1} / ${portfolioItems.length}`;
+            const viewer = document.getElementById('media-viewer');
+            viewer.setAttribute('aria-hidden', 'false');
+            viewer.classList.remove('opacity-0', 'pointer-events-none');
+        }
+
+        function stepMedia(step) {
+            openMedia(mediaIndex + step);
+        }
+
+        function closeMedia() {
+            const viewer = document.getElementById('media-viewer');
+            viewer.setAttribute('aria-hidden', 'true');
+            viewer.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function formatRequirements(requirements) {
+            return Array.isArray(requirements) ? requirements.join(', ') : (requirements || '');
+        }
         const paymentMethods = [
             { name: 'M-Pesa Vodacom', icon: 'fa-mobile-screen-button' },
             { name: 'Orange Money', icon: 'fa-wallet' },
@@ -690,18 +934,36 @@
                 <button type="button" onclick="setBookingOption('eventType', '${type}')" class="px-3 py-2 rounded-lg text-[10px] font-semibold transition ${bookingData.eventType === type ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">${type}</button>
             `).join('');
             const communeOptions = communes.map(commune => `
-                <button type="button" onclick="setBookingOption('commune', '${commune}')" class="px-3 py-1.5 rounded-lg text-[10px] font-semibold transition ${bookingData.commune === commune ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">${commune}</button>
+                <button type="button" onclick="setCommune('${commune}')" class="px-3 py-1.5 rounded-lg text-[10px] font-semibold transition ${bookingData.commune === commune ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">${commune}</button>
             `).join('');
+            const chip = (selected) => selected ? 'bg-navy text-white border-navy' : 'bg-white text-slate-600 border-slate-200';
+            // La bande s'allonge si la date vient du calendrier de l'artiste (au-delà de 10 jours)
+            const daysUntilSelected = bookingData.date ? Math.round((new Date(`${bookingData.date}T12:00:00`) - new Date(`${getLocalDateValue()}T12:00:00`)) / 86400000) : 0;
+            const dateOptions = getUpcomingDates(Math.max(10, daysUntilSelected + 2)).map(({ value, date, available }) => `
+                <button type="button" ${bookingData.date === value ? 'data-selected-date' : ''} ${available ? `onclick="setBookingOption('date', '${value}')"` : 'disabled'} class="flex-shrink-0 w-14 py-2 rounded-xl border text-center transition ${available ? chip(bookingData.date === value) : 'bg-slate-50 text-slate-300 border-slate-100 line-through'}">
+                    <span class="block text-[9px] font-semibold uppercase">${date.toLocaleDateString('fr-FR', { weekday: 'short' }).replace('.', '')}</span>
+                    <span class="block text-base font-extrabold leading-tight">${date.getDate()}</span>
+                    <span class="block text-[9px]">${available ? date.toLocaleDateString('fr-FR', { month: 'short' }).replace('.', '') : 'Complet'}</span>
+                </button>
+            `).join('');
+            const slotOptions = timeSlots.map(([start, end]) => `
+                <button type="button" onclick="setTimeSlot('${start}', '${end}')" class="py-2.5 rounded-lg border text-[10px] font-bold transition ${chip(bookingData.startTime === start && bookingData.endTime === end)}">${start} – ${end}</button>
+            `).join('');
+            const venueOptions = [...(venuesByCommune[bookingData.commune] || []), homeVenue].map(venue => `
+                <button type="button" onclick="setBookingOption('address', '${venue.replace(/'/g, "\\'")}')" class="px-3 py-2 rounded-lg border text-[10px] font-semibold transition ${chip(bookingData.address === venue)}">${venue === homeVenue ? '<i class="fa-solid fa-location-crosshairs mr-1"></i>' : ''}${escapeHtml(venue)}</button>
+            `).join('');
+            const needOptions = technicalNeeds.map(need => {
+                const selected = bookingData.requirements.includes(need);
+                return `<button type="button" onclick="toggleRequirement('${need}')" class="px-3 py-1.5 rounded-full border text-[10px] font-semibold transition ${selected ? 'bg-emerald-subtle text-emerald-dark border-emerald' : 'bg-white text-slate-600 border-slate-200'}"><i class="fa-solid ${selected ? 'fa-check' : 'fa-plus'} mr-1 text-[8px]"></i>${need}</button>`;
+            }).join('');
 
             return `
                 <div class="p-4 animate-fadeIn space-y-4 pb-7">
                     <div class="flex items-center justify-between">
                         <button onclick="switchTab('profile')" class="w-8 h-8 rounded-full bg-white border border-slate-100 text-slate-600" aria-label="Retour au profil"><i class="fa-solid fa-arrow-left text-xs"></i></button>
-                        <div class="flex items-center gap-2">
-                            <button type="button" onclick="fillBookingExample()" class="px-2.5 py-1 rounded-full border border-slate-200 bg-white text-[9px] font-semibold text-slate-500 hover:text-emerald hover:border-emerald transition"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Remplir un exemple</button>
-                            <span class="text-[10px] font-semibold text-slate-400">Étape 1 sur 2</span>
-                        </div>
+                        <span class="text-[10px] font-semibold text-slate-400">Étape 1 sur 2</span>
                     </div>
+                    <p class="text-[10px] text-emerald-dark bg-emerald-subtle rounded-lg px-3 py-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Rien à taper : tout est pré-sélectionné, touchez pour modifier.</p>
                     <div class="bg-white rounded-2xl p-3 flex items-center gap-3 border border-slate-100">
                         <img src="lina-mg.jpg" alt="Lina Mg" class="w-11 h-11 rounded-xl object-cover object-[center_25%]">
                         <div class="min-w-0 flex-1">
@@ -716,14 +978,10 @@
                     <section class="space-y-3">
                         <h2 class="text-sm font-extrabold text-navy"><span class="text-emerald mr-1">1.</span> Date & horaire souhaités</h2>
                         <p class="text-[10px] text-slate-500 -mt-2">Disponible pour vos événements à Kisangani</p>
-                        <label class="block text-[10px] font-semibold text-slate-600">Date de la prestation</label>
-                        <input type="date" min="${getLocalDateValue()}" value="${escapeHtml(bookingData.date)}" onchange="updateBookingField('date', this.value)" class="w-full bg-slate-100 rounded-lg px-3 py-2.5 text-xs text-navy border-0 focus:ring-2 focus:ring-emerald">
-                        <label class="block text-[10px] font-semibold text-slate-600">Créneau de passage</label>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button type="button" onclick="setCustomTime(false)" class="py-2.5 rounded-lg text-[10px] font-bold ${!bookingData.customTime ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">${escapeHtml(bookingData.startTime)} - ${escapeHtml(bookingData.endTime)} <i class="fa-regular fa-clock ml-1"></i></button>
-                            <button type="button" onclick="setCustomTime(true)" class="py-2.5 rounded-lg text-[10px] font-semibold ${bookingData.customTime ? 'bg-navy text-white' : 'bg-slate-100 text-slate-600'}">Autre créneau <i class="fa-regular fa-clock ml-1"></i></button>
-                        </div>
-                        ${bookingData.customTime ? `<div class="grid grid-cols-2 gap-2"><label class="text-[10px] text-slate-500">Début<input type="time" value="${escapeHtml(bookingData.startTime)}" onchange="updateBookingField('startTime', this.value)" class="mt-1 w-full bg-slate-100 rounded-lg px-3 py-2 text-xs text-navy"></label><label class="text-[10px] text-slate-500">Fin<input type="time" value="${escapeHtml(bookingData.endTime)}" onchange="updateBookingField('endTime', this.value)" class="mt-1 w-full bg-slate-100 rounded-lg px-3 py-2 text-xs text-navy"></label></div>` : ''}
+                        <p class="text-[10px] font-semibold text-slate-600">Date de la prestation</p>
+                        <div class="flex gap-2 overflow-x-auto app-scroll -mx-4 px-4 pb-1">${dateOptions}</div>
+                        <p class="text-[10px] font-semibold text-slate-600">Créneau de passage</p>
+                        <div class="grid grid-cols-3 gap-2">${slotOptions}</div>
                     </section>
 
                     <section class="space-y-3">
@@ -732,15 +990,15 @@
                     </section>
 
                     <section class="space-y-3">
-                        <label class="block text-sm font-extrabold text-navy"><span class="text-emerald mr-1">3.</span> Commune</label>
+                        <h2 class="text-sm font-extrabold text-navy"><span class="text-emerald mr-1">3.</span> Lieu</h2>
                         <div class="flex flex-wrap gap-2">${communeOptions}</div>
-                        <label class="block text-[10px] font-semibold text-slate-600" for="booking-address">Adresse ou nom de la salle</label>
-                        <input id="booking-address" type="text" value="${escapeHtml(bookingData.address)}" oninput="updateBookingField('address', this.value)" placeholder="Ex. Hôtel Palm Beach, Salon Congo" class="w-full bg-slate-100 rounded-lg px-3 py-2.5 text-xs text-navy border-0 focus:ring-2 focus:ring-emerald">
+                        <p class="text-[10px] font-semibold text-slate-600">Salle ou adresse</p>
+                        <div class="flex flex-wrap gap-2">${venueOptions}</div>
                     </section>
 
                     <section class="space-y-2">
-                        <label for="booking-requirements" class="block text-[10px] font-semibold text-slate-600">Besoins techniques ou consignes (facultatif)</label>
-                        <textarea id="booking-requirements" rows="2" oninput="updateBookingField('requirements', this.value)" placeholder="Sonorisation, scène, accès…" class="w-full resize-none bg-slate-100 rounded-lg px-3 py-2.5 text-xs text-navy border-0 focus:ring-2 focus:ring-emerald">${escapeHtml(bookingData.requirements)}</textarea>
+                        <p class="text-[10px] font-semibold text-slate-600">Besoins techniques (facultatif)</p>
+                        <div class="flex flex-wrap gap-2">${needOptions}</div>
                     </section>
                     <button onclick="continueToBookingSummary()" class="w-full py-3 bg-emerald text-white text-xs font-bold rounded-xl shadow-md active:scale-[0.98] transition">Suivant <i class="fa-solid fa-arrow-right ml-1"></i></button>
                 </div>
@@ -771,6 +1029,7 @@
                         <div class="text-slate-500">${escapeHtml(bookingData.artist)} · ${escapeHtml(bookingData.eventType)}</div>
                         <div class="text-slate-500">${escapeHtml(formatBookingDate(bookingData.date))} · ${escapeHtml(bookingData.startTime)} - ${escapeHtml(bookingData.endTime)}</div>
                         <div class="text-slate-500">${escapeHtml(bookingData.address)}, ${escapeHtml(bookingData.commune)}</div>
+                        ${bookingData.requirements.length ? `<div class="text-slate-500">${escapeHtml(formatRequirements(bookingData.requirements))}</div>` : ''}
                         <div class="flex justify-between border-t border-slate-100 pt-2"><span class="text-slate-600">Frais BomaTalk & protection (5%)</span><strong class="text-navy">$${fee.toFixed(2)}</strong></div>
                         <div class="flex justify-between text-emerald"><span>Médiation en cas de litige</span><strong>Incluse</strong></div>
                     </section>
@@ -793,6 +1052,14 @@
 
         function refreshBookingView() {
             document.getElementById('main-content').innerHTML = bookingStep === 'summary' ? renderBookingSummary() : renderBookingForm();
+            scrollSelectedDateIntoView();
+        }
+
+        function scrollSelectedDateIntoView() {
+            const selected = document.querySelector('#main-content [data-selected-date]');
+            if (!selected) return;
+            const strip = selected.parentElement;
+            requestAnimationFrame(() => strip.scrollTo({ left: selected.offsetLeft - strip.offsetLeft - 16, behavior: 'instant' }));
         }
 
         function renderReservationsList() {
@@ -845,7 +1112,7 @@
                             <p><i class="fa-solid fa-location-dot w-4 text-emerald"></i>${escapeHtml(request.address)}, ${escapeHtml(request.commune)}</p>
                             <p><i class="fa-solid fa-music w-4 text-emerald"></i>${escapeHtml(request.eventType)}</p>
                             <p><i class="fa-solid fa-wallet w-4 text-emerald"></i>${escapeHtml(request.payment)} · total estimé avec frais inclus</p>
-                            ${request.requirements ? `<p><i class="fa-regular fa-note-sticky w-4 text-emerald"></i>${escapeHtml(request.requirements)}</p>` : ''}
+                            ${formatRequirements(request.requirements) ? `<p><i class="fa-regular fa-note-sticky w-4 text-emerald"></i>${escapeHtml(formatRequirements(request.requirements))}</p>` : ''}
                         </div>
                         ${artistActions}
                     </article>
@@ -994,42 +1261,50 @@
         }
 
         // Action métier: Réserver
-        function selectServiceAndBook(serviceName, price) {
+        function selectServiceAndBook(serviceName, price, date = null) {
             bookingData.service = serviceName;
             bookingData.priceUSD = Number(price);
-            bookingData.date = '';
-            bookingData.eventType = '';
-            bookingData.address = '';
-            bookingData.requirements = '';
+            // Tout est pré-sélectionné : « Suivant » fonctionne dès la première touche.
+            bookingData.date = date || (getUpcomingDates().find(day => day.available) || {}).value || '';
+            [bookingData.startTime, bookingData.endTime] = timeSlots[1];
+            bookingData.eventType = eventTypes.find(type => type.startsWith('Événement')) || eventTypes[0];
+            bookingData.commune = 'Makiso';
+            bookingData.address = venuesByCommune.Makiso[0];
+            bookingData.requirements = [];
+            bookingData.payment = currentUser ? currentUser.payment : 'M-Pesa Vodacom';
             bookingData.submitted = false;
             bookingStep = 'form';
             bookingFlowActive = true;
             switchTab('reservations');
+            scrollSelectedDateIntoView();
+            if (date) showToast(`Date choisie : ${formatBookingDate(date)}`);
         }
 
-        // Démo rapide devant un jury : pré-remplit l'étape 1 avec un exemple réaliste.
-        function fillBookingExample() {
-            const inOneWeek = new Date();
-            inOneWeek.setDate(inOneWeek.getDate() + 7);
-            bookingData.date = getLocalDateValue(inOneWeek);
-            bookingData.eventType = eventTypes.find(type => type.startsWith('Événement')) || eventTypes[0];
-            bookingData.commune = 'Makiso';
-            bookingData.address = 'Hôtel Palm Beach';
-            refreshBookingView();
-        }
-
-        function updateBookingField(field, value) {
-            bookingData[field] = value;
-        }
-
+        // Garde la position de défilement : chaque choix redessine le formulaire.
         function setBookingOption(field, value) {
             bookingData[field] = value;
+            const mainContent = document.getElementById('main-content');
+            const scrollTop = mainContent.scrollTop;
             refreshBookingView();
+            mainContent.querySelector('.animate-fadeIn')?.classList.remove('animate-fadeIn');
+            mainContent.scrollTop = scrollTop;
         }
 
-        function setCustomTime(enabled) {
-            bookingData.customTime = enabled;
-            refreshBookingView();
+        function setCommune(commune) {
+            bookingData.address = (venuesByCommune[commune] || [homeVenue])[0];
+            setBookingOption('commune', commune);
+        }
+
+        function setTimeSlot(start, end) {
+            bookingData.startTime = start;
+            setBookingOption('endTime', end);
+        }
+
+        function toggleRequirement(need) {
+            const requirements = bookingData.requirements.includes(need)
+                ? bookingData.requirements.filter(item => item !== need)
+                : [...bookingData.requirements, need];
+            setBookingOption('requirements', requirements);
         }
 
         function continueToBookingSummary() {
@@ -1059,11 +1334,54 @@
             refreshBookingView();
         }
 
+        // Connexion simulée : une touche suffit, aucun champ à remplir.
+        const demoAccounts = {
+            device: { firstName: 'Patrick', name: 'Patrick Bolamba', payment: 'M-Pesa Vodacom', via: 'votre numéro' },
+            google: { firstName: 'Patrick', name: 'Patrick Bolamba', payment: 'M-Pesa Vodacom', via: 'Google' },
+            facebook: { firstName: 'Patrick', name: 'Patrick Bolamba', payment: 'M-Pesa Vodacom', via: 'Facebook' }
+        };
+
+        function showLoginScreen(onLogin = null) {
+            afterLogin = onLogin;
+            const screen = document.getElementById('login-screen');
+            screen.querySelectorAll('button').forEach(button => { button.disabled = false; });
+            document.querySelector('#login-guest .login-label').textContent = onLogin ? 'Plus tard' : 'Explorer sans compte';
+            screen.classList.remove('is-hidden');
+            screen.scrollTop = 0;
+        }
+
+        function loginWith(method, button) {
+            const screen = document.getElementById('login-screen');
+            const label = button.querySelector('.login-label');
+            const originalLabel = label.innerHTML;
+            screen.querySelectorAll('button').forEach(item => { item.disabled = true; });
+            if (method !== 'guest') label.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+
+            window.setTimeout(() => {
+                label.innerHTML = originalLabel;
+                screen.classList.add('is-hidden');
+                const callback = afterLogin;
+                afterLogin = null;
+                if (method === 'guest') {
+                    if (!callback) switchTab(currentTab);
+                    return;
+                }
+                currentUser = demoAccounts[method];
+                showToast(`Bienvenue ${currentUser.firstName}, connecté via ${currentUser.via}.`);
+                if (callback) callback(); else switchTab(currentTab);
+            }, method === 'guest' ? 150 : 700);
+        }
+
         function submitBookingRequest() {
             if (bookingData.submitted) return;
+            if (!currentUser) {
+                showLoginScreen(submitBookingRequest);
+                return;
+            }
             bookingData.submitted = true;
             bookingRequests.push({
                 ...bookingData,
+                client: currentUser.name,
                 id: `${Date.now()}`,
                 status: 'pending',
                 createdAt: new Date().toISOString()
